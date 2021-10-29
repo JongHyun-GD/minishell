@@ -1,28 +1,28 @@
-TARGET = minishell
-SRCS =	main.c
-OBJS =	$(SRCS:.c=.o)
-CC =	gcc
-CF =	-Wall -Wextra -Werror -Iincludes -lreadline 
+CFLAGS		= -Wall -Wextra -Werror
+LFLAGS		= -lreadline
 
-all : $(TARGET)
+INC_LINK	= -I./includes/
+NAME		= minishell
+SRC_DIR		= ./src/
+C_FILES		= main.c
 
-$(TARGET) : $(OBJS)
-	$(CC) $(CF) $^ -o $@
+SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
+OBJS		= $(SRCS:.c=.o)
 
-%.o : %.c
-	$(CC) $< -c
+%.o			: %.c
+	gcc -c $(CFLAGS) $(INC_LINK) $< -o $@
 
-clean :
-	rm -f *.o
+all			: $(NAME)
 
-fclean : clean
-	rm -f $(TARGET)
+$(NAME)	: $(OBJS)
+	gcc $(CFLAGS) $(LFLAGS) $(OBJS) -o $(NAME) 
 
-re : fclean all
+clean		:
+	rm -f $(OBJS)
 
-bonus : all
+fclean		:
+	rm -f $(NAME)
 
-t : all
-	./minishell
+re			: fclean all
 
-.PHONY = all clean fclean re bonus
+.PHONY		: all clean fclean re
