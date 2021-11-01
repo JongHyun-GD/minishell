@@ -9,8 +9,7 @@ LIBFT           = $(addprefix $(LIBFT_DIR), $(LIBFT_NAME))
 
 NAME		= minishell
 SRC_DIR		= ./src/
-C_FILES		= main.c	\
-			  list.c
+C_FILES		= main.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
 OBJS		= $(SRCS:.c=.o)
