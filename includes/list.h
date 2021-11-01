@@ -22,8 +22,8 @@ typedef struct	s_node
 typedef struct s_list
 {
 	int				l_type;
-	struct s_node	*strat_node;
-	struct	s_list	*next;
+	struct s_node	*start_node;
+	struct s_list	*next;
 }					t_list;
 
 #endif
