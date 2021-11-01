@@ -8,7 +8,4 @@
 # include <readline/history.h>
 # include <stdlib.h>
 
-t_node	*ft_create_node(int n_type, char *data);
-t_list	*ft_create_list(int l_type, int size);
-
 #endif
