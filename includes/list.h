@@ -19,11 +19,10 @@ typedef struct	s_node
 	struct s_node	*next;
 }					t_node;
 
-
 typedef struct s_list
 {
 	int				l_type;
-	node			*node;
+	struct s_node	*strat_node;
 	struct	s_list	*next;
 }					t_list;
 
