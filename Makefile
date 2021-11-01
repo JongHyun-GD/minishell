@@ -2,6 +2,11 @@ CFLAGS		= -Wall -Wextra -Werror
 LFLAGS		= -lreadline
 
 INC_LINK	= -I./includes/
+
+LIBFT_NAME      = libft.a
+LIBFT_DIR       = ./libft/
+LIBFT           = $(addprefix $(LIBFT_DIR), $(LIBFT_NAME))
+
 NAME		= minishell
 SRC_DIR		= ./src/
 C_FILES		= main.c
@@ -14,13 +19,18 @@ OBJS		= $(SRCS:.c=.o)
 
 all			: $(NAME)
 
-$(NAME)	: $(OBJS)
+$(NAME)	: $(LIBFT) $(OBJS)
 	gcc $(CFLAGS) $(LFLAGS) $(OBJS) -o $(NAME) 
 
+$(LIBFT)	:
+	@make all -C $(LIBFT_DIR)
+
 clean		:
+	@make clean -C $(LIBFT_DIR)
 	rm -f $(OBJS)
 
 fclean		:
+	@make fclean -C $(LIBFT_DIR)
 	rm -f $(NAME)
 
 re			: fclean all
