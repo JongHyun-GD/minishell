@@ -20,7 +20,7 @@ OBJS		= $(SRCS:.c=.o)
 all			: $(NAME)
 
 $(NAME)	: $(LIBFT) $(OBJS)
-	gcc $(CFLAGS) $(LFLAGS) $(OBJS) -o $(NAME) 
+	gcc $(CFLAGS)  $(LFLAGS) $(OBJS) $(LIBFT) -o $(NAME) 
 
 $(LIBFT)	:
 	@make all -C $(LIBFT_DIR)
