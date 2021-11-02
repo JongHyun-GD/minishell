@@ -20,10 +20,10 @@ OBJS		= $(SRCS:.c=.o)
 %.o			: %.c
 	gcc -c $(CFLAGS) $(INC_LINK) $< -o $@
 
-all			: $(NAME)
+all			: $(LIBFT) $(NAME)
 
 $(NAME)	: $(LIBFT) $(OBJS)
-	gcc $(CFLAGS) $(LFLAGS) $(OBJS) -o $(NAME)
+	gcc $(CFLAGS)  $(LFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 $(LIBFT)	:
 	@make all -C $(LIBFT_DIR)
