@@ -1,6 +1,6 @@
 #include <minishell.h>
 
-int main(void)
+int	main(void)
 {
 	char	*str;
 	char	**argv;
@@ -9,8 +9,8 @@ int main(void)
 	while (1)
 	{
 		str = readline("prompt> ");
-
-		if (ft_strncmp(str, "env", ft_strlen(str)) == 0) {
+		if (ft_strncmp(str, "env", ft_strlen(str)) == 0)
+		{
 			argv = 0;
 			envp = get_envp();
 			execve("env", argv, envp);

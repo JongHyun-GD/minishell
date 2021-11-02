@@ -6,13 +6,13 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 09:09:59 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/02 11:51:55 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/11/02 13:38:48 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		count_lines()
+int	count_lines(void)
 {
 	int		fd;
 	int		count;
@@ -24,13 +24,12 @@ int		count_lines()
 	{
 		if (read_char == '\n')
 			count++;
-
 	}
 	close(fd);
-	return count + 1;
+	return (count + 1);
 }
 
-char**	get_envp()
+char	**get_envp(void)
 {
 	int		fd;
 	int		res;
@@ -45,7 +44,7 @@ char**	get_envp()
 	}
 	lines = (char **)malloc(sizeof(char *) * count_lines());
 	count = 0;
-	while(1)
+	while (1)
 	{
 		res = get_next_line(fd, &lines[count]);
 		if (res <= 0)
@@ -53,5 +52,5 @@ char**	get_envp()
 		count++;
 	}
 	close(fd);
-	return lines;
+	return (lines);
 }
