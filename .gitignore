@@ -2,4 +2,4 @@
 minishell
 .vscode
 libft/libft.a
-bin
+bin/env
