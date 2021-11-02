@@ -13,7 +13,7 @@ int	main(void)
 		{
 			argv = 0;
 			envp = get_envp();
-			execve("env", argv, envp);
+			execve(ENV_PATH, argv, envp);
 		}
 		else if (str)
 		{

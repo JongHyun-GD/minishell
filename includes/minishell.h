@@ -1,5 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# define ENV_PATH "./bin/env"
 
 # include "list.h"
 # include "../libft/includes/libft.h"
