@@ -9,7 +9,10 @@ LIBFT           = $(addprefix $(LIBFT_DIR), $(LIBFT_NAME))
 
 NAME		= minishell
 SRC_DIR		= ./src/
-C_FILES		= main.c
+C_FILES		= main.c \
+				envp.c \
+				get_next_line.c \
+				get_next_line_utils.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
 OBJS		= $(SRCS:.c=.o)
@@ -20,7 +23,7 @@ OBJS		= $(SRCS:.c=.o)
 all			: $(NAME)
 
 $(NAME)	: $(LIBFT) $(OBJS)
-	gcc $(CFLAGS) $(LFLAGS) $(OBJS) -o $(NAME) 
+	gcc $(CFLAGS) $(LFLAGS) $(OBJS) -o $(NAME)
 
 $(LIBFT)	:
 	@make all -C $(LIBFT_DIR)
