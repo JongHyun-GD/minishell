@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 11:56:06 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/02 14:12:40 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/11/02 14:25:12 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	argc = 0;
+	if (argc > 1)
+	{
+		printf("Error: Invalid arguments\n");
+		return (-1);
+	}
 	argv = 0;
 	while (*envp)
 	{
