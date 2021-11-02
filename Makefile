@@ -17,7 +17,7 @@ C_FILES		= main.c \
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
 OBJS		= $(SRCS:.c=.o)
 
-ENV			= env
+ENV			= ./bin/env
 ENV_C_FILES	= env.c
 ENV_SRCS	= $(addprefix $(SRC_DIR), $(ENV_C_FILES))
 ENV_OBJS	= $(ENV_SRCS:.c=.o)
