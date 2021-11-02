@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 09:09:59 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/02 10:19:24 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/11/02 11:51:55 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,17 @@ char**	get_envp()
 	int		count;
 
 	fd = open(ENVP_PATH, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Error occured when open envp file");
+		exit(-1);
+	}
 	lines = (char **)malloc(sizeof(char *) * count_lines());
 	count = 0;
 	while(1)
 	{
 		res = get_next_line(fd, &lines[count]);
-		if (res == -1)
+		if (res <= 0)
 			break ;
 		count++;
 	}
