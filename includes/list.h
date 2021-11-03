@@ -12,7 +12,7 @@
 # define LTYPE_SEMI_COLON 3
 # define LTYPE_REDIRECT 4
 
-typedef struct	s_node
+typedef struct s_node
 {
 	int				n_type;
 	char			*data;
