@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 16:43:32 by dason             #+#    #+#             */
-/*   Updated: 2021/07/06 14:50:40 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/03 14:09:41 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	update_store_buff(char ***s, size_t start)
 	size_t	index;
 	size_t	len;
 
-	len = ft_strlen(**s) - start;
+	len = gnl_strlen(**s) - start;
 	new_s = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!new_s)
 		return ;
@@ -43,7 +43,7 @@ char	*get_line(char **s)
 	index = 0;
 	if (!nl_index)
 	{
-		line = ft_strdup(*s);
+		line = gnl_strdup(*s);
 		free(*s);
 		*s = NULL;
 		return (line);
@@ -85,7 +85,7 @@ int	get_next_line(int fd, char **line)
 		if (rd_size <= 0)
 			break ;
 		buff[rd_size] = '\0';
-		store_buff[fd] = ft_strjoin(store_buff[fd], buff);
+		store_buff[fd] = gnl_strjoin(store_buff[fd], buff);
 		if (!store_buff[fd])
 			return (ERROR);
 		if (ft_isnewline(store_buff[fd]))
