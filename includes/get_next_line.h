@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 16:40:59 by dason             #+#    #+#             */
-/*   Updated: 2021/02/06 19:41:46 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/03 14:08:35 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int		get_next_line(int fd, char **line);
 void	update_store_buff(char ***s, size_t n);
 char	*get_line(char **s);
 
-size_t	ft_strlen(char *s);
-char	*ft_strjoin(char *s1, char *s2);
+size_t	gnl_strlen(char *s);
+char	*gnl_strjoin(char *s1, char *s2);
 size_t	ft_isnewline(char *s);
-char	*ft_strdup(char *s);
+char	*gnl_strdup(char *s);
 void	*ft_calloc(size_t count, size_t size);
 
 #endif

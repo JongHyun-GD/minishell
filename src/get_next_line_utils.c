@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 18:54:57 by dason             #+#    #+#             */
-/*   Updated: 2021/07/06 14:52:09 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/03 14:10:11 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *s)
+size_t	gnl_strlen(char *s)
 {
 	size_t	count;
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(char *s)
 	return (count);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*gnl_strjoin(char *s1, char *s2)
 {
 	char	*store_buff;
 	size_t	index;
@@ -32,10 +32,10 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	s1_len;
 	size_t	s2_len;
 
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
+	s1_len = gnl_strlen(s1);
+	s2_len = gnl_strlen(s2);
 	if (!s1)
-		return (ft_strdup(s2));
+		return (gnl_strdup(s2));
 	if (!s1 && !s2)
 		return (NULL);
 	store_buff = (char *)ft_calloc(s1_len + s2_len + 1, sizeof(char));
@@ -69,13 +69,13 @@ size_t	ft_isnewline(char *s)
 	return (0);
 }
 
-char	*ft_strdup(char *s)
+char	*gnl_strdup(char *s)
 {
 	char	*line;
 	size_t	len;
 	size_t	index;
 
-	len = ft_strlen(s);
+	len = gnl_strlen(s);
 	index = 0;
 	line = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!line)
