@@ -1,4 +1,4 @@
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
 LFLAGS		= -lreadline
 
 INC_LINK	= -I./includes/
@@ -11,7 +11,9 @@ NAME		= minishell
 SRC_DIR		= ./src/
 C_FILES		= get_next_line.c		\
 			  get_next_line_utils.c	\
+			  envp.c \
 			  env.c \
+			  export.c \
 			  main.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
