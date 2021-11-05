@@ -5,7 +5,9 @@
 # include "../libft/includes/libft.h"
 # include "get_next_line.h"
 # include "info.h"
+# include "envp.h"
 # include "env.h"
+# include "export.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
