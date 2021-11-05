@@ -167,6 +167,10 @@ int main(int argc, char **argv, char **envp)
 		{
 			unset(make_test_list_unset2(), &info);
 		}
+		else if (ft_strncmp(str, "pwd", 3) == 0)
+		{
+			pwd();
+		}
 		else if (str)
 		{
 			printf("%s\n", str);

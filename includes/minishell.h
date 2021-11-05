@@ -9,6 +9,7 @@
 # include "env.h"
 # include "export.h"
 # include "unset.h"
+# include "pwd.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
