@@ -15,5 +15,6 @@
 # include <stdlib.h>
 
 # define PATH_LENGTH 1024
-
+# define LOGO_PATH "etc/logo.txt"
+# define LOGO_LENGTH 1024
 #endif

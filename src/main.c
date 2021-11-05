@@ -112,6 +112,21 @@ t_list	*make_test_list_unset2()
 	return (list);
 }
 
+void	print_logo()
+{
+	int		fd;
+	char	*line;
+
+	fd = open(LOGO_PATH, O_RDONLY);
+	line = (char *)ft_calloc(LOGO_LENGTH, 1);
+	while (get_next_line(fd, &line))
+	{
+		printf("%s\n", line);
+	}
+	close(fd);
+	free(line);
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	char	*str;
@@ -127,6 +142,7 @@ int main(int argc, char **argv, char **envp)
 	{
 		return (-1);
 	}
+	print_logo();
 	while (1)
 	{
 		printf("%s", getcwd(cwd_path, PATH_LENGTH));
