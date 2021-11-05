@@ -66,8 +66,8 @@ int main(int argc, char **argv, char **envp)
 	t_info	info;
 
 	// TODO: Temp
-	argc = 0;
-	argv = 0;
+	(void)argc;
+	(void)argv;
 	//
 
 	if (make_info(&info, envp) == -1)

@@ -73,7 +73,7 @@ int	return_all(char *line, char *store_buff)
 
 int	get_next_line(int fd, char **line)
 {
-	static char	*store_buff[OPEN_MAX];
+	static char	*store_buff[255];
 	char		buff[BUFFER_SIZE + 1];
 	ssize_t		rd_size;
 
