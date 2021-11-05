@@ -6,11 +6,12 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:39:39 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/04 14:12:55 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/11/05 10:40:04 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/export.h"
+#include <stdio.h>
 
 int	remove_envp_index(int idx, char **envp, t_info *info)
 {
@@ -35,7 +36,7 @@ int	remove_envp_index(int idx, char **envp, t_info *info)
 				return (-1);
 		}
 	}
-	my_envp[it] = NULL;
+	my_envp[it + 1] = NULL;
 	free_envp(envp);
 	info->envp = my_envp;
 	return (0);

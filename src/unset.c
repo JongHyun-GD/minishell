@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 13:47:07 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/05 10:16:35 by jongpark         ###   ########.fr       */
+/*   Created: 2021/11/05 09:16:26 by jongpark          #+#    #+#             */
+/*   Updated: 2021/11/05 10:40:56 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/env.h"
+#include "unset.h"
 
-int	env(t_info *info)
+int	unset(t_list *list, t_info *info)
 {
-	int	i;
+	t_node	*node;
+	int		flag;
 
-	i = 0;
-	while (info->envp[i])
+	node = list->start_node->next;
+	while (node)
 	{
-		printf("%s\n", info->envp[i]);
-		i++;
+		if (has_equal(node->data) == false)
+		{
+			flag = remove_envp(node->data, info->envp, info);
+			if (flag == -1)
+				return (flag);
+		}
+		else
+		{
+			printf("minishell: unset: `%s\': not a valid identifier\n",
+				node->data);
+		}
+		node = node->next;
 	}
 	return (0);
 }

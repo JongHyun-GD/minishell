@@ -8,6 +8,7 @@
 # include "envp.h"
 # include "env.h"
 # include "export.h"
+# include "unset.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>

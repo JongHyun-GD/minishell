@@ -8,5 +8,7 @@
 # include <stdbool.h>
 
 int	export(t_list *list, t_info *info);
+int	remove_envp_index(int idx, char **envp, t_info *info);
+int	remove_envp(char *data, char **envp, t_info *info);
 
 #endif

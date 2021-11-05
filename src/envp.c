@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 17:35:39 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/04 14:07:49 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/11/05 10:35:22 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,18 @@ bool	has_same_envp_key(char *a, char *b)
 	int	i;
 
 	i = 0;
-	while (a[i] && b[i] && a[i] == b[i])
+	while (a[i] && b[i])
 	{
-		if (a[i] == '=')
+		if (a[i] == '=' || b[i] == '=')
 			return (true);
+		if (a[i] != b[i])
+			return (false);
 		i++;
 	}
+	if (!a[i] && b[i] == '=')
+		return (true);
+	if (!b[i] && a[i] == '=')
+		return (true);
 	return (false);
 }
 
