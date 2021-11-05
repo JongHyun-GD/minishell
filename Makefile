@@ -14,6 +14,7 @@ C_FILES		= get_next_line.c		\
 			  envp.c \
 			  env.c \
 			  export.c \
+			  unset.c \
 			  main.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
