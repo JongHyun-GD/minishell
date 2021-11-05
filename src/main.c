@@ -116,6 +116,7 @@ int main(int argc, char **argv, char **envp)
 {
 	char	*str;
 	t_info	info;
+	char	cwd_path[PATH_LENGTH];
 
 	// TODO: Temp
 	(void)argc;
@@ -128,7 +129,8 @@ int main(int argc, char **argv, char **envp)
 	}
 	while (1)
 	{
-		str = readline("prompt> ");
+		printf("%s", getcwd(cwd_path, PATH_LENGTH));
+		str = readline(" > ");
 		if (ft_strncmp(str, "env", ft_strlen(str)) == 0)
 		{
 			env(&info);
