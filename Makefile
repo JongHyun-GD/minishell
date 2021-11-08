@@ -1,4 +1,5 @@
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
+# CFLAGS		=
 LFLAGS		= -lreadline
 
 INC_LINK	= -I./includes/
@@ -9,10 +10,13 @@ LIBFT           = $(addprefix $(LIBFT_DIR), $(LIBFT_NAME))
 
 NAME		= minishell
 SRC_DIR		= ./src/
-C_FILES		= get_next_line.c		\
+C_FILES		= env.c					\
+			  get_next_line.c		\
 			  get_next_line_utils.c	\
-			  env.c \
-			  main.c
+			  list_utils.c			\
+			  main.c				\
+			  parser.c				\
+			  str_split_recomb.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
 OBJS		= $(SRCS:.c=.o)
@@ -23,7 +27,7 @@ OBJS		= $(SRCS:.c=.o)
 all			: $(LIBFT) $(NAME)
 
 $(NAME)	: $(LIBFT) $(OBJS)
-	gcc $(CFLAGS)  $(LFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	gcc $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) $(LFLAGS)
 
 $(LIBFT)	:
 	@make all -C $(LIBFT_DIR)
