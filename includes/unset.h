@@ -9,6 +9,6 @@
 # include <stdbool.h>
 # include <stdio.h>
 
-int unset(t_list *list, t_info *info);
+int	unset(t_list *list, t_info *info);
 
 #endif

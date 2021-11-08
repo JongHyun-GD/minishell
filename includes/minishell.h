@@ -10,6 +10,7 @@
 # include "export.h"
 # include "unset.h"
 # include "pwd.h"
+# include "cd.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>

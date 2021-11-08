@@ -16,6 +16,7 @@ C_FILES		= get_next_line.c		\
 			  export.c \
 			  unset.c \
 			  pwd.c \
+			  cd.c \
 			  main.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))

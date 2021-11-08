@@ -6,11 +6,30 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 17:35:39 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/05 10:35:22 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/11/08 10:21:41 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "envp.h"
+
+char	*dup_envp_value(char *key, char **envp)
+{
+	int	i;
+	int	it;
+
+	i = -1;
+	while (envp[++i])
+	{
+		if (has_same_envp_key(key, envp[i]))
+		{
+			it = -1;
+			while (envp[i][++it] != '=')
+				;
+			return (ft_strdup(&envp[i][++it]));
+		}
+	}
+	return (NULL);
+}
 
 bool	has_equal(char *str)
 {

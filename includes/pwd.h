@@ -1,4 +1,5 @@
 #ifndef PWD_H
+# define PWD_H
 
 # include "list.h"
 # include <unistd.h>
@@ -6,6 +7,6 @@
 
 # define PATH_LENGTH 1024
 
-int	pwd();
+int	pwd(void);
 
 #endif
