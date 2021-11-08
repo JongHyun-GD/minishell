@@ -1,5 +1,5 @@
-CFLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
-# CFLAGS		=
+# CFLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror
 LFLAGS		= -lreadline
 
 INC_LINK	= -I./includes/
@@ -14,9 +14,14 @@ C_FILES		= env.c					\
 			  get_next_line.c		\
 			  get_next_line_utils.c	\
 			  list_utils.c			\
-			  main.c				\
 			  parser.c				\
-			  str_split_recomb.c
+			  str_split_recomb.c	\
+			  envp.c 				\
+			  export.c 				\
+			  unset.c 				\
+			  pwd.c 				\
+			  cd.c 					\
+			  main.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
 OBJS		= $(SRCS:.c=.o)

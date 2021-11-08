@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:44:18 by dason             #+#    #+#             */
-/*   Updated: 2021/11/08 17:59:09 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/08 18:18:26 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,17 @@ char	*organize_str(char *str)
 int	parser(t_list **list, char *str)
 {
 	char	**lexer;
+	int		i;
 
 	ft_memset(*list, 0, sizeof(t_list));
 	str = organize_str(str);
 	if (!str)
 		return (0);
 	lexer = ft_split(str, ' ');
+	i = -1;
+	while (lexer[++i])
+	{
+		printf("%s\n", lexer[i]);
+	}
 	return (1);
 }

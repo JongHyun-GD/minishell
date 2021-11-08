@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 13:47:07 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/05 10:16:35 by jongpark         ###   ########.fr       */
+/*   Created: 2021/11/05 14:25:28 by jongpark          #+#    #+#             */
+/*   Updated: 2021/11/08 10:22:14 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/env.h"
+#include "../includes/pwd.h"
 
-int	env(t_info *info)
+int	pwd(void)
 {
-	int	i;
+	char	path[PATH_LENGTH];
 
-	i = 0;
-	while (info->envp[i])
-	{
-		printf("%s\n", info->envp[i]);
-		i++;
-	}
+	printf("%s\n", getcwd(path, PATH_LENGTH));
 	return (0);
 }

@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 13:47:07 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/05 10:16:35 by jongpark         ###   ########.fr       */
+/*   Created: 2021/11/08 10:31:57 by jongpark          #+#    #+#             */
+/*   Updated: 2021/11/08 10:50:44 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/env.h"
+#include "../includes/echo.h"
 
-int	env(t_info *info)
+int	echo(t_list *list)
 {
-	int	i;
+	bool	has_n_flag;
+	t_node	*node;
 
-	i = 0;
-	while (info->envp[i])
+	if (!list || list->l_type != LTYPE_COMMAND)
+		return (-1);
+	has_n_flag = false;
+	node = list->start_node;
+	while (node)
 	{
-		printf("%s\n", info->envp[i]);
-		i++;
+		if (ft_strlen(node->data) == 2
+			&& node->data[0] == '-' && node->data[1] == 'n')
+			has_n_flag = true;
+		else
+			printf("%s", node->data);
+		node = node->next;
 	}
+	if (has_n_flag == false)
+		printf("\n");
 	return (0);
 }
