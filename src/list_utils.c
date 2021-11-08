@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/08 18:36:05 by dason             #+#    #+#             */
+/*   Updated: 2021/11/08 18:36:20 by dason            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 t_node	*ft_create_node(int n_type, char *data)
@@ -23,40 +35,4 @@ t_list	*ft_create_list(int l_type)
 	ft_memset(new_list, 0, sizeof(t_list));
 	new_list->l_type = l_type;
 	return (new_list);
-}
-
-void	ft_nodeadd_back(t_node *node, t_node *new_node)
-{
-	while (node->next)
-		node = node->next;
-	node->next = new_node;
-}
-
-void	ft_listadd_back(t_list *list, t_list *new_list)
-{
-	while (list->next)
-		list = list->next;
-	list->next = new_list;
-}
-
-/* TEST */
-void	print_list(t_list *list)
-{
-	printf("## print_list\n");
-	t_node	*node;
-
-	while (list)
-	{
-		printf("-l_type: %d\n", list->l_type);
-		node = list->start_node;
-		while(node)
-		{
-			printf("--n_type: %d\n", node->n_type);
-			printf("--data: %s\n", node->data);
-			node = node->next;
-		}
-		printf("\n");
-		list = list->next;
-		printf("\n");
-	}
 }
