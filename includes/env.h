@@ -4,6 +4,6 @@
 # include <stdio.h>
 # include "info.h"
 
-int env(t_info *info);
+int	env(t_info *info);
 
 #endif

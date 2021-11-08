@@ -112,6 +112,86 @@ t_list	*make_test_list_unset2()
 	return (list);
 }
 
+t_list	*make_test_list_cd1()
+{
+	t_list *list;
+	t_node *node1;
+
+	list = (t_list *)malloc(sizeof(t_list));
+	node1 = (t_node *)malloc(sizeof(t_node));
+
+	list->l_type = LTYPE_COMMAND;
+	node1->n_type = NTYPE_COMMAND;
+	node1->data = "cd";
+	node1->next = NULL;
+
+	list->start_node = node1;
+	return (list);
+}
+
+t_list	*make_test_list_cd2()
+{
+	t_list *list;
+	t_node *node1, *node2;
+
+	list = (t_list *)malloc(sizeof(t_list));
+	node1 = (t_node *)malloc(sizeof(t_node));
+	node2 = (t_node *)malloc(sizeof(t_node));
+
+	list->l_type = LTYPE_COMMAND;
+	node1->n_type = NTYPE_COMMAND;
+	node1->data = "cd";
+	node1->next = node2;
+	node2->n_type = NTYPE_DATA;
+	node2->data = "etc";
+	node2->next = NULL;
+
+	list->start_node = node1;
+	return (list);
+}
+
+t_list	*make_test_list_cd3()
+{
+	t_list *list;
+	t_node *node1, *node2;
+
+	list = (t_list *)malloc(sizeof(t_list));
+	node1 = (t_node *)malloc(sizeof(t_node));
+	node2 = (t_node *)malloc(sizeof(t_node));
+
+	list->l_type = LTYPE_COMMAND;
+	node1->n_type = NTYPE_COMMAND;
+	node1->data = "cd";
+	node1->next = node2;
+	node2->n_type = NTYPE_DATA;
+	node2->data = "~/Documents";
+	node2->next = NULL;
+
+	list->start_node = node1;
+	return (list);
+}
+
+t_list	*make_test_list_cd4()
+{
+	t_list *list;
+	t_node *node1, *node2;
+
+	list = (t_list *)malloc(sizeof(t_list));
+	node1 = (t_node *)malloc(sizeof(t_node));
+	node2 = (t_node *)malloc(sizeof(t_node));
+
+	list->l_type = LTYPE_COMMAND;
+	node1->n_type = NTYPE_COMMAND;
+	node1->data = "cd";
+	node1->next = node2;
+	node2->n_type = NTYPE_DATA;
+	node2->data = "..";
+	node2->next = NULL;
+
+	list->start_node = node1;
+	return (list);
+}
+
 void	print_logo()
 {
 	int		fd;
@@ -166,6 +246,26 @@ int main(int argc, char **argv, char **envp)
 		else if (ft_strncmp(str, "unset2", 6) == 0)
 		{
 			unset(make_test_list_unset2(), &info);
+		}
+		else if (ft_strncmp(str, "pwd", 3) == 0)
+		{
+			pwd();
+		}
+		else if (ft_strncmp(str, "cd1", 3) == 0)
+		{
+			cd(make_test_list_cd1(), &info);
+		}
+		else if (ft_strncmp(str, "cd2", 3) == 0)
+		{
+			cd(make_test_list_cd2(), &info);
+		}
+		else if (ft_strncmp(str, "cd3", 3) == 0)
+		{
+			cd(make_test_list_cd3(), &info);
+		}
+		else if (ft_strncmp(str, "cd4", 3) == 0)
+		{
+			cd(make_test_list_cd4(), &info);
 		}
 		else if (str)
 		{
