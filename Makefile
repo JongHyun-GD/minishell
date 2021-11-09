@@ -9,15 +9,21 @@ LIBFT           = $(addprefix $(LIBFT_DIR), $(LIBFT_NAME))
 
 NAME		= minishell
 SRC_DIR		= ./src/
-C_FILES		= get_next_line.c		\
+C_FILES		= cd.c					\
+			  echo.c				\
+			  env.c					\
+			  envp.c 				\
+			  export.c 				\
+			  get_next_line.c		\
 			  get_next_line_utils.c	\
-			  envp.c \
-			  env.c \
-			  export.c \
-			  unset.c \
-			  pwd.c \
-			  cd.c \
-			  main.c
+			  list_utils.c			\
+			  main.c				\
+			  parser.c				\
+			  pwd.c 				\
+			  str_split_recomb.c	\
+			  unset.c 				\
+			  utils.c				\
+			  test.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
 OBJS		= $(SRCS:.c=.o)

@@ -1,12 +1,13 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "list.h"
 # include "../libft/includes/libft.h"
 # include "get_next_line.h"
+# include "list_node.h"
 # include "info.h"
 # include "envp.h"
 # include "env.h"
+# include "parser.h"
 # include "export.h"
 # include "unset.h"
 # include "pwd.h"
@@ -19,4 +20,10 @@
 # define PATH_LENGTH 1024
 # define LOGO_PATH "etc/logo.txt"
 # define LOGO_LENGTH 1024
+
+/*
+**	UTILS
+*/
+void	free_double_pointer(char ***s);
+
 #endif

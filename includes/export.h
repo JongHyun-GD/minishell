@@ -1,7 +1,7 @@
 #ifndef EXPORT_H
 # define EXPORT_H
 
-# include "list.h"
+# include "list_node.h"
 # include "info.h"
 # include "envp.h"
 # include "../libft/includes/libft.h"

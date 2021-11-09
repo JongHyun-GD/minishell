@@ -1,7 +1,5 @@
 #include "../includes/minishell.h"
 
-
-
 int	make_info(t_info *info, char **envp)
 {
 	info->envp = dup_envp(envp);
@@ -23,10 +21,10 @@ t_list	*make_test_list1()
 	node1->n_type = NTYPE_COMMAND;
 	node1->data = "export";
 	node1->next = node2;
-	node2->n_type = NTYPE_DATA;
+	node2->n_type = NTYPE_STRING;
 	node2->data = "aa==bb";
 	node2->next = node3;
-	node3->n_type = NTYPE_DATA;
+	node3->n_type = NTYPE_STRING;
 	node3->data = "cc==dd";
 	node3->next = NULL;
 
@@ -49,10 +47,10 @@ t_list	*make_test_list2()
 	node1->n_type = NTYPE_COMMAND;
 	node1->data = "export";
 	node1->next = node2;
-	node2->n_type = NTYPE_DATA;
+	node2->n_type = NTYPE_STRING;
 	node2->data = "aa==ss";
 	node2->next = node3;
-	node3->n_type = NTYPE_DATA;
+	node3->n_type = NTYPE_STRING;
 	node3->data = "cc==zz";
 	node3->next = NULL;
 
@@ -75,10 +73,10 @@ t_list	*make_test_list_unset1()
 	node1->n_type = NTYPE_COMMAND;
 	node1->data = "unset";
 	node1->next = node2;
-	node2->n_type = NTYPE_DATA;
+	node2->n_type = NTYPE_STRING;
 	node2->data = "aa";
 	node2->next = node3;
-	node3->n_type = NTYPE_DATA;
+	node3->n_type = NTYPE_STRING;
 	node3->data = "cc";
 	node3->next = NULL;
 
@@ -101,10 +99,10 @@ t_list	*make_test_list_unset2()
 	node1->n_type = NTYPE_COMMAND;
 	node1->data = "unset";
 	node1->next = node2;
-	node2->n_type = NTYPE_DATA;
+	node2->n_type = NTYPE_STRING;
 	node2->data = "aa";
 	node2->next = node3;
-	node3->n_type = NTYPE_DATA;
+	node3->n_type = NTYPE_STRING;
 	node3->data = "kk=aa";
 	node3->next = NULL;
 
@@ -142,7 +140,7 @@ t_list	*make_test_list_cd2()
 	node1->n_type = NTYPE_COMMAND;
 	node1->data = "cd";
 	node1->next = node2;
-	node2->n_type = NTYPE_DATA;
+	node2->n_type = NTYPE_STRING;
 	node2->data = "etc";
 	node2->next = NULL;
 
@@ -163,7 +161,7 @@ t_list	*make_test_list_cd3()
 	node1->n_type = NTYPE_COMMAND;
 	node1->data = "cd";
 	node1->next = node2;
-	node2->n_type = NTYPE_DATA;
+	node2->n_type = NTYPE_STRING;
 	node2->data = "~/Documents";
 	node2->next = NULL;
 
@@ -184,7 +182,7 @@ t_list	*make_test_list_cd4()
 	node1->n_type = NTYPE_COMMAND;
 	node1->data = "cd";
 	node1->next = node2;
-	node2->n_type = NTYPE_DATA;
+	node2->n_type = NTYPE_STRING;
 	node2->data = "..";
 	node2->next = NULL;
 
@@ -211,6 +209,8 @@ int main(int argc, char **argv, char **envp)
 {
 	char	*str;
 	t_info	info;
+	t_list	*list;
+
 	char	cwd_path[PATH_LENGTH];
 
 	// TODO: Temp
@@ -227,6 +227,8 @@ int main(int argc, char **argv, char **envp)
 	{
 		printf("%s", getcwd(cwd_path, PATH_LENGTH));
 		str = readline(" > ");
+		parser(&list, ft_strdup(str));
+		print_list(list);
 		if (ft_strncmp(str, "env", ft_strlen(str)) == 0)
 		{
 			env(&info);
@@ -271,12 +273,9 @@ int main(int argc, char **argv, char **envp)
 		{
 			printf("%s\n", str);
 		}
-		else
-		{
-			break ;
-		}
 		add_history(str);
 		free(str);
+		free_list_node(list);
 	}
 	return (0);
 }

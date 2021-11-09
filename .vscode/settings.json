@@ -1,8 +1,0 @@
-{
-	"files.associations": {
-		"minishell.h": "c",
-		"stdlib.h": "c",
-		"envp.h": "c",
-		"__node_handle": "c"
-	}
-}

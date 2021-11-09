@@ -1,10 +1,14 @@
 #ifndef LIST_H
 # define LIST_H
 
+# include "../libft/includes/libft.h"
+# include <stdlib.h>
+# include <stdio.h>
+
 # define NTYPE_NONE 0
 # define NTYPE_COMMAND 1
 # define NTYPE_FLAG 2
-# define NTYPE_DATA 3
+# define NTYPE_STRING 3
 
 # define LTYPE_NONE 0
 # define LTYPE_COMMAND 1
@@ -25,5 +29,16 @@ typedef struct s_list
 	struct s_node	*start_node;
 	struct s_list	*next;
 }					t_list;
+
+t_node	*ft_create_node(int n_type, char *data);
+t_list	*ft_create_list(int l_type);
+void	ft_nodeadd_back(t_node *node, t_node *new_list);
+void	ft_listadd_back(t_list *list, t_list *new_list);
+void	free_list_node(t_list *list);
+
+/*
+**	TEST
+*/
+void	print_list(t_list *list);
 
 #endif
