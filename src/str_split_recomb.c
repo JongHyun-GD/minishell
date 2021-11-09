@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 09:41:36 by dason             #+#    #+#             */
-/*   Updated: 2021/11/08 17:41:55 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/09 11:38:11 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ char	*str_split_recomb(char *str, char c, bool double_redirect)
 	char	*new_str;
 	char	**split;
 	int		len;
-	int		i;
 
 	len = str_split(&split, str, c);
 	if (!len)
@@ -119,10 +118,7 @@ char	*str_split_recomb(char *str, char c, bool double_redirect)
 		new_str = str_recomb_double(split, len, get_num_of_c(str, c) / 2, c);
 	if (!new_str)
 		return (NULL);
-	i = -1;
-	while (split[++i])
-		free(split[i]);
-	free(split);
+	free_double_pointer(&split);
 	free(str);
 	return (new_str);
 }

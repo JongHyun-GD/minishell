@@ -1,17 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   list_node.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 17:47:38 by dason             #+#    #+#             */
-/*   Updated: 2021/11/08 17:47:58 by dason            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#ifndef LIST_H
+# define LIST_H
 
-#ifndef LIST_NODE_H
-# define LIST_NODE_H
+# include "../libft/includes/libft.h"
+# include <stdlib.h>
+# include <stdio.h>
 
 # define NTYPE_NONE 0
 # define NTYPE_COMMAND 1
@@ -40,5 +32,13 @@ typedef struct s_list
 
 t_node	*ft_create_node(int n_type, char *data);
 t_list	*ft_create_list(int l_type);
+void	ft_nodeadd_back(t_node *node, t_node *new_list);
+void	ft_listadd_back(t_list *list, t_list *new_list);
+void	free_list_node(t_list *list);
+
+/*
+**	TEST
+*/
+void	print_list(t_list *list);
 
 #endif

@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 17:48:10 by dason             #+#    #+#             */
-/*   Updated: 2021/11/09 11:12:52 by dason            ###   ########.fr       */
+/*   Created: 2021/11/09 14:51:36 by dason             #+#    #+#             */
+/*   Updated: 2021/11/09 14:51:37 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "../includes/minishell.h"
 
-# include "minishell.h"
-# include "list_node.h"
-# include "../libft/includes/libft.h"
-# include <stdio.h>
-# include <stdbool.h>
+void	free_double_pointer(char ***s)
+{
+	int		i;
 
-char	*str_split_recomb(char *str, char c, bool double_redirect);
-int		parser(t_list **list, char *str);
-
-#endif
+	i = -1;
+	while ((*s)[++i])
+	{
+		free((*s)[i]);
+		(*s)[i] = NULL;
+	}
+	free(*s);
+	*s = NULL;
+}

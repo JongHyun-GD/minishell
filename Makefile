@@ -1,5 +1,4 @@
-# CFLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
 LFLAGS		= -lreadline
 
 INC_LINK	= -I./includes/
@@ -10,18 +9,21 @@ LIBFT           = $(addprefix $(LIBFT_DIR), $(LIBFT_NAME))
 
 NAME		= minishell
 SRC_DIR		= ./src/
-C_FILES		= env.c					\
+C_FILES		= cd.c					\
+			  echo.c				\
+			  env.c					\
+			  envp.c 				\
+			  export.c 				\
 			  get_next_line.c		\
 			  get_next_line_utils.c	\
 			  list_utils.c			\
+			  main.c				\
 			  parser.c				\
-			  str_split_recomb.c	\
-			  envp.c 				\
-			  export.c 				\
-			  unset.c 				\
 			  pwd.c 				\
-			  cd.c 					\
-			  main.c
+			  str_split_recomb.c	\
+			  unset.c 				\
+			  utils.c				\
+			  test.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
 OBJS		= $(SRCS:.c=.o)

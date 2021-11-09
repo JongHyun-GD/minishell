@@ -1,7 +1,5 @@
 #include "../includes/minishell.h"
 
-
-
 int	make_info(t_info *info, char **envp)
 {
 	info->envp = dup_envp(envp);
@@ -229,7 +227,8 @@ int main(int argc, char **argv, char **envp)
 	{
 		printf("%s", getcwd(cwd_path, PATH_LENGTH));
 		str = readline(" > ");
-		parser(&list, str);
+		parser(&list, ft_strdup(str));
+		print_list(list);
 		if (ft_strncmp(str, "env", ft_strlen(str)) == 0)
 		{
 			env(&info);
@@ -272,15 +271,11 @@ int main(int argc, char **argv, char **envp)
 		}
 		else if (str)
 		{
-			free(str);
-			break ;
-		}
-		else if (str)
-		{
 			printf("%s\n", str);
 		}
 		add_history(str);
 		free(str);
+		free_list_node(list);
 	}
 	return (0);
 }
