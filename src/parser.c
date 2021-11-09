@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 14:54:56 by dason             #+#    #+#             */
-/*   Updated: 2021/11/09 14:54:57 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/09 15:36:02 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	check_l_type(char *s)
 	return (0);
 }
 
-static void	put_the_struct(t_list ***list, char **lexer)
+static void	make_list(t_list ***list, char **lexer)
 {
 	t_list	*new_list;
 	int		i;
@@ -94,7 +94,7 @@ int	parser(t_list **list, char *str)
 	if (!str)
 		return (0);
 	lexer = ft_split(str, ' ');
-	put_the_struct(&list, lexer);
+	make_list(&list, lexer);
 	free(str);
 	free_double_pointer(&lexer);
 	return (0);

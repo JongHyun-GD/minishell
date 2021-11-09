@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 18:41:12 by dason             #+#    #+#             */
-/*   Updated: 2021/11/09 14:50:23 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/09 15:33:45 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@ t_node	*ft_create_node(int n_type, char *data)
 {
 	t_node	*new_node;
 
-	new_node = (t_node *)malloc(sizeof(t_node));
+	new_node = (t_node *)ft_calloc(1, sizeof(t_node));
 	if (!new_node)
 		return (0);
-	ft_memset(new_node, 0, sizeof(t_node));
 	new_node->n_type = n_type;
 	new_node->data = ft_strdup(data);
 	return (new_node);
@@ -29,10 +28,9 @@ t_list	*ft_create_list(int l_type)
 {
 	t_list	*new_list;
 
-	new_list = (t_list *)malloc(sizeof(t_list));
+	new_list = (t_list *)ft_calloc(1, sizeof(t_list));
 	if (!new_list)
 		return (0);
-	ft_memset(new_list, 0, sizeof(t_list));
 	new_list->l_type = l_type;
 	return (new_list);
 }
