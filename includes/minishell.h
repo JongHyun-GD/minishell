@@ -26,4 +26,9 @@
 */
 void	free_double_pointer(char ***s);
 
+/*
+**	EXECUTE
+*/
+int		execute_non_builtin(char **argv, char **envp);
+
 #endif
