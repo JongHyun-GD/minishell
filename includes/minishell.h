@@ -16,6 +16,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+# include <sys/wait.h>
 
 # define PATH_LENGTH 1024
 # define LOGO_PATH "etc/logo.txt"
@@ -25,5 +26,10 @@
 **	UTILS
 */
 void	free_double_pointer(char ***s);
+
+/*
+**	EXECUTE
+*/
+int		execute_non_builtin(char **argv, char **envp);
 
 #endif

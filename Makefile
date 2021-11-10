@@ -23,6 +23,7 @@ C_FILES		= cd.c					\
 			  str_split_recomb.c	\
 			  unset.c 				\
 			  utils.c				\
+			  execute.c				\
 			  test.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))

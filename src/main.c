@@ -205,6 +205,30 @@ void	print_logo()
 	free(line);
 }
 
+char	**make_argv_with_node(t_list *list)
+{
+	int		size;
+	t_node	*node;
+	char	**argv;
+
+	node = list->start_node;
+	size = 0;
+	while (node)
+	{
+		size++;
+		node = node->next;
+	}
+	argv = (char **)ft_calloc(size + 1, sizeof(char *));
+	size = 0;
+	node = list->start_node;
+	while (node)
+	{
+		argv[size++] = ft_strdup(node->data);
+		node = node->next;
+	}
+	return (argv);
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	char	*str;
@@ -271,7 +295,7 @@ int main(int argc, char **argv, char **envp)
 		}
 		else if (str)
 		{
-			printf("%s\n", str);
+			execute_non_builtin(make_argv_with_node(list), info.envp);
 		}
 		add_history(str);
 		free(str);
