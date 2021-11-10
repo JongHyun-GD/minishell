@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:35:07 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/08 10:21:12 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/11/10 12:18:16 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,11 @@ int	cd(t_list *list, t_info *info)
 	if (list->start_node->next == NULL)
 	{
 		path = dup_envp_value("HOME", info->envp);
-		printf("cd: path: %s\n", path);
 	}
 	else
 	{
 		path = list->start_node->next->data;
 		path = make_path(make_split_path(path, info));
-		printf("cd: path = %s\n", path);
 	}
 	flag = chdir(path);
 	if (flag == -1 && list->start_node->next != NULL)
