@@ -1,5 +1,5 @@
-#ifndef LIST_H
-# define LIST_H
+#ifndef LIST_NODE_H
+# define LIST_NODE_H
 
 # include "../libft/includes/libft.h"
 # include <stdlib.h>
