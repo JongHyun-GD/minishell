@@ -8,9 +8,10 @@ char	*make_command(char	**argv)
 	command_length = strlen(argv[0]) + 6;
 	command = (char *)ft_calloc(command_length, 1);
 	if (command == NULL)
-		return (-1);
+		return (NULL);
 	ft_strlcpy(command, "/bin/", command_length);
-	strlcat(command, argv[0], command_length);
+	ft_strlcat(command, argv[0], command_length);
+	return (command);
 }
 
 int	execute_non_builtin(char **argv, char **envp)
@@ -20,6 +21,8 @@ int	execute_non_builtin(char **argv, char **envp)
 	pid_t	wait_pid;
 
 	command = make_command(argv);
+	if (command == NULL)
+		return (-1);
 	flag = fork();
 	if (flag < 0)
 		return (-1);

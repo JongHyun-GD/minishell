@@ -16,6 +16,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+# include <sys/wait.h>
 
 # define PATH_LENGTH 1024
 # define LOGO_PATH "etc/logo.txt"
