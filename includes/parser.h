@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 14:12:17 by dason             #+#    #+#             */
-/*   Updated: 2021/11/11 14:12:18 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/11 19:30:16 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int		parser(t_info info, t_list **list, char *str);
 **	UTILS
 */
 int		get_num_of_c(char *s, char c);
+int		check_l_type(char *s);
 
 #endif

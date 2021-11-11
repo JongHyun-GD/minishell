@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 14:09:01 by dason             #+#    #+#             */
-/*   Updated: 2021/11/11 14:09:02 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/11 19:46:12 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-t_node	*ft_create_node(int n_type, char *data);
 t_list	*ft_create_list(int l_type);
-void	ft_nodeadd_back(t_node *node, t_node *new_list);
-void	ft_listadd_back(t_list *list, t_list *new_list);
+t_node	*ft_create_node(int n_type, char *data);
+int		ft_listadd_back(t_list *list, t_list *new_list);
+int		ft_nodeadd_back(t_node *node, t_node *new_list);
 void	free_list_node(t_list *list);
 
 /*
