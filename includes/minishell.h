@@ -12,6 +12,7 @@
 # include "unset.h"
 # include "pwd.h"
 # include "cd.h"
+# include "echo.h"
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>

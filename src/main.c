@@ -60,6 +60,8 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 		flag = pwd();
 	else if (ft_strncmp(commandline, "cd", 2) == 0)
 		flag = cd(list, info);
+	else if (ft_strncmp(commandline, "echo", 4) == 0)
+		flag = echo(list);
 	if (flag == -42)
 		return (-1);
 	return (0);
