@@ -14,3 +14,20 @@ int     get_num_of_c(char *s, char c)
         }
         return (count);
 }
+
+int     check_l_type(char *s)
+{
+        if (*s == '|')
+                return (LTYPE_PIPE);
+        if (*s == ';')
+                return (LTYPE_SEMI_COLON);
+        if (*s == '<')
+                return (LTYPE_REDIRECT);
+        if (*s == '>')
+                return (LTYPE_REDIRECT);
+        if (*s == '<' && *(s + 1) == '<')
+                return (LTYPE_REDIRECT);
+        if (*s == '>' && *(s + 1) == '>')
+                return (LTYPE_REDIRECT);
+        return (0);
+}
