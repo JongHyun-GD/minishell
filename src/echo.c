@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:31:57 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/11 09:25:30 by hyun             ###   ########.fr       */
+/*   Updated: 2021/11/11 13:41:57 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ int	echo(t_list *list)
 	if (!list || list->l_type != LTYPE_COMMAND)
 		return (-1);
 	has_n_flag = false;
-	node = list->start_node;
+	node = list->start_node->next;
 	while (node)
 	{
+		if (node != list->start_node->next)
+			printf(" ");
 		if (ft_strlen(node->data) == 2
 			&& node->data[0] == '-' && node->data[1] == 'n')
 			has_n_flag = true;
