@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 17:48:10 by dason             #+#    #+#             */
-/*   Updated: 2021/11/09 11:12:52 by dason            ###   ########.fr       */
+/*   Created: 2021/11/11 14:12:17 by dason             #+#    #+#             */
+/*   Updated: 2021/11/11 14:12:18 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,15 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-char	*str_split_recomb(char *str, char c, bool double_redirect);
-int		parser(t_list **list, char *str);
+/*
+**	MAIN
+*/
+char	*organize_str(char *str);
+int		parser(t_info info, t_list **list, char *str);
+
+/*
+**	UTILS
+*/
+int		get_num_of_c(char *s, char c);
 
 #endif

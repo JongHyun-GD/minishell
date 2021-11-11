@@ -18,3 +18,15 @@ void	print_list(t_list *list)
 		list = list->next;
 	}
 }
+
+void	print_node(t_node *node)
+{
+	printf("### print_node\n");
+	while (node)
+	{
+		printf("--- n_type: %d\n", node->n_type);
+		printf("--- data: %s\n", node->data);
+		node = node->next;
+	}
+	printf("\n");
+}

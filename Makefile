@@ -19,10 +19,12 @@ C_FILES		= cd.c					\
 			  list_utils.c			\
 			  main.c				\
 			  parser.c				\
+			  parser_utils.c		\
 			  pwd.c 				\
 			  str_split_recomb.c	\
 			  unset.c 				\
 			  utils.c				\
+			  execute.c				\
 			  test.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))

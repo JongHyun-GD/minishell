@@ -6,26 +6,11 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 09:41:36 by dason             #+#    #+#             */
-/*   Updated: 2021/11/09 11:38:11 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/10 11:30:38 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
-
-static int	get_num_of_c(char *s, char c)
-{
-	int		index;
-	int		count;
-
-	count = 0;
-	index = -1;
-	while (s[++index])
-	{
-		if (s[index] == c)
-			count++;
-	}
-	return (count);
-}
 
 static char	*str_recomb_single(char **split, int len, int count_c, char c)
 {
@@ -103,7 +88,7 @@ static int	str_split(char ***split, char *str, char c)
 	return (len);
 }
 
-char	*str_split_recomb(char *str, char c, bool double_redirect)
+static char	*str_split_recomb(char *str, char c, bool double_redirect)
 {
 	char	*new_str;
 	char	**split;
@@ -121,4 +106,33 @@ char	*str_split_recomb(char *str, char c, bool double_redirect)
 	free_double_pointer(&split);
 	free(str);
 	return (new_str);
+}
+
+char	*organize_str(char *str)
+{
+	char	*tmp;
+
+	if (ft_strchr(str, '|'))
+		str = str_split_recomb(str, '|', false);
+	if (ft_strchr(str, ';'))
+		str = str_split_recomb(str, ';', false);
+	tmp = ft_strchr(str, '<');
+	if (tmp)
+	{
+		if (*(tmp + 1) != '<')
+			str = str_split_recomb(str, '<', false);
+		else
+			str = str_split_recomb(str, '<', true);
+	}
+	tmp = ft_strchr(str, '>');
+	if (tmp)
+	{
+		if (*(tmp + 1) != '>')
+			str = str_split_recomb(str, '>', false);
+		else
+			str = str_split_recomb(str, '>', true);
+	}
+	if (!str)
+		return (NULL);
+	return (str);
 }

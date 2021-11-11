@@ -1,5 +1,17 @@
-#ifndef LIST_H
-# define LIST_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_node.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/11 14:09:01 by dason             #+#    #+#             */
+/*   Updated: 2021/11/11 14:09:02 by dason            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef LIST_NODE_H
+# define LIST_NODE_H
 
 # include "../libft/includes/libft.h"
 # include <stdlib.h>
@@ -7,7 +19,7 @@
 
 # define NTYPE_NONE 0
 # define NTYPE_COMMAND 1
-# define NTYPE_FLAG 2
+# define NTYPE_VARIABLE 2
 # define NTYPE_STRING 3
 
 # define LTYPE_NONE 0
@@ -40,5 +52,6 @@ void	free_list_node(t_list *list);
 **	TEST
 */
 void	print_list(t_list *list);
+void	print_node(t_node *node);
 
 #endif
