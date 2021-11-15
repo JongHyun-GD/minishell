@@ -31,6 +31,7 @@ int	execute_non_builtin(char **argv, char **envp)
 		flag = execve(command, argv, envp);
 		if (flag == -1)
 			printf("minishell: %s: command not found\n", argv[0]);
+		exit(0);
 	}
 	else
 	{
