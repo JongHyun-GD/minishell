@@ -47,6 +47,11 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 		flag = cd(list, info);
 	else if (ft_strncmp(commandline, "echo", 4) == 0)
 		flag = echo(list);
+	else if (ft_strncmp(commandline, "exit", 4) == 0)
+	{
+		printf("exit\n");
+		exit(0);
+	}
 	if (flag == -42)
 		return (-1);
 	return (0);
