@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 09:41:36 by dason             #+#    #+#             */
-/*   Updated: 2021/11/10 11:30:38 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/16 11:42:04 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ static char	*str_split_recomb(char *str, char c, bool double_redirect)
 	char	**split;
 	int		len;
 
+	if (!str)
+		return (NULL);
 	len = str_split(&split, str, c);
 	if (!len)
 		return (NULL);
@@ -108,31 +110,31 @@ static char	*str_split_recomb(char *str, char c, bool double_redirect)
 	return (new_str);
 }
 
-char	*organize_str(char *str)
+char	*organize_input_str(char *str)
 {
-	char	*tmp;
+	char	*new_str;
 
 	if (ft_strchr(str, '|'))
 		str = str_split_recomb(str, '|', false);
 	if (ft_strchr(str, ';'))
 		str = str_split_recomb(str, ';', false);
-	tmp = ft_strchr(str, '<');
-	if (tmp)
+	if (ft_strchr(str, '<'))
 	{
-		if (*(tmp + 1) != '<')
+		if (*(ft_strchr(str, '<') + 1) != '<')
 			str = str_split_recomb(str, '<', false);
 		else
 			str = str_split_recomb(str, '<', true);
 	}
-	tmp = ft_strchr(str, '>');
-	if (tmp)
+	if (ft_strchr(str, '>'))
 	{
-		if (*(tmp + 1) != '>')
+		if (*(ft_strchr(str, '>') + 1) != '>')
 			str = str_split_recomb(str, '>', false);
 		else
 			str = str_split_recomb(str, '>', true);
 	}
-	if (!str)
+	new_str = ft_strtrim(str, " ");
+	free(str);
+	if (!new_str)
 		return (NULL);
-	return (str);
+	return (new_str);
 }

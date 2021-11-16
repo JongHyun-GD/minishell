@@ -1,132 +1,116 @@
 #include "../includes/parser.h"
 
-//	TODO: ft_create_list, ft_create_node가 return (0); 인 경우, 처리
-static int	make_list_quote(t_list ***list, char *s)
+static int	organize_data(t_node *node)
 {
-	t_list	*new_list;
+	t_node	*new_node;
+	t_node	*next_node;
+	char	*data;
+	char	*sub_data;
 	int		i;
-	int		tmp_i;
+	int		len;
+	int		is_quote;
 
+	data = ft_strtrim(node->data, " ");
+	if (!data)
+		return (0);
+	is_quote = 0;
 	i = 0;
-	while (s[i])
+	while (data[i])
 	{
-		if (i == 0 || check_l_type(&s[i - 1]))
+		while (data[i] == ' ')
+			i++;
+		len = 0;
+		while (data[i + len] && (data[i + len] != ' ' && \
+				data[i + len] != 34 && data[i + len] != 39))
+			len++;
+		if (data[i + len] == 34 || data[i + len] == 39)
 		{
-			tmp_i = i;
-			while (s[tmp_i] && !check_l_type(&s[tmp_i]))
-				tmp_i++;
-			new_list = ft_create_list(LTYPE_COMMAND);
-			new_list->start_node = ft_create_node(NTYPE_COMMAND, \
-				ft_substr(&s[i], 0, tmp_i - i));
-			if (i == 0)
-				**list = new_list;
-			else if (s[i + 1] != '\0')
-				ft_listadd_back(**list, new_list);
-			i = tmp_i;
+			is_quote = data[i + len++];
+			while (data[i + len] && data[i + len] != is_quote)
+				len++;
+			len++;
+			while (data[i + len] && data[i + len] != ' ')
+				len++;
+			is_quote = 0;
 		}
-		else if (check_l_type(&s[i]) > LTYPE_COMMAND)
-			ft_listadd_back(**list, ft_create_list(check_l_type(&s[i++])));
+		sub_data = ft_substr(data, i, len);
+		new_node = ft_create_node(NTYPE_STRING, sub_data);
+		if (!new_node)
+			return (0);
+		ft_nodeadd_back(node, new_node);
+		i += len;
+	}
+	next_node = node->next;
+	free(node->data);
+	node->data = next_node->data;
+	node->next = next_node->next;
+	free(next_node);
+	return (1);
+}
+
+static int	organize_node(t_node *node)
+{
+	char	*new_data;
+	char	*d_quote;
+	char	*s_quote;
+
+	while (node)
+	{
+		if (ft_strchr(node->data, 34) || ft_strchr(node->data, 39))
+		{
+			d_quote = ft_strchr(node->data, 34);
+			s_quote = ft_strchr(node->data, 39);
+			if ((d_quote && !s_quote) || (d_quote && s_quote && d_quote < s_quote))
+			{
+				node->n_type = NTYPE_VARIABLE;
+				new_data = remove_c_copy(node->data, 34, \
+					get_num_of_c(node->data, 34));
+			}
+			else if ((!d_quote && s_quote) || (d_quote && s_quote && d_quote > s_quote))
+				new_data = remove_c_copy(node->data, 39, \
+					get_num_of_c(node->data, 39));
+			free(node->data);
+			node->data = new_data;
+		}
+		node = node->next;
 	}
 	return (1);
 }
 
-// TODO: ft_create_list, ft_create_node가 return (0); 인 경우, 처리
-static void	make_list_no_quote(t_list ***list, char **lexer)
-{
-	t_list	*new_list;
-	int		i;
-
-	i = -1;
-	while (lexer[++i])
-	{
-		if (i == 0 || check_l_type(lexer[i - 1]))
-		{
-			new_list = ft_create_list(LTYPE_COMMAND);
-			new_list->start_node = ft_create_node(NTYPE_COMMAND, \
-				ft_strdup(lexer[i]));
-			if (i == 0)
-				**list = new_list;
-			else
-				ft_listadd_back(**list, new_list);
-		}
-		else if (check_l_type(lexer[i]) > LTYPE_COMMAND)
-			ft_listadd_back(**list, ft_create_list(check_l_type(lexer[i])));
-		else
-			ft_nodeadd_back(new_list->start_node, \
-					ft_create_node(NTYPE_STRING, ft_strdup(lexer[i])));
-	}
-}
-
-// static void	organize_quote(t_node *node)
-// {
-// 	char	*data;
-// 	int		index;
-// 	int		tmp_index;
-// 	int		is_quote;
-// 
-// 	data = ft_strdup(node->data);
-// 	index = 0;
-// 	while (data[index])
-// 	{
-// 		if (data[index] == ' ')
-// 		{
-// 			index++;
-// 			continue;
-// 		}
-// 		if (data[index] == 34 || data[index] == 39)
-// 			is_quote = data[index];
-// 		else 
-// 			is_quote = 0;
-// 		tmp_index = index;
-// 		while (data[tmp_index] && is_quote)
-// 		{
-// 			tmp_index++;
-// 			if (data[tmp_index] == is_quote)
-// 			{
-// 				tmp_index++;
-// 				break ;
-// 			}
-// 		}
-// 		while (data[tmp_index] && !is_quote)
-// 		{
-// 			tmp_index++;
-// 			if (data[tmp_index] == 34 || data[tmp_index] == 39)
-// 				break ;
-// 		}
-// 		printf("index: %d\n", index);
-// 		printf("tmp_index: %d\n", tmp_index);
-// 		printf("len: %d\n", tmp_index - index);
-// 		printf("&data[%d]: %s\n", index, &data[index]);
-// 		if (index == 0)
-// 		{
-// 			free(node->data);
-// 			node->data = ft_substr(&data[index], 0, tmp_index - index);
-// 		}
-// 		else 
-// 			ft_nodeadd_back(node, ft_create_node(NTYPE_STRING, ft_substr(&data[index], 0, tmp_index - index)));
-// 		index += (tmp_index - index);
-// 		printf("\n");
-// 	}
-// 	free(data);
-// }
-
 //	TODO: $가 있으면 NTYPE_VARIABLE
-int	parser(t_info info, t_list **list, char *str)
+int	parser(t_list **list, char *str)
 {
 	char	**lexer;
-	(void)info;
+	t_list	*tmp_list;
 
-	str = organize_str(str);
+	printf("str: %s\n", str);
+	str = organize_input_str(str);
 	if (!str)
 		return (0);
 	if (ft_strchr(str, 34) || ft_strchr(str, 39))
 	{
-		make_list_quote(&list, str);
+		if (!make_list_quote(&list, str))
+			return (0);
+		tmp_list = *list;
+		while (tmp_list)
+		{
+			if (tmp_list->l_type == LTYPE_COMMAND)
+			{
+				if (!organize_data(tmp_list->start_node))
+					return (0);
+				if (!organize_node(tmp_list->start_node))
+					return (0);
+			}
+			tmp_list = tmp_list->next;
+		}
 	}
 	else
 	{
 		lexer = ft_split(str, ' ');
-		make_list_no_quote(&list, lexer);
+		if (!lexer)
+			return (0);
+		if (!make_list_no_quote(&list, lexer))
+			return (0);
 		free_double_pointer(&lexer);
 	}
 	free(str);
