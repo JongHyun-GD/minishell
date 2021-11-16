@@ -1,7 +1,7 @@
 CFLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
-LFLAGS		= -lreadline
+LFLAGS		= -lreadline -L /usr/local/Cellar/readline/8.1.1/lib
 
-INC_LINK	= -I./includes/
+INC_LINK	= -I./includes/ -I/usr/local/Cellar/readline/8.1.1/include
 
 LIBFT_NAME      = libft.a
 LIBFT_DIR       = ./libft/
@@ -24,6 +24,8 @@ C_FILES		= cd.c					\
 			  unset.c 				\
 			  utils.c				\
 			  execute.c				\
+			  set_signal.c			\
+			  get_user_input.c		\
 			  test.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))

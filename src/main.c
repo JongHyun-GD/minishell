@@ -6,21 +6,6 @@ int	make_info(t_info *info, char **envp)
 	return (0);
 }
 
-void	print_logo(void)
-{
-	int		fd;
-	char	*line;
-
-	fd = open(LOGO_PATH, O_RDONLY);
-	line = (char *)ft_calloc(LOGO_LENGTH, 1);
-	while (get_next_line(fd, &line))
-	{
-		printf("%s\n", line);
-	}
-	close(fd);
-	free(line);
-}
-
 char	**make_argv_with_node(t_list *list)
 {
 	int		size;
@@ -53,7 +38,7 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 	if (ft_strncmp(commandline, "env", ft_strlen(commandline)) == 0)
 		flag = env(info);
 	else if (ft_strncmp(commandline, "export", 6) == 0)
-		flag = export(list, info);
+		flag = ft_export(list, info);
 	else if (ft_strncmp(commandline, "unset", 5) == 0)
 		flag = unset(list, info);
 	else if (ft_strncmp(commandline, "pwd", 3) == 0)
@@ -62,8 +47,24 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 		flag = cd(list, info);
 	else if (ft_strncmp(commandline, "echo", 4) == 0)
 		flag = echo(list);
+	else if (ft_strncmp(commandline, "exit", 4) == 0)
+	{
+		printf("exit\n");
+		exit(0);
+	}
 	if (flag == -42)
 		return (-1);
+	return (0);
+}
+
+int	init_minishell(t_info *info, char **envp, int argc, char **argv)
+{
+	(void)argc;
+	(void)argv;
+	if (make_info(info, envp) == -1)
+		return (-1);
+	set_signal_parent();
+	set_stty(info);
 	return (0);
 }
 
@@ -72,17 +73,19 @@ int	main(int argc, char **argv, char **envp)
 	char	*str;
 	t_info	info;
 	t_list	*list;
-	char	cwd_path[PATH_LENGTH];
 
-	(void)argc;
-	(void)argv;
-	if (make_info(&info, envp) == -1)
+	if (init_minishell(&info, envp, argc, argv) == -1)
 		return (-1);
-	print_logo();
-	while (1)
+	while (true)
 	{
-		printf("%s", getcwd(cwd_path, PATH_LENGTH));
-		str = readline(" > ");
+		str = get_user_input(&info);
+		if (str == NULL)
+		{
+			printf("\n");
+			continue ;
+		}
+		if (ft_strlen(str) == 0)
+			continue ;
 		parser(&list, ft_strdup(str));
 		if (try_exec_builtin(str, list, &info) == -1)
 			execute_non_builtin(make_argv_with_node(list), info.envp);
