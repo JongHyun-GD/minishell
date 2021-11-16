@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:39:39 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/05 11:20:38 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/11/15 15:09:39 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	add_envp(char *var, char **envp, t_info *info)
 	return (0);
 }
 
-int	export(t_list *list, t_info *info)
+int	ft_export(t_list *list, t_info *info)
 {
 	t_node	*node;
 	int		res;

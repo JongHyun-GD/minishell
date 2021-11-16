@@ -83,7 +83,6 @@ int	parser(t_list **list, char *str)
 	char	**lexer;
 	t_list	*tmp_list;
 
-	printf("str: %s\n", str);
 	str = organize_input_str(str);
 	if (!str)
 		return (0);

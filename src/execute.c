@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
+/*   Updated: 2021/11/16 14:25:05 by dason            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 char	*make_command(char	**argv)
@@ -31,6 +43,7 @@ int	execute_non_builtin(char **argv, char **envp)
 		flag = execve(command, argv, envp);
 		if (flag == -1)
 			printf("minishell: %s: command not found\n", argv[0]);
+		exit(0);
 	}
 	else
 	{
