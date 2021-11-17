@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:48:10 by dason             #+#    #+#             */
-/*   Updated: 2021/11/16 14:24:46 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/17 15:57:34 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 /*
 **	MAIN
 */
-int		make_list_quote(t_list ***list, char *s);
-int		make_list_no_quote(t_list ***list, char **lexer);
+void	make_list_quote(t_list **list, char *s);
+void	make_list_no_quote(t_list **list, char **lexer);
 char	*organize_input_str(char *str);
 int		parser(t_list **list, char *str);
 
@@ -31,7 +31,8 @@ int		parser(t_list **list, char *str);
 **	UTILS
 */
 int		get_num_of_c(char *s, char c);
-int		check_l_type(char *s);
+int		get_l_type(char *s);
 char	*remove_c_copy(char *data, int c, int size);
+int		check_quote(char *data);
 
 #endif

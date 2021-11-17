@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/17 16:03:08 by dason             #+#    #+#             */
+/*   Updated: 2021/11/17 16:03:09 by dason            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/parser.h"
 
-int     get_num_of_c(char *s, char c)
+int	get_num_of_c(char *s, char c)
 {
-	int             index;
-	int             count;
+	int	index;
+	int	count;
 
 	count = 0;
 	index = -1;
@@ -15,21 +27,22 @@ int     get_num_of_c(char *s, char c)
 	return (count);
 }
 
-int     check_l_type(char *s)
+int	get_l_type(char *s)
 {
 	if (*s == '|')
 		return (LTYPE_PIPE);
-	if (*s == ';')
+	else if (*s == ';')
 		return (LTYPE_SEMI_COLON);
-	if (*s == '<')
+	else if (*s == '<')
 		return (LTYPE_REDIRECT);
-	if (*s == '>')
+	else if (*s == '>')
 		return (LTYPE_REDIRECT);
-	if (*s == '<' && *(s + 1) == '<')
+	else if (*s == '<' && *(s + 1) == '<')
 		return (LTYPE_REDIRECT);
-	if (*s == '>' && *(s + 1) == '>')
+	else if (*s == '>' && *(s + 1) == '>')
 		return (LTYPE_REDIRECT);
-	return (0);
+	else
+		return (1);
 }
 
 char	*remove_c_copy(char *data, int c, int size)
@@ -41,6 +54,8 @@ char	*remove_c_copy(char *data, int c, int size)
 	int		new_data_i;
 
 	new_data = (char *)ft_calloc(ft_strlen(data) - size + 1, sizeof(char));
+	if (!new_data)
+		exit(1);
 	first_c = ft_strchr(data, c);
 	last_c = ft_strrchr(data, c);
 	new_data_i = -1;
@@ -48,8 +63,23 @@ char	*remove_c_copy(char *data, int c, int size)
 	while (data[++i])
 	{
 		if (&data[i] == first_c || &data[i] == last_c)
-			continue;
+			continue ;
 		new_data[++new_data_i] = data[i];
 	}
 	return (new_data);
+}
+
+int	check_quote(char *data)
+{
+	int		i;
+
+	i = -1;
+	while (data[++i])
+	{
+		if (data[i] == 34)
+			return (data[i]);
+		if (data[i] == 39)
+			return (data[i]);
+	}
+	return (0);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_split_recomb.c                                 :+:      :+:    :+:   */
+/*   parser_organize_str.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 09:41:36 by dason             #+#    #+#             */
-/*   Updated: 2021/11/16 11:42:04 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/17 15:48:32 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*str_recomb_single(char **split, int len, int count_c, char c)
 
 	new_str = (char *)ft_calloc(len + count_c * 3 + 1, sizeof(char));
 	if (!new_str)
-		return (NULL);
+		exit(1);
 	str_i = -1;
 	while (*split)
 	{
@@ -46,7 +46,7 @@ static char	*str_recomb_double(char **split, int len, int count_c, char c)
 
 	new_str = (char *)ft_calloc(len + count_c * 3 + 2, sizeof(char));
 	if (!new_str)
-		return (NULL);
+		exit(1);
 	str_i = -1;
 	while (*split)
 	{
@@ -73,14 +73,14 @@ static int	str_split(char ***split, char *str, char c)
 
 	*split = ft_split(str, c);
 	if (!*split)
-		return (0);
+		exit(1);
 	len = 0;
 	i = -1;
 	while ((*split)[++i])
 	{
 		trim = ft_strtrim((*split)[i], " ");
 		if (!trim)
-			return (0);
+			exit(1);
 		free((*split)[i]);
 		(*split)[i] = trim;
 		len += ft_strlen((*split)[i]);
@@ -95,16 +95,12 @@ static char	*str_split_recomb(char *str, char c, bool double_redirect)
 	int		len;
 
 	if (!str)
-		return (NULL);
+		exit(1);
 	len = str_split(&split, str, c);
-	if (!len)
-		return (NULL);
 	if (!double_redirect)
 		new_str = str_recomb_single(split, len, get_num_of_c(str, c), c);
 	else
 		new_str = str_recomb_double(split, len, get_num_of_c(str, c) / 2, c);
-	if (!new_str)
-		return (NULL);
 	free_double_pointer(&split);
 	free(str);
 	return (new_str);
@@ -133,8 +129,8 @@ char	*organize_input_str(char *str)
 			str = str_split_recomb(str, '>', true);
 	}
 	new_str = ft_strtrim(str, " ");
-	free(str);
 	if (!new_str)
-		return (NULL);
+		exit(1);
+	free(str);
 	return (new_str);
 }
