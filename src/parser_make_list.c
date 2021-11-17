@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/11/17 15:58:45 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/17 16:45:06 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@ void	make_list_quote(t_list **list, char *s)
 {
 	t_list	*new_list;
 	int		i;
-	int		tmp_i;
+	int		len;
 
 	i = 0;
 	while (s[i])
 	{
 		if (i == 0 || get_l_type(&s[i - 1]) != LTYPE_COMMAND)
 		{
-			tmp_i = i;
-			while (s[tmp_i] && get_l_type(&s[tmp_i]) == LTYPE_COMMAND)
-				tmp_i++;
+			len = 0;
+			while (s[i + len] && get_l_type(&s[i + len]) == LTYPE_COMMAND)
+				len++;
 			new_list = ft_create_list(LTYPE_COMMAND, \
-				ft_create_node(NTYPE_COMMAND, ft_substr(&s[i], 0, tmp_i - i)));
+				ft_create_node(NTYPE_COMMAND, ft_substr(&s[i], i, len)));
 			if (i == 0)
 				*list = new_list;
 			else
 				ft_lstadd_back(*list, new_list);
-			i = tmp_i;
+			i += len;
 		}
 		else if (get_l_type(&s[i]) != LTYPE_COMMAND)
 			ft_lstadd_back(*list, ft_create_list(get_l_type(&s[i++]), NULL));
