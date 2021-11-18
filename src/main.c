@@ -85,7 +85,10 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		if (ft_strlen(str) == 0)
+		{
+			free(str);
 			continue ;
+		}
 		parser(&list, ft_strdup(str));
 		print_list(list);
 		if (try_exec_builtin(str, list, &info) == -1)
