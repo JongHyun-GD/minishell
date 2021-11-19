@@ -1,103 +1,91 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 17:30:26 by dason             #+#    #+#             */
-/*   Updated: 2021/11/17 16:42:52 by dason            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/parser.h"
 
-static int	get_len_when_quote(char *data, int i, int len)
+static char	*get_env_variable(char *s, int *i)
 {
-	int	is_quote;
-
-	is_quote = data[i + len++];
-	while (data[i + len] && data[i + len] != is_quote)
-		len++;
-	len++;
-	while (data[i + len] && data[i + len] != ' ')
-		len++;
-	is_quote = 0;
-	return (len);
-}
-
-static void	organize_data(t_list *list)
-{
-	char	*data;
-	int		i;
+	char	*env;
 	int		len;
 
-	data = ft_strtrim(list->start_node->data, " ");
-	if (!data)
-		exit(1);
-	i = 0;
-	while (data[i])
+	len = 0;
+	while (s[++len])
 	{
-		while (data[i] == ' ')
-			i++;
-		len = 0;
-		while (data[i + len] && (data[i + len] != ' ' && \
-				data[i + len] != 34 && data[i + len] != 39))
-			len++;
-		if (data[i + len] == 34 || data[i + len] == 39)
-			len = get_len_when_quote(data, i, len);
-		ft_nodeadd_back(list->start_node, \
-			ft_create_node(NTYPE_STRING, ft_substr(data, i, len)));
-		i += len;
+		if (s[len] == ' ' || s[len] == '\"' || s[len] == '\'')
+			break ;
+	}
+	env = ft_substr(s, 1, len - 1);
+	*i += (len - 1);
+	return (env);
+}
+
+static void	process_quote_in_node(t_node *node, char *data, int *i, int *new_i)
+{
+	int		quote;
+	char	*env_variable;
+	char	*env_value;
+	char	*new_data;
+
+	quote = data[*i];
+	while (data[++(*i)])
+	{
+		if (data[*i] == quote)
+			break ;
+		if (quote == '\"' && data[*i] == '$')
+		{
+			env_variable = get_env_variable(&data[*i], i);
+			env_value = getenv(env_variable);
+			new_data = (char *)ft_calloc(ft_strlen(data) + \
+				ft_strlen(env_value) + ft_strlen(node->data), sizeof(char));
+			if (!new_data)
+				exit(1);
+			ft_strlcat(new_data, node->data, ft_strlen(node->data) + 1);
+			ft_strlcat(new_data, env_value, ft_strlen(env_value) + 1);
+			free(node->data);
+			node->data = new_data;
+			(*new_i) += ft_strlen(env_value);
+			free(env_variable);
+		}
+		else if (data[*i] != quote)
+			node->data[(*new_i)++] = data[*i];
+	}
+}
+
+static void	organize_node(t_list *list)
+{
+	t_node	*current_node;
+	char	*data;
+	int		i;
+	int		new_i;
+
+	current_node = list->start_node;
+	data = ft_strdup(list->start_node->data);
+	ft_memset(current_node->data, 0, ft_strlen(current_node->data));
+	i = -1;
+	new_i = 0;
+	while (data[++i])
+	{
+		if (is_quote(data[i]) == false && data[i] != ' ')
+			current_node->data[new_i++] = data[i];
+		else if (data[i] == ' ')
+		{
+			current_node->next = ft_create_node(NTYPE_STRING, \
+					(char *)ft_calloc(ft_strlen(data) + 1, sizeof(char)));
+			current_node = current_node->next;
+			new_i = 0;
+		}
+		else if (is_quote(data[i]))
+			process_quote_in_node(current_node, data, &i, &new_i);
 	}
 	free(data);
 }
 
-static void	organize_node(t_node *node)
+static void	organize_list(t_list *list)
 {
-	char	*new_data;
-	int		is_quote;
-	int		size;
-
-	while (node)
-	{
-		is_quote = check_quote(node->data);
-		if (is_quote)
-		{
-			size = get_num_of_c(node->data, is_quote);
-			if (is_quote == 34)
-			{
-				node->n_type = NTYPE_VARIABLE;
-				new_data = remove_c_copy(node->data, 34, size);
-			}
-			else if (is_quote == 39)
-				new_data = remove_c_copy(node->data, 39, size);
-			free(node->data);
-			node->data = new_data;
-		}
-		node = node->next;
-	}
-}
-
-static int	organize_list(t_list *list)
-{
-	t_node	*next_node;
 
 	while (list)
 	{
 		if (list->l_type == LTYPE_COMMAND)
-		{
-			organize_data(list);
-			next_node = list->start_node->next;
-			free(list->start_node->data);
-			free(list->start_node);
-			list->start_node = next_node;
-			list->start_node->n_type = NTYPE_COMMAND;
-			organize_node(list->start_node);
-		}
+			organize_node(list);
 		list = list->next;
 	}
-	return (1);
 }
 
 int	parser(t_list **list, char *str)
@@ -105,7 +93,7 @@ int	parser(t_list **list, char *str)
 	char	**lexer;
 
 	str = organize_input_str(str);
-	if (ft_strchr(str, 34) || ft_strchr(str, 39))
+	if (ft_strchr(str, '\"') || ft_strchr(str, '\''))
 	{
 		make_list_quote(list, str);
 		organize_list(*list);

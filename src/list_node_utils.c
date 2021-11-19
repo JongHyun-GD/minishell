@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_utils.c                                       :+:      :+:    :+:   */
+/*   list_node_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 18:41:12 by dason             #+#    #+#             */
-/*   Updated: 2021/11/17 15:51:38 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/18 10:04:31 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,22 @@ t_node	*ft_create_node(int n_type, char *data)
 	return (new_node);
 }
 
-int	ft_lstadd_back(t_list *list, t_list *new_list)
+void	ft_lstadd_back(t_list *list, t_list *new_list)
 {
+	if (!list)
+		exit(1);
 	while (list->next)
 		list = list->next;
 	list->next = new_list;
-	return (1);
 }
 
-int	ft_nodeadd_back(t_node *node, t_node *new_node)
+void	ft_nodeadd_back(t_node *node, t_node *new_node)
 {
+	if (!node)
+		exit(1);
 	while (node->next)
 		node = node->next;
 	node->next = new_node;
-	return (1);
 }
 
 void	free_list_node(t_list *list)

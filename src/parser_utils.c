@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:03:08 by dason             #+#    #+#             */
-/*   Updated: 2021/11/17 16:03:09 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/18 14:46:28 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,30 +42,30 @@ int	get_l_type(char *s)
 	else if (*s == '>' && *(s + 1) == '>')
 		return (LTYPE_REDIRECT);
 	else
-		return (1);
+		return (LTYPE_COMMAND);
 }
 
-char	*remove_c_copy(char *data, int c, int size)
+char	*remove_char_in_str(char *data, int c)
 {
 	char	*new_data;
-	char	*first_c;
-	char	*last_c;
 	int		i;
 	int		new_data_i;
 
-	new_data = (char *)ft_calloc(ft_strlen(data) - size + 1, sizeof(char));
+	new_data = (char *)ft_calloc(ft_strlen(data), sizeof(char));
 	if (!new_data)
 		exit(1);
-	first_c = ft_strchr(data, c);
-	last_c = ft_strrchr(data, c);
 	new_data_i = -1;
 	i = -1;
 	while (data[++i])
 	{
-		if (&data[i] == first_c || &data[i] == last_c)
-			continue ;
-		new_data[++new_data_i] = data[i];
+		if (data[i] != c)
+		{
+			new_data[++new_data_i] = data[i];
+		}
 	}
+	printf("origin data: %s\n", data);
+	printf("new_data: %s\n", new_data);
+	printf("strlen(new_data): %lu\n", ft_strlen(new_data));
 	return (new_data);
 }
 
@@ -76,10 +76,19 @@ int	check_quote(char *data)
 	i = -1;
 	while (data[++i])
 	{
-		if (data[i] == 34)
+		if (data[i] == '\"')
 			return (data[i]);
-		if (data[i] == 39)
+		if (data[i] == '\'')
 			return (data[i]);
 	}
 	return (0);
+}
+
+bool	is_quote(char c)
+{
+	if (c == '\"')
+		return (true);
+	if (c == '\'')
+		return (true);
+	return (false);
 }

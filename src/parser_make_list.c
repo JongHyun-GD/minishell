@@ -6,15 +6,31 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/11/17 16:45:06 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/18 14:34:58 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
 
-void	make_list_quote(t_list **list, char *s)
+static	void process_the_list(t_list **list, char *s, int *i, int *len)
 {
 	t_list	*new_list;
+	char	*sub_str;
+
+	while (s[*i + *len] && get_l_type(&s[*i + *len]) == LTYPE_COMMAND)
+		(*len)++;
+	sub_str = ft_substr(s, *i, *len);
+	new_list = ft_create_list(LTYPE_COMMAND, \
+			ft_create_node(NTYPE_COMMAND, ft_strtrim(sub_str, " ")));
+	if (*i == 0)
+		*list = new_list;
+	else
+		ft_lstadd_back(*list, new_list);
+	free(sub_str);
+}
+
+void	make_list_quote(t_list **list, char *s)
+{
 	int		i;
 	int		len;
 
@@ -24,14 +40,7 @@ void	make_list_quote(t_list **list, char *s)
 		if (i == 0 || get_l_type(&s[i - 1]) != LTYPE_COMMAND)
 		{
 			len = 0;
-			while (s[i + len] && get_l_type(&s[i + len]) == LTYPE_COMMAND)
-				len++;
-			new_list = ft_create_list(LTYPE_COMMAND, \
-				ft_create_node(NTYPE_COMMAND, ft_substr(&s[i], i, len)));
-			if (i == 0)
-				*list = new_list;
-			else
-				ft_lstadd_back(*list, new_list);
+			process_the_list(list, s, &i, &len);
 			i += len;
 		}
 		else if (get_l_type(&s[i]) != LTYPE_COMMAND)
