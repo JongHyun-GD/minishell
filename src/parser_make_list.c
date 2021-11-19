@@ -6,13 +6,13 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/11/18 14:34:58 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/19 11:32:23 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
 
-static	void process_the_list(t_list **list, char *s, int *i, int *len)
+static void	process_the_list(t_list **list, char *s, int *i, int *len)
 {
 	t_list	*new_list;
 	char	*sub_str;

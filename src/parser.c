@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/19 11:52:57 by dason             #+#    #+#             */
+/*   Updated: 2021/11/19 11:52:58 by dason            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/parser.h"
 
 static char	*get_env_variable(char *s, int *i)
@@ -16,12 +28,31 @@ static char	*get_env_variable(char *s, int *i)
 	return (env);
 }
 
-static void	process_quote_in_node(t_node *node, char *data, int *i, int *new_i)
+static char	*combine_nodedata_env(t_node *node, char *data, int *i, int *new_i)
 {
-	int		quote;
+	char	*new_data;
 	char	*env_variable;
 	char	*env_value;
+	size_t	size;
+
+	env_variable = get_env_variable(&data[*i], i);
+	env_value = getenv(env_variable);
+	size = ft_strlen(data) + \
+		   ft_strlen(env_value) + ft_strlen(node->data);
+	new_data = (char *)ft_calloc(size, sizeof(char));
+	if (!new_data)
+		exit(1);
+	ft_strlcat(new_data, node->data, ft_strlen(node->data) + 1);
+	ft_strlcat(new_data, env_value, size);
+	free(env_variable);
+	(*new_i) += ft_strlen(env_value);
+	return (new_data);
+}
+
+static void	process_quote_in_node(t_node *node, char *data, int *i, int *new_i)
+{
 	char	*new_data;
+	int		quote;
 
 	quote = data[*i];
 	while (data[++(*i)])
@@ -30,18 +61,9 @@ static void	process_quote_in_node(t_node *node, char *data, int *i, int *new_i)
 			break ;
 		if (quote == '\"' && data[*i] == '$')
 		{
-			env_variable = get_env_variable(&data[*i], i);
-			env_value = getenv(env_variable);
-			new_data = (char *)ft_calloc(ft_strlen(data) + \
-				ft_strlen(env_value) + ft_strlen(node->data), sizeof(char));
-			if (!new_data)
-				exit(1);
-			ft_strlcat(new_data, node->data, ft_strlen(node->data) + 1);
-			ft_strlcat(new_data, env_value, ft_strlen(node->data) + 1 + ft_strlen(env_value) + 1);
+			new_data = combine_nodedata_env(node, data, i, new_i);
 			free(node->data);
 			node->data = new_data;
-			(*new_i) += ft_strlen(env_value);
-			free(env_variable);
 		}
 		else if (data[*i] != quote)
 			node->data[(*new_i)++] = data[*i];
@@ -77,26 +99,22 @@ static void	organize_node(t_list *list)
 	free(data);
 }
 
-static void	organize_list(t_list *list)
-{
-
-	while (list)
-	{
-		if (list->l_type == LTYPE_COMMAND)
-			organize_node(list);
-		list = list->next;
-	}
-}
-
 int	parser(t_list **list, char *str)
 {
 	char	**lexer;
+	t_list	*tmp_list;
 
 	str = organize_input_str(str);
 	if (ft_strchr(str, '\"') || ft_strchr(str, '\''))
 	{
 		make_list_quote(list, str);
-		organize_list(*list);
+		tmp_list = *list;
+		while (tmp_list)
+		{
+			if (tmp_list->l_type == LTYPE_COMMAND)
+				organize_node(tmp_list);
+			tmp_list = tmp_list->next;
+		}
 	}
 	else
 	{
