@@ -37,7 +37,7 @@ static void	process_quote_in_node(t_node *node, char *data, int *i, int *new_i)
 			if (!new_data)
 				exit(1);
 			ft_strlcat(new_data, node->data, ft_strlen(node->data) + 1);
-			ft_strlcat(new_data, env_value, ft_strlen(env_value) + 1);
+			ft_strlcat(new_data, env_value, ft_strlen(node->data) + 1 + ft_strlen(env_value) + 1);
 			free(node->data);
 			node->data = new_data;
 			(*new_i) += ft_strlen(env_value);
