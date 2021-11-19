@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/16 11:02:25 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/11/18 14:16:53 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ int	execute_non_builtin(char **argv, char **envp)
 			return (-1);
 		free(command);
 	}
+	free_double_pointer(&argv);
 	return (0);
 }

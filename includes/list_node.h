@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_node.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/11 09:29:29 by hyun              #+#    #+#             */
-/*   Updated: 2021/11/11 09:29:46 by hyun             ###   ########.fr       */
+/*   Created: 2021/11/11 14:09:01 by dason             #+#    #+#             */
+/*   Updated: 2021/11/18 09:22:18 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define NTYPE_NONE 0
 # define NTYPE_COMMAND 1
-# define NTYPE_FLAG 2
+# define NTYPE_VARIABLE 2
 # define NTYPE_STRING 3
 
 # define LTYPE_NONE 0
@@ -42,15 +42,16 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+t_list	*ft_create_list(int l_type, t_node *start_node);
 t_node	*ft_create_node(int n_type, char *data);
-t_list	*ft_create_list(int l_type);
-void	ft_nodeadd_back(t_node *node, t_node *new_list);
-void	ft_listadd_back(t_list *list, t_list *new_list);
+void	ft_lstadd_back(t_list *list, t_list *new_list);
+void	ft_nodeadd_back(t_node *node, t_node *new_node);
 void	free_list_node(t_list *list);
 
 /*
 **	TEST
 */
 void	print_list(t_list *list);
+void	print_node(t_node *node);
 
 #endif

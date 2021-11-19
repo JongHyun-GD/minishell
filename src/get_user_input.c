@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 14:59:56 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/16 11:02:02 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/11/16 14:40:33 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*wait_child(int *ipc_pipe, t_info *info)
 	if (get_exit_result(stat) == STAT_CTRL_C)
 		return (NULL);
 	buf = (char *)malloc(INPUT_BUFFER_SIZE);
-	read(ipc_pipe[0], buf, BUFFER_SIZE);
+	read(ipc_pipe[0], buf, INPUT_BUFFER_SIZE);
 	return (buf);
 }
 

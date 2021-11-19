@@ -16,11 +16,13 @@ C_FILES		= cd.c					\
 			  export.c 				\
 			  get_next_line.c		\
 			  get_next_line_utils.c	\
-			  list_utils.c			\
+			  list_node_utils.c		\
 			  main.c				\
 			  parser.c				\
+			  parser_make_list.c	\
+			  parser_organize_str.c	\
+			  parser_utils.c		\
 			  pwd.c 				\
-			  str_split_recomb.c	\
 			  unset.c 				\
 			  utils.c				\
 			  execute.c				\

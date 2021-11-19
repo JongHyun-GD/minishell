@@ -5,97 +5,125 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/09 14:54:56 by dason             #+#    #+#             */
-/*   Updated: 2021/11/09 15:36:02 by dason            ###   ########.fr       */
+/*   Created: 2021/11/19 11:52:57 by dason             #+#    #+#             */
+/*   Updated: 2021/11/19 11:52:58 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
 
-static char	*organize_str(char *str)
+static char	*get_env_variable(char *s, int *i)
 {
-	char	*tmp;
+	char	*env;
+	int		len;
 
-	if (ft_strchr(str, '|'))
-		str = str_split_recomb(str, '|', false);
-	if (ft_strchr(str, ';'))
-		str = str_split_recomb(str, ';', false);
-	tmp = ft_strchr(str, '<');
-	if (tmp)
+	len = 0;
+	while (s[++len])
 	{
-		if (*(tmp + 1) != '<')
-			str = str_split_recomb(str, '<', false);
-		else
-			str = str_split_recomb(str, '<', true);
+		if (s[len] == ' ' || s[len] == '\"' || s[len] == '\'')
+			break ;
 	}
-	tmp = ft_strchr(str, '>');
-	if (tmp)
-	{
-		if (*(tmp + 1) != '>')
-			str = str_split_recomb(str, '>', false);
-		else
-			str = str_split_recomb(str, '>', true);
-	}
-	if (!str)
-		return (NULL);
-	return (str);
+	env = ft_substr(s, 1, len - 1);
+	*i += (len - 1);
+	return (env);
 }
 
-static int	check_l_type(char *s)
+static char	*combine_nodedata_env(t_node *node, char *data, int *i, int *new_i)
 {
-	if (!ft_strncmp(s, "|", ft_strlen(s)))
-		return (LTYPE_PIPE);
-	if (!ft_strncmp(s, ";", ft_strlen(s)))
-		return (LTYPE_SEMI_COLON);
-	if (!ft_strncmp(s, "<", ft_strlen(s)))
-		return (LTYPE_REDIRECT);
-	if (!ft_strncmp(s, ">", ft_strlen(s)))
-		return (LTYPE_REDIRECT);
-	if (!ft_strncmp(s, "<<", ft_strlen(s)))
-		return (LTYPE_REDIRECT);
-	if (!ft_strncmp(s, ">>", ft_strlen(s)))
-		return (LTYPE_REDIRECT);
-	return (0);
+	char	*new_data;
+	char	*env_variable;
+	char	*env_value;
+	size_t	size;
+
+	env_variable = get_env_variable(&data[*i], i);
+	env_value = getenv(env_variable);
+	size = ft_strlen(data) + \
+		   ft_strlen(env_value) + ft_strlen(node->data);
+	new_data = (char *)ft_calloc(size, sizeof(char));
+	if (!new_data)
+		exit(1);
+	ft_strlcat(new_data, node->data, ft_strlen(node->data) + 1);
+	ft_strlcat(new_data, env_value, size);
+	free(env_variable);
+	(*new_i) += ft_strlen(env_value);
+	return (new_data);
 }
 
-static void	make_list(t_list ***list, char **lexer)
+static void	process_quote_in_node(t_node *node, char *data, int *i, int *new_i)
 {
-	t_list	*new_list;
+	char	*new_data;
+	int		quote;
+
+	quote = data[*i];
+	while (data[++(*i)])
+	{
+		if (data[*i] == quote)
+			break ;
+		if (quote == '\"' && data[*i] == '$')
+		{
+			new_data = combine_nodedata_env(node, data, i, new_i);
+			free(node->data);
+			node->data = new_data;
+		}
+		else if (data[*i] != quote)
+			node->data[(*new_i)++] = data[*i];
+	}
+}
+
+static void	organize_node(t_list *list)
+{
+	t_node	*current_node;
+	char	*data;
 	int		i;
+	int		new_i;
 
+	current_node = list->start_node;
+	data = ft_strdup(list->start_node->data);
+	ft_memset(current_node->data, 0, ft_strlen(current_node->data));
 	i = -1;
-	while (lexer[++i])
+	new_i = 0;
+	while (data[++i])
 	{
-		if (i == 0 || check_l_type(lexer[i - 1]))
+		if (is_quote(data[i]) == false && data[i] != ' ')
+			current_node->data[new_i++] = data[i];
+		else if (data[i] == ' ')
 		{
-			new_list = ft_create_list(LTYPE_COMMAND);
-			new_list->start_node = ft_create_node(NTYPE_COMMAND, lexer[i]);
-			if (i == 0)
-				**list = new_list;
-			else
-				ft_listadd_back(**list, new_list);
+			current_node->next = ft_create_node(NTYPE_STRING, \
+					(char *)ft_calloc(ft_strlen(data) + 1, sizeof(char)));
+			current_node = current_node->next;
+			new_i = 0;
 		}
-		else
-		{
-			if (check_l_type(lexer[i]) > LTYPE_COMMAND)
-				ft_listadd_back(**list, ft_create_list(check_l_type(lexer[i])));
-			else
-				ft_nodeadd_back(new_list->start_node, \
-					ft_create_node(NTYPE_STRING, lexer[i]));
-		}
+		else if (is_quote(data[i]))
+			process_quote_in_node(current_node, data, &i, &new_i);
 	}
+	free(data);
 }
 
 int	parser(t_list **list, char *str)
 {
 	char	**lexer;
+	t_list	*tmp_list;
 
-	str = organize_str(str);
-	if (!str)
-		return (0);
-	lexer = ft_split(str, ' ');
-	make_list(&list, lexer);
+	str = organize_input_str(str);
+	if (ft_strchr(str, '\"') || ft_strchr(str, '\''))
+	{
+		make_list_quote(list, str);
+		tmp_list = *list;
+		while (tmp_list)
+		{
+			if (tmp_list->l_type == LTYPE_COMMAND)
+				organize_node(tmp_list);
+			tmp_list = tmp_list->next;
+		}
+	}
+	else
+	{
+		lexer = ft_split(str, ' ');
+		if (!lexer)
+			exit(1);
+		make_list_no_quote(list, lexer);
+		free_double_pointer(&lexer);
+	}
 	free(str);
-	free_double_pointer(&lexer);
-	return (0);
+	return (1);
 }

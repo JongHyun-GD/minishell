@@ -84,8 +84,12 @@ int	main(int argc, char **argv, char **envp)
 			printf("\n");
 			continue ;
 		}
+		// TODO: 빈 문자열 입력시 에러.
 		if (ft_strlen(str) == 0)
+		{
+			free(str);
 			continue ;
+		}
 		parser(&list, ft_strdup(str));
 		if (try_exec_builtin(str, list, &info) == -1)
 			execute_non_builtin(make_argv_with_node(list), info.envp);
