@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 14:51:36 by dason             #+#    #+#             */
-/*   Updated: 2021/11/10 11:25:37 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/22 10:59:45 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,16 @@ void	free_double_pointer(char ***s)
 	}
 	free(*s);
 	*s = NULL;
+}
+
+bool	is_blank(char * str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] != ' ') return false;
+	}
+	return true;
 }

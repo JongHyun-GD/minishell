@@ -84,8 +84,7 @@ int	main(int argc, char **argv, char **envp)
 			printf("\n");
 			continue ;
 		}
-		// TODO: 빈 문자열 입력시 에러.
-		if (ft_strlen(str) == 0)
+		if (ft_strlen(str) == 0 || is_blank(str))
 		{
 			free(str);
 			continue ;
