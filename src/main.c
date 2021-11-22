@@ -79,16 +79,8 @@ int	main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		str = get_user_input(&info);
-		if (str == NULL)
-		{
-			printf("\n");
+		if (is_valid_input(str) == false)
 			continue ;
-		}
-		if (ft_strlen(str) == 0 || is_blank(str))
-		{
-			free(str);
-			continue ;
-		}
 		parser(&list, ft_strdup(str));
 		if (try_exec_builtin(str, list, &info) == -1)
 			execute_non_builtin(make_argv_with_node(list), info.envp);

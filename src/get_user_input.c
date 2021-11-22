@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 14:59:56 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/16 14:40:33 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/22 11:07:54 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*get_user_input(t_info *info)
 		return (wait_child(ipc_pipe, info));
 	else
 	{
-		printf("minishell: fork error\n");
+		printf("minishell: fork error");
 		return (NULL);
 	}
 	return (NULL);
