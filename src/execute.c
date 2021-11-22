@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/18 14:16:53 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/22 11:03:34 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,10 @@ int	execute_non_builtin(char **argv, char **envp)
 	pid_t	wait_pid;
 
 	command = make_command(argv);
-	if (command == NULL)
-		return (-1);
 	flag = fork();
-	if (flag < 0)
+	if (command == NULL || flag < 0)
 		return (-1);
-	else if (flag == 0)
+	if (flag == 0)
 	{
 		flag = execve(command, argv, envp);
 		if (flag == -1)

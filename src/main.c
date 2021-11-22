@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
+/*   Updated: 2021/11/22 14:02:33 by dason            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	make_info(t_info *info, char **envp)
@@ -79,17 +91,8 @@ int	main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		str = get_user_input(&info);
-		if (str == NULL)
-		{
-			printf("\n");
+		if (is_valid_input(str) == false)
 			continue ;
-		}
-		// TODO: 빈 문자열 입력시 에러.
-		if (ft_strlen(str) == 0)
-		{
-			free(str);
-			continue ;
-		}
 		parser(&list, ft_strdup(str));
 		if (try_exec_builtin(str, list, &info) == -1)
 			execute_non_builtin(make_argv_with_node(list), info.envp);
