@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:35:07 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/10 12:18:16 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/11/22 09:22:27 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	cd(t_list *list, t_info *info)
 			list->start_node->next->data);
 	else if (flag == -1 && list->start_node->next == NULL)
 		printf("minishell: cd: No home directory\n");
-	if (list->start_node->next == NULL && path != NULL)
-		free(path);
+	free(path);
 	return (0);
 }
