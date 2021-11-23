@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/11/22 14:02:33 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/23 10:11:10 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int	main(int argc, char **argv, char **envp)
 		if (is_valid_input(str) == false)
 			continue ;
 		parser(&list, ft_strdup(str));
+		handle_redirect(list);
 		if (try_exec_builtin(str, list, &info) == -1)
 			execute_non_builtin(make_argv_with_node(list), info.envp);
 		add_history(str);
