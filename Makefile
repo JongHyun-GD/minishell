@@ -21,6 +21,7 @@ C_FILES		= cd.c					\
 			  parser.c				\
 			  parser_make_list.c	\
 			  parser_organize_str.c	\
+			  parser_redirect.c		\
 			  parser_utils.c		\
 			  pwd.c 				\
 			  unset.c 				\

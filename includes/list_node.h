@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 14:09:01 by dason             #+#    #+#             */
-/*   Updated: 2021/11/23 10:07:53 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/11/23 21:27:45 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@
 # define LTYPE_NONE 0
 # define LTYPE_COMMAND 1
 # define LTYPE_PIPE 2
-# define LTYPE_SEMI_COLON 3
-# define LTYPE_REDIRECT_L 4
-# define LTYPE_REDIRECT2_L 5
-# define LTYPE_REDIRECT_R 6
-# define LTYPE_REDIRECT2_R 7
+# define LTYPE_REDIRECT_L 3
+# define LTYPE_REDIRECT2_L 4
+# define LTYPE_REDIRECT_R 5
+# define LTYPE_REDIRECT2_R 6
 
 typedef struct s_node
 {

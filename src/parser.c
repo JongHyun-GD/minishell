@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 11:52:57 by dason             #+#    #+#             */
-/*   Updated: 2021/11/19 11:52:58 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/23 21:49:31 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,13 @@ static void	organize_node(t_list *list)
 	free(data);
 }
 
-int	parser(t_list **list, char *str)
+void	parser(t_list **list, char *str)
 {
 	char	**lexer;
 	t_list	*tmp_list;
 
 	str = organize_input_str(str);
+	exit (0);	// test
 	if (ft_strchr(str, '\"') || ft_strchr(str, '\''))
 	{
 		make_list_quote(list, str);
@@ -125,5 +126,5 @@ int	parser(t_list **list, char *str)
 		free_double_pointer(&lexer);
 	}
 	free(str);
-	return (1);
+	parser_redirect(*list);
 }
