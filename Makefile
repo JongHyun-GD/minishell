@@ -28,6 +28,7 @@ C_FILES		= cd.c					\
 			  execute.c				\
 			  set_signal.c			\
 			  get_user_input.c		\
+			  redirect.c			\
 			  test.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
