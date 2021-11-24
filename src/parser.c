@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: sondho <sondho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 11:52:57 by dason             #+#    #+#             */
-/*   Updated: 2021/11/24 11:50:58 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/24 16:05:44 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,5 @@ void	parser(t_list **list, char *str)
 	}
 	free(str);
 	parser_redirect(*list);
+	print_list(*list);
 }

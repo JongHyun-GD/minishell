@@ -34,6 +34,6 @@ void	parser(t_list **list, char *str);
 int		get_l_type(char *s);
 bool	is_quote(char c);
 bool	is_ltype_redirect(char c);
-int		get_num_of_ltype(char *s);
+int		get_num_of_redirect(char *s);
 
 #endif

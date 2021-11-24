@@ -50,7 +50,7 @@ bool	is_ltype_redirect(char c)
 	return (false);
 }
 
-int	get_num_of_ltype(char *s)
+int	get_num_of_redirect(char *s)
 {
 	int		count;
 	int		i;
