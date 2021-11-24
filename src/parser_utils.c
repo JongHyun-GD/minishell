@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:03:08 by dason             #+#    #+#             */
-/*   Updated: 2021/11/23 22:07:34 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/24 11:50:22 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ bool	is_ltype_redirect(char c)
 	return (false);
 }
 
-// 임시 이름. 추후 변경
 int	get_num_of_ltype(char *s)
 {
 	int		count;
@@ -59,9 +58,9 @@ int	get_num_of_ltype(char *s)
 
 	count = 0;
 	i = -1;
-	while (s[++i])
+	while (++i < (int)ft_strlen(s))
 	{
-		if (get_l_type(&s[i]) == LTYPE_REDIRECT2_L || 
+		if (get_l_type(&s[i]) == LTYPE_REDIRECT2_L || \
 			get_l_type(&s[i]) == LTYPE_REDIRECT2_R)
 		{
 			i++;

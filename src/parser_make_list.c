@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/11/23 11:43:19 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/24 11:51:26 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	make_list_no_quote(t_list **list, char **lexer)
 	i = -1;
 	while (lexer[++i])
 	{
-		if (i == 0 || (get_l_type(lexer[i - 1]) != LTYPE_COMMAND &&
+		if (i == 0 || (get_l_type(lexer[i - 1]) != LTYPE_COMMAND && \
 			get_l_type(lexer[i]) == LTYPE_COMMAND))
 		{
 			new_list = ft_create_list(LTYPE_COMMAND, \
