@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 09:41:36 by dason             #+#    #+#             */
-/*   Updated: 2021/11/25 10:13:08 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/25 11:29:24 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void	str_addback_quote(char **tmp_str, char *str, int *i, int *new_i)
 			break ;
 		}
 	}
+	(*i)--;
 }
 
 static void	str_addback_redirect(char **tmp_str, char *str, int *i, int *new_i)
