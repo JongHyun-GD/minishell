@@ -6,11 +6,22 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 09:41:36 by dason             #+#    #+#             */
-/*   Updated: 2021/11/24 16:05:38 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/25 10:13:08 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
+
+static void	when_char_is_space(char **tmp_str, char *str, int *i, int *new_i)
+{
+	if (str[*i] == ' ')
+	{
+		if (*i != 0 && (*tmp_str)[*new_i - 1] != ' ')
+			(*tmp_str)[(*new_i)++] = ' ';
+		while (str[*i] == ' ')
+			(*i)++;
+	}
+}
 
 static void	str_addback_quote(char **tmp_str, char *str, int *i, int *new_i)
 {
@@ -67,13 +78,7 @@ char	*organize_input_str(char *str)
 	i = -1;
 	while (++i < (int)ft_strlen(str))
 	{
-		if (str[i] == ' ')
-		{
-			if (i != 0 && tmp_str[new_i - 1] != ' ')
-				tmp_str[new_i++] = ' ';
-			while (str[i] == ' ')
-				i++;
-		}
+		when_char_is_space(&tmp_str, str, &i, &new_i);
 		str_addback_redirect(&tmp_str, str, &i, &new_i);
 	}
 	free(str);
