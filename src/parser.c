@@ -6,7 +6,7 @@
 /*   By: sondho <sondho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 11:52:57 by dason             #+#    #+#             */
-/*   Updated: 2021/11/26 11:49:49 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/26 12:11:22 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,6 @@ void	parser(t_list **list, char *str)
 	t_list	*tmp_list;
 
 	str = organize_input_str(str);
-	printf("str: %s\n", str);
-	exit(1);
 	if (ft_strchr(str, '\"') || ft_strchr(str, '\''))
 	{
 		make_list_quote(list, str);

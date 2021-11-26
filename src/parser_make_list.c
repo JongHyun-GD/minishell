@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/11/26 11:43:05 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/26 12:12:44 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ static void	process_the_list(t_list **list, char *s, int *i, int *len)
 	free(sub_str);
 }
 
-// echo "a">"b" heap-buffer-overflow
-// echo a>b 
 void	make_list_quote(t_list **list, char *s)
 {
 	int		i;
