@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   info.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:26 by hyun              #+#    #+#             */
-/*   Updated: 2021/11/16 14:22:54 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/24 10:08:28 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 # define INFO_H
 
 # include <termios.h>
+# include <stdbool.h>
 
 typedef struct s_info
 {
 	char			**envp;
 	struct termios	orig_term;
 	struct termios	new_term;
+	int				pipe[2];
+	bool			is_pipe_in;
+	bool			is_pipe_out;
 }			t_info;
 
 #endif
