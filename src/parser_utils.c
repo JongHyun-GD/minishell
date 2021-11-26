@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:03:08 by dason             #+#    #+#             */
-/*   Updated: 2021/11/24 11:50:22 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/26 12:07:39 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	get_num_of_redirect(char *s)
 		{
 			quote = s[i];
 			while (s[++i])
-				if (s[i] == quote && i++)
+				if (s[i] == quote && i)
 					break ;
 		}
 	}

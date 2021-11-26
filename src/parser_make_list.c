@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/11/25 12:32:04 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/26 11:43:05 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ static void	process_the_list(t_list **list, char *s, int *i, int *len)
 	while (s[*i + *len] && get_l_type(&s[*i + *len]) == LTYPE_COMMAND)
 	{
 		if (s[*i + *len] == '\"' || s[*i + *len] == '\'')
-		{
 			process_when_quote(s, i, len);
-		}
 		(*len)++;
 	}
 	sub_str = ft_substr(s, *i, *len);
@@ -45,15 +43,19 @@ static void	process_the_list(t_list **list, char *s, int *i, int *len)
 	free(sub_str);
 }
 
+// echo "a">"b" heap-buffer-overflow
+// echo a>b 
 void	make_list_quote(t_list **list, char *s)
 {
 	int		i;
 	int		len;
 
 	i = 0;
-	while (s[i])
+	while (i < (int)ft_strlen(s))
 	{
-		if (i == 0 || get_l_type(&s[i - 1]) != LTYPE_COMMAND)
+		while (s[i] == ' ')
+			i++;
+		if (i == 0 || get_l_type(&s[i]) == LTYPE_COMMAND)
 		{
 			len = 0;
 			process_the_list(list, s, &i, &len);

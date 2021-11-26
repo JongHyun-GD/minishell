@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_organize_str.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: sondho <sondho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 09:41:36 by dason             #+#    #+#             */
-/*   Updated: 2021/11/25 11:29:24 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/26 12:09:05 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static void	str_addback_quote(char **tmp_str, char *str, int *i, int *new_i)
 			break ;
 		}
 	}
-	(*i)--;
 }
 
 static void	str_addback_redirect(char **tmp_str, char *str, int *i, int *new_i)
@@ -61,7 +60,7 @@ static void	str_addback_redirect(char **tmp_str, char *str, int *i, int *new_i)
 	else if (is_quote(str[*i]))
 		str_addback_quote(tmp_str, str, i, new_i);
 	else
-		(*tmp_str)[(*new_i)++] = str[*i];
+		(*tmp_str)[(*new_i)++] = str[(*i)++];
 }
 
 char	*organize_input_str(char *str)
@@ -76,8 +75,8 @@ char	*organize_input_str(char *str)
 	if (!tmp_str)
 		exit(1);
 	new_i = 0;
-	i = -1;
-	while (++i < (int)ft_strlen(str))
+	i = 0;
+	while (i < (int)ft_strlen(str))
 	{
 		when_char_is_space(&tmp_str, str, &i, &new_i);
 		str_addback_redirect(&tmp_str, str, &i, &new_i);
