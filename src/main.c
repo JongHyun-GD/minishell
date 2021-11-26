@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/11/26 16:17:17 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/26 17:16:08 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int	make_info(t_info *info, char **envp)
 {
 	info->envp = dup_envp(envp);
+	info->is_pipe_in = false;
+	info->is_pipe_out = false;
 	return (0);
 }
 
@@ -80,6 +82,20 @@ int	init_minishell(t_info *info, char **envp, int argc, char **argv)
 	return (0);
 }
 
+int	move_to_next_command_list(t_list **list)
+{
+	int	has_next;
+
+	has_next = -1;
+	*list = (*list)->next;
+	while ((*list) && (*list)->l_type != LTYPE_COMMAND)
+	{
+		has_next = 0;
+		*list = (*list)->next;
+	}
+	return (has_next);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
@@ -94,9 +110,14 @@ int	main(int argc, char **argv, char **envp)
 		if (is_valid_input(str) == false)
 			continue ;
 		parser(&list, ft_strdup(str));
-		handle_redirect(list, &info);
-		if (try_exec_builtin(str, list, &info) == -1)
-			execute_non_builtin(make_argv_with_node(list), info.envp);
+		while (true)
+		{
+			handle_redirect(list, &info);
+			if (try_exec_builtin(str, list, &info) == -1)
+				execute_non_builtin(make_argv_with_node(list), info.envp, &info);
+			if (move_to_next_command_list(&list) == -1)
+				break;
+		}
 		add_history(str);
 		free(str);
 		free_list_node(list);
