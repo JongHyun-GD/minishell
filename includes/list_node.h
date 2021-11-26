@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 14:09:01 by dason             #+#    #+#             */
-/*   Updated: 2021/11/23 21:27:45 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/26 16:06:27 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_list
 {
 	int				l_type;
 	struct s_node	*start_node;
+	struct s_list	*prev;
 	struct s_list	*next;
 }					t_list;
 

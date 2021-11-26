@@ -12,6 +12,9 @@ void	print_list(t_list *list)
 	}
 	while (list)
 	{
+		printf("- prev adrees: %p\n", list->prev);
+		printf("- current adrees: %p\n", list);
+		printf("- next adrees: %p\n", list->next);
 		printf("- l_type: %d\n", list->l_type);
 		node = list->start_node;
 		while (node)

@@ -6,7 +6,7 @@
 /*   By: sondho <sondho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 11:52:57 by dason             #+#    #+#             */
-/*   Updated: 2021/11/26 12:11:22 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/26 15:15:08 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,4 @@ void	parser(t_list **list, char *str)
 		free_double_pointer(&lexer);
 	}
 	free(str);
-	parser_redirect(*list);
 }

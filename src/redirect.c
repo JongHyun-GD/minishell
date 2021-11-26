@@ -1,7 +1,8 @@
 #include "minishell.h"
 
-void handle_redirect(t_list *list)
+void handle_redirect(t_list *list, t_info *info)
 {
+	printf("info: %p\n", info);
 	if (list->l_type != LTYPE_COMMAND)
 		return;
 	list = list->next;

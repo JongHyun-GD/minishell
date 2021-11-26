@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:31 by hyun              #+#    #+#             */
-/*   Updated: 2021/11/23 10:10:37 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/11/26 15:55:37 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ char	*get_user_input(t_info *info);
 /*
 **	REDIRECT
 */
-void handle_redirect(t_list *list);
+void	handle_redirect(t_list *list, t_info *info);
 
 #endif
