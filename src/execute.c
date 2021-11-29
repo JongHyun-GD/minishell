@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/24 15:04:04 by hyun             ###   ########.fr       */
+/*   Updated: 2021/11/29 18:11:28 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,14 @@ void add_pipe_to_argv(char ***argv, t_info *info)
 	*argv = new_argv;
 }
 
+// TODO: temp_command
+// TODO: norminette
 int	execute_non_builtin(char **argv, char **envp, t_info *info)
 {
 	int		flag;
 	pid_t	wait_pid;
-
+	char	*tmp_command;
+	
 	flag = fork();
 	if (flag < 0)
 		return (-1);
@@ -66,9 +69,15 @@ int	execute_non_builtin(char **argv, char **envp, t_info *info)
 			dup2(info->pipe[0], STDIN_FILENO);
 			close(info->pipe[0]);
 		}
-		flag = execve(make_command(argv, "/bin/"), argv, envp);
+		tmp_command = make_command(argv, "/bin/");
+		flag = execve(tmp_command, argv, envp);
+		free(tmp_command);
 		if (flag < 0)
-			flag = execve(make_command(argv, "/usr/bin/"), argv, envp);
+		{
+			tmp_command = make_command(argv, "/usr/bin/");
+			flag = execve(tmp_command, argv, envp);
+			free(tmp_command);
+		}
 		if (flag < 0)
 			printf("minishell: %s: command not found\n", argv[0]);
 		exit(0);
