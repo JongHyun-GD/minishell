@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:31 by hyun              #+#    #+#             */
-/*   Updated: 2021/11/26 17:15:44 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/29 10:15:33 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "pwd.h"
 # include "cd.h"
 # include "echo.h"
+# include "free.h"
 # include <stdio.h>
 # include <termios.h>
 # include <readline/readline.h>
@@ -42,7 +43,6 @@
 /*
 **	UTILS
 */
-void	free_double_pointer(char ***s);
 bool	is_blank(char *str);
 bool	is_valid_input(char *str);
 

@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/11/26 12:12:44 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/26 17:33:25 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	process_when_quote(char *s, int *i, int *len)
 		(*len)++;
 }
 
+// TODO: memory leaks
 static void	process_the_list(t_list **list, char *s, int *i, int *len)
 {
 	t_list	*new_list;

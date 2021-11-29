@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/11/26 17:16:08 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/29 17:38:48 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,19 @@ int	init_minishell(t_info *info, char **envp, int argc, char **argv)
 
 int	move_to_next_command_list(t_list **list)
 {
-	int	has_next;
+	int		has_next;
+	t_list	*next_list;
 
 	has_next = -1;
-	*list = (*list)->next;
+	next_list = (*list)->next;
+	free_list(*list);
+	*list = next_list;
 	while ((*list) && (*list)->l_type != LTYPE_COMMAND)
 	{
 		has_next = 0;
-		*list = (*list)->next;
+		next_list = (*list)->next;
+		free_list(*list);
+		*list = next_list;
 	}
 	return (has_next);
 }
@@ -117,10 +122,10 @@ int	main(int argc, char **argv, char **envp)
 				execute_non_builtin(make_argv_with_node(list), info.envp, &info);
 			if (move_to_next_command_list(&list) == -1)
 				break;
-		}
+	}
 		add_history(str);
 		free(str);
-		free_list_node(list);
+		free_list_node(&list);
 	}
 	return (0);
 }

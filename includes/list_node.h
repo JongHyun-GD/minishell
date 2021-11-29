@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 14:09:01 by dason             #+#    #+#             */
-/*   Updated: 2021/11/26 16:06:27 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/29 17:26:19 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ t_list	*ft_create_list(int l_type, t_node *start_node);
 t_node	*ft_create_node(int n_type, char *data);
 void	ft_lstadd_back(t_list *list, t_list *new_list);
 void	ft_nodeadd_back(t_node *node, t_node *new_node);
-void	free_list_node(t_list *list);
 
 /*
 **	TEST

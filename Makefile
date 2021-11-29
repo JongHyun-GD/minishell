@@ -14,6 +14,7 @@ C_FILES		= cd.c					\
 			  env.c					\
 			  envp.c 				\
 			  export.c 				\
+			  free.c				\
 			  get_next_line.c		\
 			  get_next_line_utils.c	\
 			  list_node_utils.c		\
