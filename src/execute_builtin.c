@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   non_builtin.c                                      :+:      :+:    :+:   */
+/*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:31:26 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/01 14:38:31 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/01 15:00:20 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ bool	is_builtin(char *commandline)
 
 int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 {
-	int	flag;
-
 	if (is_builtin(commandline) == false)
 		return (-1);
 	if (info->has_pipe_in)
@@ -43,17 +41,17 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 		close(info->pipe_out[READ_END]);
 	}
 	if (ft_strncmp(commandline, "env", ft_strlen(commandline)) == 0)
-		flag = env(info);
+		env(info);
 	else if (ft_strncmp(commandline, "export", 6) == 0)
-		flag = ft_export(list, info);
+		ft_export(list, info);
 	else if (ft_strncmp(commandline, "unset", 5) == 0)
-		flag = unset(list, info);
+		unset(list, info);
 	else if (ft_strncmp(commandline, "pwd", 3) == 0)
-		flag = pwd();
+		pwd();
 	else if (ft_strncmp(commandline, "cd", 2) == 0)
-		flag = cd(list, info);
+		cd(list, info);
 	else if (ft_strncmp(commandline, "echo", 4) == 0)
-		flag = echo(list);
+		echo(list);
 	else if (ft_strncmp(commandline, "exit", 4) == 0)
 	{
 		printf("exit\n");
