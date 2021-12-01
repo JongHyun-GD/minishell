@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/11/23 10:11:10 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/01 15:52:41 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	make_info(t_info *info, char **envp)
 {
 	info->envp = dup_envp(envp);
+	info->has_pipe_in = false;
 	return (0);
 }
 
@@ -39,34 +40,8 @@ char	**make_argv_with_node(t_list *list)
 		argv[size++] = ft_strdup(node->data);
 		node = node->next;
 	}
+	argv[size] = NULL;
 	return (argv);
-}
-
-int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
-{
-	int	flag;
-
-	flag = -42;
-	if (ft_strncmp(commandline, "env", ft_strlen(commandline)) == 0)
-		flag = env(info);
-	else if (ft_strncmp(commandline, "export", 6) == 0)
-		flag = ft_export(list, info);
-	else if (ft_strncmp(commandline, "unset", 5) == 0)
-		flag = unset(list, info);
-	else if (ft_strncmp(commandline, "pwd", 3) == 0)
-		flag = pwd();
-	else if (ft_strncmp(commandline, "cd", 2) == 0)
-		flag = cd(list, info);
-	else if (ft_strncmp(commandline, "echo", 4) == 0)
-		flag = echo(list);
-	else if (ft_strncmp(commandline, "exit", 4) == 0)
-	{
-		printf("exit\n");
-		exit(0);
-	}
-	if (flag == -42)
-		return (-1);
-	return (0);
 }
 
 int	init_minishell(t_info *info, char **envp, int argc, char **argv)
@@ -80,11 +55,26 @@ int	init_minishell(t_info *info, char **envp, int argc, char **argv)
 	return (0);
 }
 
+int	move_to_next_command_list(t_list **list)
+{
+	int		has_next;
+
+	has_next = -1;
+	*list = (*list)->next;
+	while ((*list) && (*list)->l_type != LTYPE_COMMAND)
+	{
+		has_next = 0;
+		*list = (*list)->next;
+	}
+	return (has_next);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
 	t_info	info;
 	t_list	*list;
+	t_list	*origin_list;
 
 	if (init_minishell(&info, envp, argc, argv) == -1)
 		return (-1);
@@ -94,12 +84,19 @@ int	main(int argc, char **argv, char **envp)
 		if (is_valid_input(str) == false)
 			continue ;
 		parser(&list, ft_strdup(str));
-		handle_redirect(list);
-		if (try_exec_builtin(str, list, &info) == -1)
-			execute_non_builtin(make_argv_with_node(list), info.envp);
+		origin_list = list;
+		while (true)
+		{
+			handle_redirect(list, &info);
+			if (try_exec_builtin(str, list, &info) == -1)
+				execute_non_builtin(list, make_argv_with_node(list), info.envp, &info);
+			swap_pipe(&info);
+			if (move_to_next_command_list(&list) == -1)
+				break;
+		}
 		add_history(str);
 		free(str);
-		free_list_node(list);
+		free_list_node(&origin_list);
 	}
 	return (0);
 }

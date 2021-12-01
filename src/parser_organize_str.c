@@ -3,134 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   parser_organize_str.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: sondho <sondho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 09:41:36 by dason             #+#    #+#             */
-/*   Updated: 2021/11/17 15:48:32 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/26 12:09:05 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
 
-static char	*str_recomb_single(char **split, int len, int count_c, char c)
+static void	when_char_is_space(char **tmp_str, char *str, int *i, int *new_i)
 {
-	char	*new_str;
-	int		str_i;
-	int		j;
-
-	new_str = (char *)ft_calloc(len + count_c * 3 + 1, sizeof(char));
-	if (!new_str)
-		exit(1);
-	str_i = -1;
-	while (*split)
+	if (str[*i] == ' ')
 	{
-		j = -1;
-		while ((*split)[++j])
-			new_str[++str_i] = (*split)[j];
-		if (count_c--)
+		if (*i != 0 && (*tmp_str)[*new_i - 1] != ' ')
+			(*tmp_str)[(*new_i)++] = ' ';
+		while (str[*i] == ' ')
+			(*i)++;
+	}
+}
+
+static void	str_addback_quote(char **tmp_str, char *str, int *i, int *new_i)
+{
+	int		quote;
+
+	quote = str[*i];
+	while (str[*i])
+	{
+		(*tmp_str)[(*new_i)++] = str[(*i)++];
+		if (str[*i] == quote)
 		{
-			new_str[++str_i] = ' ';
-			new_str[++str_i] = c;
-			new_str[++str_i] = ' ';
+			(*tmp_str)[(*new_i)++] = str[(*i)++];
+			break ;
 		}
-		split++;
 	}
-	return (new_str);
 }
 
-static char	*str_recomb_double(char **split, int len, int count_c, char c)
+static void	str_addback_redirect(char **tmp_str, char *str, int *i, int *new_i)
 {
-	char	*new_str;
-	int		str_i;
-	int		j;
-
-	new_str = (char *)ft_calloc(len + count_c * 3 + 2, sizeof(char));
-	if (!new_str)
-		exit(1);
-	str_i = -1;
-	while (*split)
+	if (get_l_type(&str[*i]) == LTYPE_REDIRECT2_L || \
+		get_l_type(&str[*i]) == LTYPE_REDIRECT2_R)
 	{
-		j = -1;
-		while ((*split)[++j])
-			new_str[++str_i] = (*split)[j];
-		if (count_c--)
-		{
-			new_str[++str_i] = ' ';
-			new_str[++str_i] = c;
-			new_str[++str_i] = c;
-			new_str[++str_i] = ' ';
-		}
-		split++;
+		if (*new_i != 0 && (*tmp_str)[*new_i - 1] != ' ')
+			(*tmp_str)[(*new_i)++] = ' ';
+		(*tmp_str)[(*new_i)++] = str[(*i)++];
+		(*tmp_str)[(*new_i)++] = str[(*i)++];
+		(*tmp_str)[(*new_i)++] = ' ';
 	}
-	return (new_str);
-}
-
-static int	str_split(char ***split, char *str, char c)
-{
-	char	*trim;
-	int		len;
-	int		i;
-
-	*split = ft_split(str, c);
-	if (!*split)
-		exit(1);
-	len = 0;
-	i = -1;
-	while ((*split)[++i])
+	else if (get_l_type(&str[*i]) != LTYPE_COMMAND)
 	{
-		trim = ft_strtrim((*split)[i], " ");
-		if (!trim)
-			exit(1);
-		free((*split)[i]);
-		(*split)[i] = trim;
-		len += ft_strlen((*split)[i]);
+		if (*new_i != 0 && (*tmp_str)[*new_i - 1] != ' ')
+			(*tmp_str)[(*new_i)++] = ' ';
+		(*tmp_str)[(*new_i)++] = str[(*i)++];
+		(*tmp_str)[(*new_i)++] = ' ';
 	}
-	return (len);
-}
-
-static char	*str_split_recomb(char *str, char c, bool double_redirect)
-{
-	char	*new_str;
-	char	**split;
-	int		len;
-
-	if (!str)
-		exit(1);
-	len = str_split(&split, str, c);
-	if (!double_redirect)
-		new_str = str_recomb_single(split, len, get_num_of_c(str, c), c);
+	else if (is_quote(str[*i]))
+		str_addback_quote(tmp_str, str, i, new_i);
 	else
-		new_str = str_recomb_double(split, len, get_num_of_c(str, c) / 2, c);
-	free_double_pointer(&split);
-	free(str);
-	return (new_str);
+		(*tmp_str)[(*new_i)++] = str[(*i)++];
 }
 
 char	*organize_input_str(char *str)
 {
+	char	*tmp_str;
 	char	*new_str;
+	int		i;
+	int		new_i;
 
-	if (ft_strchr(str, '|'))
-		str = str_split_recomb(str, '|', false);
-	if (ft_strchr(str, ';'))
-		str = str_split_recomb(str, ';', false);
-	if (ft_strchr(str, '<'))
-	{
-		if (*(ft_strchr(str, '<') + 1) != '<')
-			str = str_split_recomb(str, '<', false);
-		else
-			str = str_split_recomb(str, '<', true);
-	}
-	if (ft_strchr(str, '>'))
-	{
-		if (*(ft_strchr(str, '>') + 1) != '>')
-			str = str_split_recomb(str, '>', false);
-		else
-			str = str_split_recomb(str, '>', true);
-	}
-	new_str = ft_strtrim(str, " ");
-	if (!new_str)
+	tmp_str = (char *)ft_calloc(\
+		ft_strlen(str) + get_num_of_redirect(str) * 2 + 1, sizeof(char));
+	if (!tmp_str)
 		exit(1);
+	new_i = 0;
+	i = 0;
+	while (i < (int)ft_strlen(str))
+	{
+		when_char_is_space(&tmp_str, str, &i, &new_i);
+		str_addback_redirect(&tmp_str, str, &i, &new_i);
+	}
 	free(str);
+	new_str = ft_strtrim(tmp_str, " ");
+	free(tmp_str);
 	return (new_str);
 }

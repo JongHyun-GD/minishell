@@ -1,4 +1,4 @@
-CFLAGS		= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS		= -Wall -Wextra -Werror
 LFLAGS		= -lreadline -L /usr/local/Cellar/readline/8.1.1/lib
 
 INC_LINK	= -I./includes/ -I/usr/local/Cellar/readline/8.1.1/include
@@ -14,6 +14,7 @@ C_FILES		= cd.c					\
 			  env.c					\
 			  envp.c 				\
 			  export.c 				\
+			  free.c				\
 			  get_next_line.c		\
 			  get_next_line_utils.c	\
 			  list_node_utils.c		\
@@ -29,6 +30,7 @@ C_FILES		= cd.c					\
 			  set_signal.c			\
 			  get_user_input.c		\
 			  redirect.c			\
+			  execute_builtin.c		\
 			  test.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))

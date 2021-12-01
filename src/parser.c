@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: sondho <sondho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 11:52:57 by dason             #+#    #+#             */
-/*   Updated: 2021/11/19 11:52:58 by dason            ###   ########.fr       */
+/*   Updated: 2021/11/26 15:15:08 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static void	organize_node(t_list *list)
 	free(data);
 }
 
-int	parser(t_list **list, char *str)
+void	parser(t_list **list, char *str)
 {
 	char	**lexer;
 	t_list	*tmp_list;
@@ -125,5 +125,4 @@ int	parser(t_list **list, char *str)
 		free_double_pointer(&lexer);
 	}
 	free(str);
-	return (1);
 }
