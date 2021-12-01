@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/01 14:11:44 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/01 14:38:54 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,33 +42,6 @@ char	**make_argv_with_node(t_list *list)
 	}
 	argv[size] = NULL;
 	return (argv);
-}
-
-int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
-{
-	int	flag;
-
-	flag = -42;
-	if (ft_strncmp(commandline, "env", ft_strlen(commandline)) == 0)
-		flag = env(info);
-	else if (ft_strncmp(commandline, "export", 6) == 0)
-		flag = ft_export(list, info);
-	else if (ft_strncmp(commandline, "unset", 5) == 0)
-		flag = unset(list, info);
-	else if (ft_strncmp(commandline, "pwd", 3) == 0)
-		flag = pwd();
-	else if (ft_strncmp(commandline, "cd", 2) == 0)
-		flag = cd(list, info);
-	else if (ft_strncmp(commandline, "echo", 4) == 0)
-		flag = echo(list);
-	else if (ft_strncmp(commandline, "exit", 4) == 0)
-	{
-		printf("exit\n");
-		exit(0);
-	}
-	if (flag == -42)
-		return (-1);
-	return (0);
 }
 
 int	init_minishell(t_info *info, char **envp, int argc, char **argv)

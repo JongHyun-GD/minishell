@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:31 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/01 14:04:20 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/01 14:40:51 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,10 @@ char	*get_user_input(t_info *info);
 */
 void swap_pipe(t_info *info);
 void handle_redirect(t_list *list, t_info *info);
+
+/*
+**	EXECUTE BUILT-IN
+*/
+int	try_exec_builtin(char *commandline, t_list *list, t_info *info);
 
 #endif

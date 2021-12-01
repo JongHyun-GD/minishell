@@ -30,6 +30,7 @@ C_FILES		= cd.c					\
 			  set_signal.c			\
 			  get_user_input.c		\
 			  redirect.c			\
+			  execute_builtin.c		\
 			  test.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
