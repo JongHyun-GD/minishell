@@ -6,13 +6,13 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 10:35:52 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/01 14:04:03 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/01 16:03:26 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void swap_pipe(t_info *info)
+void	swap_pipe(t_info *info)
 {
 	int	temp[2];
 
@@ -24,11 +24,11 @@ void swap_pipe(t_info *info)
 	info->pipe_out[1] = temp[1];
 }
 
-void handle_redirect(t_list *list, t_info *info)
+void	handle_redirect(t_list *list, t_info *info)
 {
 	printf("info: %p\n", info);
 	if (list->l_type != LTYPE_COMMAND)
-		return;
+		return ;
 	list = list->next;
 	while (list)
 	{
@@ -36,7 +36,7 @@ void handle_redirect(t_list *list, t_info *info)
 		{
 			pipe(info->pipe_in);
 			info->has_pipe_in = true;
-			break;
+			break ;
 		}
 		if (list->l_type == LTYPE_REDIRECT_L)
 		{

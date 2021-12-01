@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/01 14:38:54 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/01 15:52:41 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,13 @@ int	init_minishell(t_info *info, char **envp, int argc, char **argv)
 int	move_to_next_command_list(t_list **list)
 {
 	int		has_next;
-	t_list	*next_list;
 
 	has_next = -1;
-	next_list = (*list)->next;
-	free_list(*list);
-	*list = next_list;
+	*list = (*list)->next;
 	while ((*list) && (*list)->l_type != LTYPE_COMMAND)
 	{
 		has_next = 0;
-		next_list = (*list)->next;
-		free_list(*list);
-		*list = next_list;
+		*list = (*list)->next;
 	}
 	return (has_next);
 }
@@ -79,6 +74,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*str;
 	t_info	info;
 	t_list	*list;
+	t_list	*origin_list;
 
 	if (init_minishell(&info, envp, argc, argv) == -1)
 		return (-1);
@@ -88,6 +84,7 @@ int	main(int argc, char **argv, char **envp)
 		if (is_valid_input(str) == false)
 			continue ;
 		parser(&list, ft_strdup(str));
+		origin_list = list;
 		while (true)
 		{
 			handle_redirect(list, &info);
@@ -99,7 +96,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		add_history(str);
 		free(str);
-		free_list_node(&list);
+		free_list_node(&origin_list);
 	}
 	return (0);
 }

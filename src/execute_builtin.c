@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:31:26 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/01 15:00:20 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/01 16:02:53 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 bool	is_builtin(char *commandline)
 {
-	if (ft_strncmp(commandline, "env", ft_strlen(commandline)) == 0 ||
-	ft_strncmp(commandline, "export", 6) == 0 ||
-	ft_strncmp(commandline, "unset", 5) == 0 ||
-	ft_strncmp(commandline, "pwd", 3) == 0 ||
-	ft_strncmp(commandline, "cd", 2) == 0 ||
-	ft_strncmp(commandline, "echo", 4) == 0 ||
+	if (ft_strncmp(commandline, "env", ft_strlen(commandline)) == 0 || \
+	ft_strncmp(commandline, "export", 6) == 0 || \
+	ft_strncmp(commandline, "unset", 5) == 0 || \
+	ft_strncmp(commandline, "pwd", 3) == 0 || \
+	ft_strncmp(commandline, "cd", 2) == 0 || \
+	ft_strncmp(commandline, "echo", 4) == 0 || \
 	ft_strncmp(commandline, "exit", 4) == 0)
 		return (true);
 	return (false);
 }
 
+// TODO: Norminette - 25lines
 int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 {
 	if (is_builtin(commandline) == false)

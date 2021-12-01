@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/01 14:06:54 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/01 16:01:40 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*make_command(char	**argv, char *location)
 	return (command);
 }
 
-void add_pipe_to_argv(char ***argv, t_info *info)
+void	add_pipe_to_argv(char ***argv, t_info *info)
 {
 	char	str[8096];
 	char	**new_argv;
@@ -49,13 +49,48 @@ void add_pipe_to_argv(char ***argv, t_info *info)
 	*argv = new_argv;
 }
 
-// TODO: temp_command
-// TODO: norminette
+static void	add_slash_to_str(char **s)
+{
+	char	*new_s;
+
+	new_s = ft_strjoin(*s, "/");
+	free(*s);
+	*s = new_s;
+}
+
+static int	execute(char **argv, char **envp)
+{
+	char	**paths;
+	int		i;
+	size_t	len;
+	char	*command;
+
+	i = -1;
+	while (envp[++i])
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+			paths = ft_split(&envp[i][5], ':');
+	}
+	i = -1;
+	while (paths[++i])
+	{
+		len = ft_strlen(paths[i]);
+		if (paths[i][len - 1] != '/')
+			add_slash_to_str(&paths[i]);
+		command = make_command(argv, paths[i]);
+		execve(command, argv, envp);
+		free(command);
+	}
+	free_double_pointer(&paths);
+	printf("minishell: %s: command not found\n", argv[0]);
+	exit(0);
+}
+
+// TODO: norminette - 25 lines
 int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 {
 	int		pid;
 	pid_t	wait_pid;
-	char	*tmp_command;
 
 	pid = fork();
 	if (pid < 0)
@@ -64,7 +99,6 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 	{
 		if (info->has_pipe_in)
 		{
-			printf("is_pipe_in!\n");
 			dup2(info->pipe_in[WRITE_END], STDOUT_FILENO);
 			close(info->pipe_in[WRITE_END]);
 		}
@@ -73,16 +107,7 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 			dup2(info->pipe_out[READ_END], STDIN_FILENO);
 			close(info->pipe_out[READ_END]);
 		}
-		tmp_command = make_command(argv, "/bin/");
-		pid = execve(tmp_command, argv, envp);
-		if (pid < 0)
-		{
-			tmp_command = make_command(argv, "/usr/bin/");
-			pid = execve(tmp_command, argv, envp);
-		}
-		if (pid < 0)
-			printf("minishell: %s: command not found\n", argv[0]);
-		exit(0);
+		execute(argv, envp);
 	}
 	else
 	{
