@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:31 by hyun              #+#    #+#             */
-/*   Updated: 2021/11/29 10:15:33 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/01 14:04:20 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	is_valid_input(char *str);
 /*
 **	EXECUTE
 */
-int		execute_non_builtin(char **argv, char **envp, t_info *info);
+int		execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info);
 
 /*
 **	SIGNAL
@@ -68,6 +68,7 @@ char	*get_user_input(t_info *info);
 /*
 **	REDIRECT
 */
+void swap_pipe(t_info *info);
 void handle_redirect(t_list *list, t_info *info);
 
 #endif

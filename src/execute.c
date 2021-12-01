@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/29 18:11:28 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/01 14:06:54 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void add_pipe_to_argv(char ***argv, t_info *info)
 	int		i;
 	int		len;
 
-	read(info->pipe[0], str, 8096);
+	read(info->pipe_in[0], str, 8096);
 	len = 0;
 	while ((*argv)[len])
 		len++;
@@ -51,51 +51,48 @@ void add_pipe_to_argv(char ***argv, t_info *info)
 
 // TODO: temp_command
 // TODO: norminette
-int	execute_non_builtin(char **argv, char **envp, t_info *info)
+int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 {
-	int		flag;
+	int		pid;
 	pid_t	wait_pid;
 	char	*tmp_command;
-	
-	flag = fork();
-	if (flag < 0)
+
+	pid = fork();
+	if (pid < 0)
 		return (-1);
-	if (flag == 0)
+	if (pid == 0)
 	{
-		if (info->is_pipe_in)
-			dup2(info->pipe[1], STDOUT_FILENO);
-		if (info->is_pipe_out)
+		if (info->has_pipe_in)
 		{
-			dup2(info->pipe[0], STDIN_FILENO);
-			close(info->pipe[0]);
+			printf("is_pipe_in!\n");
+			dup2(info->pipe_in[WRITE_END], STDOUT_FILENO);
+			close(info->pipe_in[WRITE_END]);
+		}
+		if (list->prev && list->prev->l_type == LTYPE_PIPE)
+		{
+			dup2(info->pipe_out[READ_END], STDIN_FILENO);
+			close(info->pipe_out[READ_END]);
 		}
 		tmp_command = make_command(argv, "/bin/");
-		flag = execve(tmp_command, argv, envp);
-		free(tmp_command);
-		if (flag < 0)
+		pid = execve(tmp_command, argv, envp);
+		if (pid < 0)
 		{
 			tmp_command = make_command(argv, "/usr/bin/");
-			flag = execve(tmp_command, argv, envp);
-			free(tmp_command);
+			pid = execve(tmp_command, argv, envp);
 		}
-		if (flag < 0)
+		if (pid < 0)
 			printf("minishell: %s: command not found\n", argv[0]);
 		exit(0);
 	}
 	else
 	{
-		wait_pid = wait(&flag);
-		printf("\nchild proc dead!\n");
+		wait_pid = wait(&pid);
 		if (wait_pid < 0)
 			return (-1);
-		if (info->is_pipe_out)
+		if (info->has_pipe_in)
 		{
-			info->is_pipe_out = false;
-		}
-		if (info->is_pipe_in)
-		{
-			info->is_pipe_in = false;
-			info->is_pipe_out = true;
+			close(info->pipe_in[WRITE_END]);
+			info->has_pipe_in = false;
 		}
 	}
 	free_double_pointer(&argv);

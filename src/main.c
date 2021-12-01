@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/11/29 17:38:48 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/01 14:11:44 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 int	make_info(t_info *info, char **envp)
 {
 	info->envp = dup_envp(envp);
-	info->is_pipe_in = false;
-	info->is_pipe_out = false;
+	info->has_pipe_in = false;
 	return (0);
 }
 
@@ -41,6 +40,7 @@ char	**make_argv_with_node(t_list *list)
 		argv[size++] = ft_strdup(node->data);
 		node = node->next;
 	}
+	argv[size] = NULL;
 	return (argv);
 }
 
@@ -119,10 +119,11 @@ int	main(int argc, char **argv, char **envp)
 		{
 			handle_redirect(list, &info);
 			if (try_exec_builtin(str, list, &info) == -1)
-				execute_non_builtin(make_argv_with_node(list), info.envp, &info);
+				execute_non_builtin(list, make_argv_with_node(list), info.envp, &info);
+			swap_pipe(&info);
 			if (move_to_next_command_list(&list) == -1)
 				break;
-	}
+		}
 		add_history(str);
 		free(str);
 		free_list_node(&list);
