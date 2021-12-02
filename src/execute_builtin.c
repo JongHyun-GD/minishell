@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:31:26 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/02 15:47:43 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/02 16:11:38 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 bool	is_builtin(char *commandline)
 {
 	if (ft_strncmp(commandline, "env", ft_strlen(commandline)) == 0 || \
-	ft_strncmp(commandline, "export", 6) == 0 || \
-	ft_strncmp(commandline, "unset", 5) == 0 || \
-	ft_strncmp(commandline, "pwd", 3) == 0 || \
-	ft_strncmp(commandline, "cd", 2) == 0 || \
-	ft_strncmp(commandline, "echo", 4) == 0 || \
-	ft_strncmp(commandline, "exit", 4) == 0)
+	ft_strncmp(commandline, "export", 7) == 0 || \
+	ft_strncmp(commandline, "unset", 6) == 0 || \
+	ft_strncmp(commandline, "pwd", 4) == 0 || \
+	ft_strncmp(commandline, "cd", 3) == 0 || \
+	ft_strncmp(commandline, "echo", 5) == 0 || \
+	ft_strncmp(commandline, "exit", 5) == 0)
 		return (true);
 	return (false);
 }
@@ -54,19 +54,19 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 			dup2(info->pipe_out[READ_END], STDIN_FILENO);
 			close(info->pipe_out[READ_END]);
 		}
-		if (ft_strncmp(commandline, "env", ft_strlen(commandline)) == 0)
+		if (ft_strncmp(commandline, "env", 4) == 0)
 			env(info);
-		else if (ft_strncmp(commandline, "export", 6) == 0)
+		else if (ft_strncmp(commandline, "export", 7) == 0)
 			ft_export(list, info);
-		else if (ft_strncmp(commandline, "unset", 5) == 0)
+		else if (ft_strncmp(commandline, "unset", 6) == 0)
 			unset(list, info);
-		else if (ft_strncmp(commandline, "pwd", 3) == 0)
+		else if (ft_strncmp(commandline, "pwd", 4) == 0)
 			pwd();
-		else if (ft_strncmp(commandline, "cd", 2) == 0)
+		else if (ft_strncmp(commandline, "cd", 3) == 0)
 			cd(list, info);
-		else if (ft_strncmp(commandline, "echo", 4) == 0)
+		else if (ft_strncmp(commandline, "echo", 5) == 0)
 			echo(list);
-		else if (ft_strncmp(commandline, "exit", 4) == 0)
+		else if (ft_strncmp(commandline, "exit", 5) == 0)
 		{
 			printf("exit\n");
 			exit(2);
