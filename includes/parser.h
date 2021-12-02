@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:48:10 by dason             #+#    #+#             */
-/*   Updated: 2021/11/23 22:07:56 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/02 16:35:57 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	parser(t_list **list, char *str);
 */
 int		get_l_type(char *s);
 bool	is_quote(char c);
-bool	is_ltype_redirect(char c);
+bool	is_ltype_redirect(char *);
 int		get_num_of_redirect(char *s);
 
 #endif

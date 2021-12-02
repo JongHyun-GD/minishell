@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:03:08 by dason             #+#    #+#             */
-/*   Updated: 2021/11/26 12:07:39 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/02 16:35:45 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ bool	is_quote(char c)
 	return (false);
 }
 
-bool	is_ltype_redirect(char c)
+bool	is_ltype_redirect(char *s)
 {
-	if (c == LTYPE_REDIRECT_L)
+	if (*s == '<' && *(s + 1) == '<')
 		return (true);
-	if (c == LTYPE_REDIRECT2_L)
+	else if (*s == '>' && *(s + 1) == '>')
 		return (true);
-	if (c == LTYPE_REDIRECT_R)
+	else if (*s == '<')
 		return (true);
-	if (c == LTYPE_REDIRECT2_R)
+	else if (*s == '>')
 		return (true);
 	return (false);
 }

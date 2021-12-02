@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/02 16:11:16 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/02 16:42:04 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		parser(&list, ft_strdup(str));
 		origin_list = list;
-		while (true)
+		while (list)
 		{
 			handle_redirect(list, &info);
 			if (try_exec_builtin(str, list, &info) == -1)

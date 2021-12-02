@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/11/26 17:33:25 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/02 16:37:49 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,12 @@ void	make_list_no_quote(t_list **list, char **lexer)
 		if (i == 0 || (get_l_type(lexer[i - 1]) != LTYPE_COMMAND && \
 			get_l_type(lexer[i]) == LTYPE_COMMAND))
 		{
-			new_list = ft_create_list(LTYPE_COMMAND, \
-					ft_create_node(NTYPE_COMMAND, ft_strdup(lexer[i])));
+			if (i != 0 && is_ltype_redirect(lexer[i - 1]))
+				new_list = ft_create_list(LTYPE_FILE, \
+						ft_create_node(NTYPE_COMMAND, ft_strdup(lexer[i])));
+			else
+				new_list = ft_create_list(LTYPE_COMMAND, \
+						ft_create_node(NTYPE_COMMAND, ft_strdup(lexer[i])));
 			if (i == 0)
 				*list = new_list;
 			else
