@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:31:26 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/01 16:02:53 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/02 14:00:10 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ bool	is_builtin(char *commandline)
 // TODO: Norminette - 25lines
 int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 {
+	int	fd;
+
 	if (is_builtin(commandline) == false)
 		return (-1);
 	if (info->has_pipe_in)
@@ -35,6 +37,17 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 		dup2(info->pipe_in[WRITE_END], STDOUT_FILENO);
 		close(info->pipe_in[WRITE_END]);
 		info->has_pipe_in = false;
+	}
+	if (info->has_redirect_r1)
+	{
+		printf("built in: path = %s,\n", info->r1_path);
+		fd = open(info->r1_path, O_WRONLY | O_CREAT, 0755);
+		printf("h1\n");
+		dup2(fd, STDOUT_FILENO);
+		printf("h2\n");
+		close(fd);
+		printf("h3\n");
+
 	}
 	if (list->prev && list->prev->l_type == LTYPE_PIPE)
 	{
@@ -58,5 +71,11 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 		printf("exit\n");
 		exit(0);
 	}
+	if (info->has_redirect_r1)
+	{
+		printf("r2\n");
+		info->has_redirect_r1 = false;
+	}
+
 	return (0);
 }

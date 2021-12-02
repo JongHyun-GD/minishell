@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/01 16:01:40 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/02 13:59:10 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 {
 	int		pid;
 	pid_t	wait_pid;
+	int		fd;
 
 	pid = fork();
 	if (pid < 0)
@@ -101,6 +102,12 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 		{
 			dup2(info->pipe_in[WRITE_END], STDOUT_FILENO);
 			close(info->pipe_in[WRITE_END]);
+		}
+		if (info->has_redirect_r1)
+		{
+			fd = open(info->r1_path, O_WRONLY | O_CREAT, 0755);
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
 		}
 		if (list->prev && list->prev->l_type == LTYPE_PIPE)
 		{
@@ -118,6 +125,10 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 		{
 			close(info->pipe_in[WRITE_END]);
 			info->has_pipe_in = false;
+		}
+		if (info->has_redirect_r1)
+		{
+			info->has_redirect_r1 = false;
 		}
 	}
 	free_double_pointer(&argv);
