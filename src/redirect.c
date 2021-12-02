@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 10:35:52 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/01 16:03:26 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/02 13:59:11 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,15 @@ void	swap_pipe(t_info *info)
 	info->pipe_out[1] = temp[1];
 }
 
+void	handle_redirect_r(t_list *list, t_info *info)
+{
+	info->has_redirect_r1 = true;
+	if (list->next)
+		info->r1_path = ft_strdup(list->next->start_node->data);
+}
+
 void	handle_redirect(t_list *list, t_info *info)
 {
-	printf("info: %p\n", info);
 	if (list->l_type != LTYPE_COMMAND)
 		return ;
 	list = list->next;
@@ -50,8 +56,7 @@ void	handle_redirect(t_list *list, t_info *info)
 		}
 		if (list->l_type == LTYPE_REDIRECT_R)
 		{
-			// TODO: > 구현
-			// handle_redirect_r();
+			handle_redirect_r(list, info);
 		}
 		if (list->l_type == LTYPE_REDIRECT2_R)
 		{

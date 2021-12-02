@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 14:09:01 by dason             #+#    #+#             */
-/*   Updated: 2021/11/29 17:26:19 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/02 16:22:41 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define LTYPE_REDIRECT2_L 4
 # define LTYPE_REDIRECT_R 5
 # define LTYPE_REDIRECT2_R 6
+# define LTYPE_FILE	7
 
 typedef struct s_node
 {
