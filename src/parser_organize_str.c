@@ -6,7 +6,7 @@
 /*   By: sondho <sondho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 09:41:36 by dason             #+#    #+#             */
-/*   Updated: 2021/11/26 12:09:05 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/04 12:49:31 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static void	str_addback_quote(char **tmp_str, char *str, int *i, int *new_i)
 
 static void	str_addback_redirect(char **tmp_str, char *str, int *i, int *new_i)
 {
-	if (get_l_type(&str[*i]) == LTYPE_REDIRECT2_L || \
-		get_l_type(&str[*i]) == LTYPE_REDIRECT2_R)
+	if (get_ltype(&str[*i]) == LTYPE_REDIRECT2_L || \
+		get_ltype(&str[*i]) == LTYPE_REDIRECT2_R)
 	{
 		if (*new_i != 0 && (*tmp_str)[*new_i - 1] != ' ')
 			(*tmp_str)[(*new_i)++] = ' ';
@@ -50,7 +50,7 @@ static void	str_addback_redirect(char **tmp_str, char *str, int *i, int *new_i)
 		(*tmp_str)[(*new_i)++] = str[(*i)++];
 		(*tmp_str)[(*new_i)++] = ' ';
 	}
-	else if (get_l_type(&str[*i]) != LTYPE_COMMAND)
+	else if (get_ltype(&str[*i]) != LTYPE_COMMAND)
 	{
 		if (*new_i != 0 && (*tmp_str)[*new_i - 1] != ' ')
 			(*tmp_str)[(*new_i)++] = ' ';
@@ -63,6 +63,7 @@ static void	str_addback_redirect(char **tmp_str, char *str, int *i, int *new_i)
 		(*tmp_str)[(*new_i)++] = str[(*i)++];
 }
 
+// TODO: echo a || echo b 처리
 char	*organize_input_str(char *str)
 {
 	char	*tmp_str;

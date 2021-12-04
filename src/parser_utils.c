@@ -6,24 +6,29 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:03:08 by dason             #+#    #+#             */
-/*   Updated: 2021/12/02 16:35:45 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/04 12:50:03 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
 
-int	get_l_type(char *s)
+int	get_ltype(char *s)
 {
-	if (*s == '|')
+	if (*s == '|' && \
+		(*(s + 1) == ' ' || *(s + 1) == '\0'))
 		return (LTYPE_PIPE);
-	else if (*s == '<' && *(s + 1) == '<')
-		return (LTYPE_REDIRECT2_L);
-	else if (*s == '>' && *(s + 1) == '>')
-		return (LTYPE_REDIRECT2_R);
-	else if (*s == '<')
+	else if (*s == '<' && \
+			(*(s + 1) == ' ' || *(s + 1) == '\0'))
 		return (LTYPE_REDIRECT_L);
-	else if (*s == '>')
+	else if (*s == '<' && *(s + 1) == '<' && \
+			(*(s + 2) == ' ' || *(s + 2) == '\0'))
+		return (LTYPE_REDIRECT2_L);
+	else if (*s == '>' && \
+			(*(s + 1) == ' ' || *(s + 1) == '\0'))
 		return (LTYPE_REDIRECT_R);
+	else if (*s == '>' && *(s + 1) == '>' && \
+			(*(s + 2) == ' ' || *(s + 2) == '\0'))
+		return (LTYPE_REDIRECT2_R);
 	else
 		return (LTYPE_COMMAND);
 }
@@ -60,13 +65,13 @@ int	get_num_of_redirect(char *s)
 	i = -1;
 	while (++i < (int)ft_strlen(s))
 	{
-		if (get_l_type(&s[i]) == LTYPE_REDIRECT2_L || \
-			get_l_type(&s[i]) == LTYPE_REDIRECT2_R)
+		if (get_ltype(&s[i]) == LTYPE_REDIRECT2_L || \
+			get_ltype(&s[i]) == LTYPE_REDIRECT2_R)
 		{
 			i++;
 			count++;
 		}
-		else if (get_l_type(&s[i]) != LTYPE_COMMAND)
+		else if (get_ltype(&s[i]) != LTYPE_COMMAND)
 			count++;
 		if (is_quote(s[i]))
 		{

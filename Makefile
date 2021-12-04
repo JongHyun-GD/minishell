@@ -9,28 +9,30 @@ LIBFT           = $(addprefix $(LIBFT_DIR), $(LIBFT_NAME))
 
 NAME		= minishell
 SRC_DIR		= ./src/
-C_FILES		= cd.c					\
-			  echo.c				\
-			  env.c					\
-			  envp.c 				\
-			  export.c 				\
-			  free.c				\
-			  get_next_line.c		\
-			  get_next_line_utils.c	\
-			  list_node_utils.c		\
-			  main.c				\
-			  parser.c				\
-			  parser_make_list.c	\
-			  parser_organize_str.c	\
-			  parser_utils.c		\
-			  pwd.c 				\
-			  unset.c 				\
-			  utils.c				\
-			  execute.c				\
-			  set_signal.c			\
-			  get_user_input.c		\
-			  redirect.c			\
-			  execute_builtin.c		\
+C_FILES		= cd.c							\
+			  echo.c						\
+			  env.c							\
+			  envp.c 						\
+			  export.c 						\
+			  free.c						\
+			  get_next_line.c				\
+			  get_next_line_utils.c			\
+			  list_node_utils.c				\
+			  main.c						\
+			  parser.c						\
+			  parser_handling_exception.c	\
+			  parser_make_list.c			\
+			  parser_organize_node.c		\
+			  parser_organize_str.c			\
+			  parser_utils.c				\
+			  pwd.c 						\
+			  unset.c 						\
+			  utils.c						\
+			  execute.c						\
+			  set_signal.c					\
+			  get_user_input.c				\
+			  redirect.c					\
+			  execute_builtin.c				\
 			  test.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))

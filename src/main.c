@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/02 16:42:04 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/03 13:22:29 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*str;
 	t_info	info;
 	t_list	*list;
-	t_list	*origin_list;
+	t_list	*work_list;
 
 	if (init_minishell(&info, envp, argc, argv) == -1)
 		return (-1);
@@ -83,20 +83,22 @@ int	main(int argc, char **argv, char **envp)
 		str = get_user_input(&info);
 		if (is_valid_input(str) == false)
 			continue ;
-		parser(&list, ft_strdup(str));
-		origin_list = list;
-		while (list)
+		if (parser(&list, ft_strdup(str)) != -1)
 		{
-			handle_redirect(list, &info);
-			if (try_exec_builtin(str, list, &info) == -1)
-				execute_non_builtin(list, make_argv_with_node(list), info.envp, &info);
-			swap_pipe(&info);
-			if (move_to_next_command_list(&list) == -1)
-				break;
+			work_list = list;
+			while (work_list)
+			{
+				handle_redirect(work_list, &info);
+				if (try_exec_builtin(str, work_list, &info) == -1)
+					execute_non_builtin(work_list, make_argv_with_node(work_list), info.envp, &info);
+				swap_pipe(&info);
+				if (move_to_next_command_list(&work_list) == -1)
+					break;
+			}
 		}
 		add_history(str);
 		free(str);
-		free_list_node(&origin_list);
+		free_list_node(&list);
 	}
 	return (0);
 }
