@@ -13,10 +13,13 @@ C_FILES		= cd.c							\
 			  echo.c						\
 			  env.c							\
 			  envp.c 						\
+			  execute_builtin.c				\
+			  execute_non_builtin.c			\
 			  export.c 						\
 			  free.c						\
 			  get_next_line.c				\
 			  get_next_line_utils.c			\
+			  get_user_input.c				\
 			  list_node_utils.c				\
 			  main.c						\
 			  parser.c						\
@@ -26,13 +29,10 @@ C_FILES		= cd.c							\
 			  parser_organize_str.c			\
 			  parser_utils.c				\
 			  pwd.c 						\
+			  redirect.c					\
+			  set_signal.c					\
 			  unset.c 						\
 			  utils.c						\
-			  execute.c						\
-			  set_signal.c					\
-			  get_user_input.c				\
-			  redirect.c					\
-			  execute_builtin.c				\
 			  test.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))

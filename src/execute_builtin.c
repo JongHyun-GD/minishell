@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:31:26 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/07 10:09:56 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/07 11:37:06 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 		}
 		if (info->has_redirect_r1)
 		{
-			fd = open(info->r1_path, O_WRONLY | O_CREAT, 0755);
+			fd = open(info->r1_path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
 			dup2(fd, STDOUT_FILENO);
 		}
 		if (info->has_redirect_r2)

@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/07 11:30:46 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/07 11:41:15 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	move_to_next_command_list(t_list **list)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*str;
+	char	*input;
 	t_info	info;
 	t_list	*list;
 	t_list	*work_list;
@@ -80,25 +80,24 @@ int	main(int argc, char **argv, char **envp)
 		return (-1);
 	while (true)
 	{
-		str = get_user_input(&info);
-		if (is_valid_input(str) == false)
+		input = get_user_input(&info);
+		if (is_valid_input(input) == false)
 			continue ;
-		if (parser(&list, ft_strdup(str)) != -1)
+		if (parser(&list, ft_strdup(input)) != -1)
 		{
-			print_list(list);
 			work_list = list;
 			while (work_list)
 			{
 				handle_redirect(work_list, &info);
-				if (try_exec_builtin(str, work_list, &info) == -1)
+				if (try_exec_builtin(input, work_list, &info) == -1)
 					execute_non_builtin(work_list, make_argv_with_node(work_list), info.envp, &info);
 				swap_pipe(&info);
 				if (move_to_next_command_list(&work_list) == -1)
 					break ;
 			}
 		}
-		add_history(str);
-		free(str);
+		add_history(input);
+		free(input);
 		free_list_node(&list);
 	}
 	return (0);

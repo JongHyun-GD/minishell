@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   execute_non_builtin.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/07 10:15:44 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/07 11:37:28 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 		}
 		if (info->has_redirect_r1)
 		{
-			fd = open(info->r1_path, O_WRONLY | O_CREAT, 0755);
+			fd = open(info->r1_path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
 		}
