@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:31:26 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/07 11:37:06 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/07 13:28:00 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ bool	is_builtin(char *commandline)
 // TODO: Norminette - 25lines
 int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 {
-	int	fd;
+	int	fd_r;
+	int	fd_l;
 	int	pid;
 	int	status;
 
-	fd = -1;
+	fd_r = -1;
+	fd_l = -1;
 	if (is_builtin(commandline) == false)
 		return (-1);
 	pid = fork();
@@ -46,13 +48,21 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 		}
 		if (info->has_redirect_r1)
 		{
-			fd = open(info->r1_path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
-			dup2(fd, STDOUT_FILENO);
+			fd_r = open(info->r1_path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
+			dup2(fd_r, STDOUT_FILENO);
 		}
 		if (info->has_redirect_r2)
 		{
-			fd = open(info->r1_path, O_WRONLY | O_CREAT | O_APPEND, 0755);
-			dup2(fd, STDOUT_FILENO);
+			fd_r = open(info->r1_path, O_WRONLY | O_CREAT | O_APPEND, 0755);
+			dup2(fd_r, STDOUT_FILENO);
+		}
+		if (info->has_redirect_l1)
+		{
+			fd_l = open(info->l1_path, O_RDONLY);
+			if (fd_l > 0)
+				dup2(fd_l, STDIN_FILENO);
+			else
+				printf("minishell: no such file or directory: %s", info->l1_path);
 		}
 		if (list->prev && list->prev->l_type == LTYPE_PIPE)
 		{
@@ -87,15 +97,21 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 			exit(0);
 		if (info->has_redirect_r1)
 		{
-			if (fd != -1)
-				close(fd);
+			if (fd_r != -1)
+				close(fd_r);
 			info->has_redirect_r1 = false;
 		}
 		if (info->has_redirect_r2)
 		{
-			if (fd != -1)
-				close(fd);
+			if (fd_r != -1)
+				close(fd_r);
 			info->has_redirect_r2 = false;
+		}
+		if (info->has_redirect_l1)
+		{
+			if (fd_l != -1)
+				close(fd_l);
+			info->has_redirect_l1 = false;
 		}
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 10:35:52 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/07 11:29:41 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/07 13:18:46 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ void	swap_pipe(t_info *info)
 	info->pipe_in[1] = info->pipe_out[1];
 	info->pipe_out[0] = temp[0];
 	info->pipe_out[1] = temp[1];
+}
+
+void	handle_redirect_l(t_list *list, t_info *info)
+{
+	info->has_redirect_l1 = true;
+	if (list->next)
+		info->l1_path = ft_strdup(list->next->start_node->data);
 }
 
 void	handle_redirect_r(t_list *list, t_info *info)
@@ -53,8 +60,7 @@ void	handle_redirect(t_list *list, t_info *info)
 		}
 		if (list->l_type == LTYPE_REDIRECT_L)
 		{
-			// TODO: < 구현
-			// handle_redirect_l();
+			handle_redirect_l(list, info);
 		}
 		if (list->l_type == LTYPE_REDIRECT2_L)
 		{
