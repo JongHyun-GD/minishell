@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 10:35:52 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/07 13:08:33 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/07 13:18:46 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,33 +26,9 @@ void	swap_pipe(t_info *info)
 
 void	handle_redirect_l(t_list *list, t_info *info)
 {
-	int		fd;
-	char	*data;
-	char	ch;
-	int		len;
-
+	info->has_redirect_l1 = true;
 	if (list->next)
-	{
-		fd = open(list->next->start_node->data, O_RDONLY);
-		if (fd == -1)
-		{
-			printf("minishell: no such file or directory: %s",
-				list->next->start_node->data);
-			return;
-		}
-		info->has_redirect_l1 = true;
-		len = 0;
-		while (read(fd, &ch, 1) > 0)
-			len++;
-		close(fd);
-		fd = open(list->next->start_node->data, O_RDONLY);
-		data = (char *)malloc(sizeof(char) * len + 1);
-		read(fd, data, len);
-		info->l1_data = data;
-		info->l1_data[len + 1] = 0;
-		info->l1_data_len = len;
-		close(fd);
-	}
+		info->l1_path = ft_strdup(list->next->start_node->data);
 }
 
 void	handle_redirect_r(t_list *list, t_info *info)

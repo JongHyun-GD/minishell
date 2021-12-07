@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/07 13:10:24 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/07 13:22:46 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 {
 	int		pid;
 	pid_t	wait_pid;
-	int		fd;
+	int		fd_r;
+	int		fd_l;
 
 	pid = fork();
 	if (pid < 0)
@@ -105,19 +106,21 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 		}
 		if (info->has_redirect_r1)
 		{
-			fd = open(info->r1_path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
-			dup2(fd, STDOUT_FILENO);
-			close(fd);
+			fd_r = open(info->r1_path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
+			dup2(fd_r, STDOUT_FILENO);
+			close(fd_r);
 		}
 		if (info->has_redirect_r2)
 		{
-			fd = open(info->r2_path, O_WRONLY | O_CREAT | O_APPEND, 0755);
-			dup2(fd, STDOUT_FILENO);
-			close(fd);
+			fd_r = open(info->r2_path, O_WRONLY | O_CREAT | O_APPEND, 0755);
+			dup2(fd_r, STDOUT_FILENO);
+			close(fd_r);
 		}
 		if (info->has_redirect_l1)
 		{
-			write(STDIN_FILENO, info->l1_data, info->l1_data_len);
+			fd_l = open(info->l1_path, O_RDONLY);
+			dup2(fd_l, STDIN_FILENO);
+			close(fd_l);
 		}
 		if (list->prev && list->prev->l_type == LTYPE_PIPE)
 		{
@@ -129,7 +132,6 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 	else
 	{
 		wait_pid = wait(&pid);
-		printf("child proc is dead!\n");
 		if (wait_pid < 0)
 			return (-1);
 		if (info->has_pipe_in)
