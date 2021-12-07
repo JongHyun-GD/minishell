@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 10:35:52 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/07 10:18:58 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/07 11:29:41 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	handle_redirect_r2(t_list *list, t_info *info)
 	if (list->next)
 		info->r2_path = ft_strdup(list->next->start_node->data);
 }
-
 
 void	handle_redirect(t_list *list, t_info *info)
 {

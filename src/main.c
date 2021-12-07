@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/03 13:22:29 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/07 11:30:46 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		if (parser(&list, ft_strdup(str)) != -1)
 		{
+			print_list(list);
 			work_list = list;
 			while (work_list)
 			{
@@ -93,7 +94,7 @@ int	main(int argc, char **argv, char **envp)
 					execute_non_builtin(work_list, make_argv_with_node(work_list), info.envp, &info);
 				swap_pipe(&info);
 				if (move_to_next_command_list(&work_list) == -1)
-					break;
+					break ;
 			}
 		}
 		add_history(str);

@@ -18,8 +18,10 @@ int	parser_handling_exception(t_list *list)
 {
 	while (list)
 	{
-		if (list->l_type != LTYPE_COMMAND && list->l_type != LTYPE_FILE && \
-			list->next->l_type != LTYPE_COMMAND && list->next->l_type != LTYPE_FILE)
+		if (list->l_type != LTYPE_COMMAND && \
+			list->l_type != LTYPE_FILE && \
+			list->next->l_type != LTYPE_COMMAND && \
+			list->next->l_type != LTYPE_FILE)
 		{
 			print_parse_error_near(list->next->l_type);
 			return (0);
