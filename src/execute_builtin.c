@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:31:26 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/07 11:37:06 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/07 12:56:59 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 			fd = open(info->r1_path, O_WRONLY | O_CREAT | O_APPEND, 0755);
 			dup2(fd, STDOUT_FILENO);
 		}
+		if (info->has_redirect_l1)
+		{
+			write(STDIN_FILENO, info->l1_data, info->l1_data_len);
+		}
 		if (list->prev && list->prev->l_type == LTYPE_PIPE)
 		{
 			dup2(info->pipe_out[READ_END], STDIN_FILENO);
@@ -97,6 +101,8 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 				close(fd);
 			info->has_redirect_r2 = false;
 		}
+		if (info->has_redirect_l1)
+			info->has_redirect_l1 = false;
 	}
 	return (0);
 }

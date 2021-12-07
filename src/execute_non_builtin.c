@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/07 11:37:28 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/07 13:10:24 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,10 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
 		}
+		if (info->has_redirect_l1)
+		{
+			write(STDIN_FILENO, info->l1_data, info->l1_data_len);
+		}
 		if (list->prev && list->prev->l_type == LTYPE_PIPE)
 		{
 			dup2(info->pipe_out[READ_END], STDIN_FILENO);
@@ -125,6 +129,7 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 	else
 	{
 		wait_pid = wait(&pid);
+		printf("child proc is dead!\n");
 		if (wait_pid < 0)
 			return (-1);
 		if (info->has_pipe_in)
@@ -139,6 +144,10 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 		if (info->has_redirect_r2)
 		{
 			info->has_redirect_r2 = false;
+		}
+		if (info->has_redirect_l1)
+		{
+			info->has_redirect_l1 = false;
 		}
 	}
 	free_double_pointer(&argv);

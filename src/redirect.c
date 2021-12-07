@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 10:35:52 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/07 11:29:41 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/07 13:08:33 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,37 @@ void	swap_pipe(t_info *info)
 	info->pipe_in[1] = info->pipe_out[1];
 	info->pipe_out[0] = temp[0];
 	info->pipe_out[1] = temp[1];
+}
+
+void	handle_redirect_l(t_list *list, t_info *info)
+{
+	int		fd;
+	char	*data;
+	char	ch;
+	int		len;
+
+	if (list->next)
+	{
+		fd = open(list->next->start_node->data, O_RDONLY);
+		if (fd == -1)
+		{
+			printf("minishell: no such file or directory: %s",
+				list->next->start_node->data);
+			return;
+		}
+		info->has_redirect_l1 = true;
+		len = 0;
+		while (read(fd, &ch, 1) > 0)
+			len++;
+		close(fd);
+		fd = open(list->next->start_node->data, O_RDONLY);
+		data = (char *)malloc(sizeof(char) * len + 1);
+		read(fd, data, len);
+		info->l1_data = data;
+		info->l1_data[len + 1] = 0;
+		info->l1_data_len = len;
+		close(fd);
+	}
 }
 
 void	handle_redirect_r(t_list *list, t_info *info)
@@ -53,8 +84,7 @@ void	handle_redirect(t_list *list, t_info *info)
 		}
 		if (list->l_type == LTYPE_REDIRECT_L)
 		{
-			// TODO: < 구현
-			// handle_redirect_l();
+			handle_redirect_l(list, info);
 		}
 		if (list->l_type == LTYPE_REDIRECT2_L)
 		{
