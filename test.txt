@@ -1,0 +1,38 @@
+Makefile
+README.md
+etc
+includes
+libft
+minishell
+src
+test.txt
+Makefile
+README.md
+etc
+includes
+libft
+minishell
+src
+test.txt
+Makefile
+README.md
+etc
+includes
+libft
+minishell
+src
+test.txt
+total 176
+drwxr-xr-x  13 hyun  staff    416 12  7 10:15 .
+drwxr-xr-x  28 hyun  staff    896 12  1 11:31 ..
+drwxr-xr-x  14 hyun  staff    448 12  7 10:12 .git
+-rw-r--r--   1 hyun  staff     65 11 10 09:02 .gitignore
+drwxr-xr-x   4 hyun  staff    128 11 12 10:39 .vscode
+-rw-r--r--   1 hyun  staff   1220 12  2 11:38 Makefile
+-rw-r--r--   1 hyun  staff     26 11  3 12:12 README.md
+drwxr-xr-x   3 hyun  staff     96 11  9 09:35 etc
+drwxr-xr-x  16 hyun  staff    512 12  7 10:07 includes
+drwxr-xr-x   8 hyun  staff    256 12  1 10:54 libft
+-rwxr-xr-x   1 hyun  staff  71400 12  7 10:15 minishell
+drwxr-xr-x  51 hyun  staff   1632 12  7 10:15 src
+-rwxr-xr-x   1 hyun  staff    183 12  7 10:13 test.txt

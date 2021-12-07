@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/02 16:05:24 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/07 10:15:44 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,12 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
 		}
+		if (info->has_redirect_r2)
+		{
+			fd = open(info->r2_path, O_WRONLY | O_CREAT | O_APPEND, 0755);
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
 		if (list->prev && list->prev->l_type == LTYPE_PIPE)
 		{
 			dup2(info->pipe_out[READ_END], STDIN_FILENO);
@@ -129,6 +135,10 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 		if (info->has_redirect_r1)
 		{
 			info->has_redirect_r1 = false;
+		}
+		if (info->has_redirect_r2)
+		{
+			info->has_redirect_r2 = false;
 		}
 	}
 	free_double_pointer(&argv);
