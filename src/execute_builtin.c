@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:31:26 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/07 13:21:39 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/07 13:28:00 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 		if (info->has_redirect_l1)
 		{
 			fd_l = open(info->l1_path, O_RDONLY);
-			dup2(fd_l, STDIN_FILENO);
+			if (fd_l > 0)
+				dup2(fd_l, STDIN_FILENO);
+			else
+				printf("minishell: no such file or directory: %s", info->l1_path);
 		}
 		if (list->prev && list->prev->l_type == LTYPE_PIPE)
 		{
