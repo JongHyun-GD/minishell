@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/07 11:28:39 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/08 17:57:25 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	make_list_quote(t_list **list, char *s)
 		else if (get_ltype(&s[i]) != LTYPE_COMMAND)
 		{
 			ft_lstadd_back(*list, ft_create_list(get_ltype(&s[i]), NULL));
-			if (get_ltype(&s[i]) == LTYPE_REDIRECT2_L || \
-				get_ltype(&s[i]) == LTYPE_REDIRECT2_R)
+			if (get_ltype(&s[i]) == LTYPE_REDIRECT_L2 || \
+				get_ltype(&s[i]) == LTYPE_REDIRECT_R2)
 				i += 2;
 			else
 				i += 1;

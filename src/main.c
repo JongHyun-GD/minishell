@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/07 11:41:15 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/08 19:24:11 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	make_info(t_info *info, char **envp)
 {
+	ft_memset(info, 0, sizeof(t_info));
 	info->envp = dup_envp(envp);
 	info->has_pipe_in = false;
 	return (0);
