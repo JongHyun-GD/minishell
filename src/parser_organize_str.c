@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 09:41:36 by dason             #+#    #+#             */
-/*   Updated: 2021/12/08 17:57:25 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/09 18:24:43 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,21 @@ static void	str_addback_redirect(char **tmp_str, char *str, int *i, int *new_i)
 		(*tmp_str)[(*new_i)++] = str[(*i)++];
 		(*tmp_str)[(*new_i)++] = ' ';
 	}
-	else if (get_ltype(&str[*i]) != LTYPE_COMMAND)
+	else if (get_ltype(&str[*i]) == LTYPE_PIPE || \
+		get_ltype(&str[*i]) == LTYPE_REDIRECT_L1 || \
+		get_ltype(&str[*i]) == LTYPE_REDIRECT_R1)
 	{
 		if (*new_i != 0 && (*tmp_str)[*new_i - 1] != ' ')
 			(*tmp_str)[(*new_i)++] = ' ';
 		(*tmp_str)[(*new_i)++] = str[(*i)++];
 		(*tmp_str)[(*new_i)++] = ' ';
 	}
+}
+
+static void	process_organize(char **tmp_str, char *str, int *i, int *new_i)
+{
+	if (get_ltype(&str[*i]) != LTYPE_COMMAND)
+		str_addback_redirect(tmp_str, str, i, new_i);
 	else if (is_quote(str[*i]))
 		str_addback_quote(tmp_str, str, i, new_i);
 	else
@@ -80,7 +88,7 @@ char	*organize_input_str(char *str)
 	while (i < (int)ft_strlen(str))
 	{
 		when_char_is_space(&tmp_str, str, &i, &new_i);
-		str_addback_redirect(&tmp_str, str, &i, &new_i);
+		process_organize(&tmp_str, str, &i, &new_i);
 	}
 	free(str);
 	new_str = ft_strtrim(tmp_str, " ");

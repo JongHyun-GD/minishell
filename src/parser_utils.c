@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:03:08 by dason             #+#    #+#             */
-/*   Updated: 2021/12/08 17:57:25 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/09 18:15:11 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,16 @@
 
 int	get_ltype(char *s)
 {
-	if (*s == '|' && \
-		(*(s + 1) == ' ' || *(s + 1) == '\0'))
+	if (*s == '|')
 		return (LTYPE_PIPE);
-	else if (*s == '<' && \
-			(*(s + 1) == ' ' || *(s + 1) == '\0'))
-		return (LTYPE_REDIRECT_L1);
-	else if (*s == '<' && *(s + 1) == '<' && \
-			(*(s + 2) == ' ' || *(s + 2) == '\0'))
+	else if (*s == '<' && *(s + 1) == '<')
 		return (LTYPE_REDIRECT_L2);
-	else if (*s == '>' && \
-			(*(s + 1) == ' ' || *(s + 1) == '\0'))
-		return (LTYPE_REDIRECT_R1);
-	else if (*s == '>' && *(s + 1) == '>' && \
-			(*(s + 2) == ' ' || *(s + 2) == '\0'))
+	else if (*s == '<')
+		return (LTYPE_REDIRECT_L1);
+	else if (*s == '>' && *(s + 1) == '>')
 		return (LTYPE_REDIRECT_R2);
+	else if (*s == '>')
+		return (LTYPE_REDIRECT_R1);
 	else
 		return (LTYPE_COMMAND);
 }

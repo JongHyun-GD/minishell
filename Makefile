@@ -1,4 +1,4 @@
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g
 LFLAGS		= -lreadline -L /usr/local/Cellar/readline/8.1.1/lib
 
 INC_LINK	= -I./includes/ -I/usr/local/Cellar/readline/8.1.1/include
