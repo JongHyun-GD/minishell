@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:31 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/01 16:06:22 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/08 18:26:44 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,11 @@ void	handle_redirect(t_list *list, t_info *info);
 **	EXECUTE BUILT-IN
 */
 int		try_exec_builtin(char *commandline, t_list *list, t_info *info);
+
+
+/*
+**	TEST
+*/
+char	*get_eof_input();
 
 #endif

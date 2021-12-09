@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_organize_str.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sondho <sondho@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 09:41:36 by dason             #+#    #+#             */
-/*   Updated: 2021/12/04 12:49:31 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/08 17:57:25 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static void	str_addback_quote(char **tmp_str, char *str, int *i, int *new_i)
 
 static void	str_addback_redirect(char **tmp_str, char *str, int *i, int *new_i)
 {
-	if (get_ltype(&str[*i]) == LTYPE_REDIRECT2_L || \
-		get_ltype(&str[*i]) == LTYPE_REDIRECT2_R)
+	if (get_ltype(&str[*i]) == LTYPE_REDIRECT_L2 || \
+		get_ltype(&str[*i]) == LTYPE_REDIRECT_R2)
 	{
 		if (*new_i != 0 && (*tmp_str)[*new_i - 1] != ' ')
 			(*tmp_str)[(*new_i)++] = ' ';

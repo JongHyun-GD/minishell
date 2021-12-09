@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_node.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 14:09:01 by dason             #+#    #+#             */
-/*   Updated: 2021/12/02 16:22:41 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/08 17:57:25 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@
 # define LTYPE_NONE 0
 # define LTYPE_COMMAND 1
 # define LTYPE_PIPE 2
-# define LTYPE_REDIRECT_L 3
-# define LTYPE_REDIRECT2_L 4
-# define LTYPE_REDIRECT_R 5
-# define LTYPE_REDIRECT2_R 6
+# define LTYPE_REDIRECT_L1 3
+# define LTYPE_REDIRECT_L2 4
+# define LTYPE_REDIRECT_R1 5
+# define LTYPE_REDIRECT_R2 6
 # define LTYPE_FILE	7
 
 typedef struct s_node

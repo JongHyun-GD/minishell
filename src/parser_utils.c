@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:03:08 by dason             #+#    #+#             */
-/*   Updated: 2021/12/04 12:50:03 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/08 17:57:25 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ int	get_ltype(char *s)
 		return (LTYPE_PIPE);
 	else if (*s == '<' && \
 			(*(s + 1) == ' ' || *(s + 1) == '\0'))
-		return (LTYPE_REDIRECT_L);
+		return (LTYPE_REDIRECT_L1);
 	else if (*s == '<' && *(s + 1) == '<' && \
 			(*(s + 2) == ' ' || *(s + 2) == '\0'))
-		return (LTYPE_REDIRECT2_L);
+		return (LTYPE_REDIRECT_L2);
 	else if (*s == '>' && \
 			(*(s + 1) == ' ' || *(s + 1) == '\0'))
-		return (LTYPE_REDIRECT_R);
+		return (LTYPE_REDIRECT_R1);
 	else if (*s == '>' && *(s + 1) == '>' && \
 			(*(s + 2) == ' ' || *(s + 2) == '\0'))
-		return (LTYPE_REDIRECT2_R);
+		return (LTYPE_REDIRECT_R2);
 	else
 		return (LTYPE_COMMAND);
 }
@@ -65,8 +65,8 @@ int	get_num_of_redirect(char *s)
 	i = -1;
 	while (++i < (int)ft_strlen(s))
 	{
-		if (get_ltype(&s[i]) == LTYPE_REDIRECT2_L || \
-			get_ltype(&s[i]) == LTYPE_REDIRECT2_R)
+		if (get_ltype(&s[i]) == LTYPE_REDIRECT_L2 || \
+			get_ltype(&s[i]) == LTYPE_REDIRECT_R2)
 		{
 			i++;
 			count++;

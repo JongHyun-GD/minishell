@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:31:26 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/07 13:28:00 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/08 20:26:16 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ bool	is_builtin(char *commandline)
 // TODO: Norminette - 25lines
 int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 {
-	int	fd_r;
-	int	fd_l;
-	int	pid;
-	int	status;
+	int		fd_r;
+	int		fd_l;
+	int		pid;
+	int		status;
+	char	*input;
 
 	fd_r = -1;
 	fd_l = -1;
@@ -46,6 +47,28 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 			close(info->pipe_in[WRITE_END]);
 			info->has_pipe_in = false;
 		}
+		if (info->has_redirect_l1)
+		{
+			fd_l = open(info->l1_path, O_RDONLY);
+			if (fd_l > 0)
+				dup2(fd_l, STDIN_FILENO);
+			else
+				printf("minishell: no such file or directory: %s", info->l1_path);
+		}
+		if (info->has_redirect_l2)
+		{
+			pipe(info->l2_pipe);
+			while (true)
+			{
+				input = get_eof_input();
+				if (!ft_strncmp(input, info->l2_eof_word, ft_strlen(info->l2_eof_word) + 1))
+					break;
+				write(info->l2_pipe[WRITE_END], input, ft_strlen(input) + 1);
+			}
+			close(info->l2_pipe[WRITE_END]);
+			dup2(info->l2_pipe[READ_END], STDIN_FILENO);
+			close(info->l2_pipe[READ_END]);
+		}
 		if (info->has_redirect_r1)
 		{
 			fd_r = open(info->r1_path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
@@ -55,14 +78,6 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 		{
 			fd_r = open(info->r1_path, O_WRONLY | O_CREAT | O_APPEND, 0755);
 			dup2(fd_r, STDOUT_FILENO);
-		}
-		if (info->has_redirect_l1)
-		{
-			fd_l = open(info->l1_path, O_RDONLY);
-			if (fd_l > 0)
-				dup2(fd_l, STDIN_FILENO);
-			else
-				printf("minishell: no such file or directory: %s", info->l1_path);
 		}
 		if (list->prev && list->prev->l_type == LTYPE_PIPE)
 		{
@@ -95,6 +110,16 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 			return (-1);
 		if (status >> 8 == 2)
 			exit(0);
+		if (info->has_redirect_l1)
+		{
+			if (fd_l != -1)
+				close(fd_l);
+			info->has_redirect_l1 = false;
+		}
+		if (info->has_redirect_l2)
+		{
+			info->has_redirect_l2 = false;
+		}
 		if (info->has_redirect_r1)
 		{
 			if (fd_r != -1)
@@ -106,12 +131,6 @@ int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 			if (fd_r != -1)
 				close(fd_r);
 			info->has_redirect_r2 = false;
-		}
-		if (info->has_redirect_l1)
-		{
-			if (fd_l != -1)
-				close(fd_l);
-			info->has_redirect_l1 = false;
 		}
 	}
 	return (0);

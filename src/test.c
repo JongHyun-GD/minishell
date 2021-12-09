@@ -1,4 +1,19 @@
 #include "../includes/list_node.h"
+#include "../includes/minishell.h"
+
+char	*get_eof_input(void)
+{
+	char	*buf;
+	char	*res;
+	
+	res = readline("heredoc> ");
+	if (res == NULL)
+	{
+		exit(1);
+	}
+	buf = ft_strjoin(res, "\n");
+	return (buf);
+}
 
 void	print_list(t_list *list)
 {
