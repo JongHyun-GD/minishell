@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_non_builtin.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/08 20:25:48 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/09 16:34:05 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,6 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 		}
 		if (info->has_redirect_l2)
 		{
-			close(info->l2_pipe[WRITE_END]);
 			info->has_redirect_l2 = false;
 		}
 		if (info->has_redirect_r1)
