@@ -5,7 +5,7 @@ char	*get_eof_input(void)
 {
 	char	*buf;
 	char	*res;
-	
+
 	res = readline("heredoc> ");
 	if (res == NULL)
 	{
@@ -17,9 +17,9 @@ char	*get_eof_input(void)
 
 void	print_list(t_list *list)
 {
-	printf("### print_list\n");
 	t_node	*node;
 
+	printf("### print_list\n");
 	if (!list)
 	{
 		printf("NULL list\n");
