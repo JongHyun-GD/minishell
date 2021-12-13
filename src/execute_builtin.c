@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:31:26 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/13 18:43:03 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 19:03:37 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool	is_builtin(char *commandline)
 	ft_strncmp(commandline, "export", 7) == 0 || \
 	ft_strncmp(commandline, "unset", 6) == 0 || \
 	ft_strncmp(commandline, "pwd", 4) == 0 || \
-	ft_strncmp(commandline, "cd", 2) == 0 || \
+	ft_strncmp(commandline, "cd", 3) == 0 || \
 	ft_strncmp(commandline, "echo", 5) == 0 || \
 	ft_strncmp(commandline, "exit", 5) == 0)
 		return (true);
@@ -35,7 +35,7 @@ void	exec_builtin(char *commandline, t_list *list, t_info *info)
 		unset(list, info);
 	else if (ft_strncmp(commandline, "pwd", 4) == 0)
 		pwd();
-	else if (ft_strncmp(commandline, "cd", 2) == 0)
+	else if (ft_strncmp(commandline, "cd", 3) == 0)
 		cd(list, info);
 	else if (ft_strncmp(commandline, "echo", 5) == 0)
 		echo(list);

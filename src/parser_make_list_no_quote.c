@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/13 17:21:08 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 19:15:01 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,21 @@ static void	process_variable(char **str, t_info *info)
 {
 	char	*new_str;
 	char	*env_variable;
+	char	*get_env;
 
 	env_variable = ft_substr(*str, 1, ft_strlen(*str));
+	if (!env_variable)
+		exit(1);
 	if (*env_variable == '?' && *(env_variable + 1) == '\0')
 		new_str = ft_itoa(info->exit_status);
 	else
-		new_str = ft_strdup(getenv(env_variable));
+	{
+		get_env = getenv(env_variable);
+		free(env_variable);
+		if (!get_env)
+			return ;
+		new_str = ft_strdup(get_env);
+	}
 	free(*str);
 	*str = new_str;
 }
