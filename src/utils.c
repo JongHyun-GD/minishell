@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 14:51:36 by dason             #+#    #+#             */
-/*   Updated: 2021/11/29 17:27:47 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 09:47:41 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,16 @@ bool	is_valid_input(char *str)
 		return (false);
 	}
 	return (true);
+}
+
+void	swap_pipe(t_info *info)
+{
+	int	temp[2];
+
+	temp[0] = info->pipe_in[0];
+	temp[1] = info->pipe_in[1];
+	info->pipe_in[0] = info->pipe_out[0];
+	info->pipe_in[1] = info->pipe_out[1];
+	info->pipe_out[0] = temp[0];
+	info->pipe_out[1] = temp[1];
 }

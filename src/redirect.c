@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 10:35:52 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/08 20:22:03 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 09:48:56 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	swap_pipe(t_info *info)
-{
-	int	temp[2];
-
-	temp[0] = info->pipe_in[0];
-	temp[1] = info->pipe_in[1];
-	info->pipe_in[0] = info->pipe_out[0];
-	info->pipe_in[1] = info->pipe_out[1];
-	info->pipe_out[0] = temp[0];
-	info->pipe_out[1] = temp[1];
-}
 
 void	handle_redirect_l1(t_list *list, t_info *info)
 {
@@ -66,21 +54,13 @@ void	handle_redirect(t_list *list, t_info *info)
 			break ;
 		}
 		if (list->l_type == LTYPE_REDIRECT_L1)
-		{
 			handle_redirect_l1(list, info);
-		}
 		if (list->l_type == LTYPE_REDIRECT_L2)
-		{
 			handle_redirect_l2(list, info);
-		}
 		if (list->l_type == LTYPE_REDIRECT_R1)
-		{
 			handle_redirect_r1(list, info);
-		}
 		if (list->l_type == LTYPE_REDIRECT_R2)
-		{
 			handle_redirect_r2(list, info);
-		}
 		if (list->l_type == LTYPE_COMMAND)
 			break ;
 		list = list->next;
