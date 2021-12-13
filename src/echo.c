@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:31:57 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/02 15:59:58 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/13 10:09:57 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	echo(t_list *list)
 	bool	has_n_flag;
 	t_node	*node;
 
-	print_list(list);
 	if (!list || list->l_type != LTYPE_COMMAND)
 		return (-1);
 	has_n_flag = false;

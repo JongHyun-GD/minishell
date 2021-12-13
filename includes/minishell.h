@@ -6,7 +6,11 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:31 by hyun              #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/12/13 10:16:59 by hyun             ###   ########.fr       */
+=======
+/*   Updated: 2021/12/13 10:09:27 by dason            ###   ########.fr       */
+>>>>>>> cd8f54947526fe814797dc2a1a03aca93a7e49bc
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +45,17 @@
 # define STAT_CTRL_C 4
 
 /*
+**	MAIN
+*/
+int		init_minishell(t_info *info, char **envp, int argc, char **argv);
+
+/*
 **	UTILS
 */
 bool	is_blank(char *str);
 bool	is_valid_input(char *str);
 void	swap_pipe(t_info *info);
+char	*get_eof_input(void);
 
 /*
 **	EXECUTE
