@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:26 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/08 19:27:56 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 12:05:38 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_info
 	char			*l2_eof_word;
 	char			*r1_path;
 	char			*r2_path;
+	int				exit_status;
 }				t_info;
 
 #endif

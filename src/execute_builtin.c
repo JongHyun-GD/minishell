@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:31:26 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/13 10:19:03 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/13 17:01:40 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	exec_builtin(char *commandline, t_list *list, t_info *info)
 	}
 }
 
-// TODO: Norminette - 25lines
 int	try_exec_builtin(char *commandline, t_list *list, t_info *info)
 {
 	int		pid;

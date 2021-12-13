@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 13:09:19 by dason             #+#    #+#             */
-/*   Updated: 2021/12/03 13:09:20 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 17:03:35 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*get_env_variable(char *s, int *i)
 	return (env);
 }
 
-static char	*combine_nodedata_env(t_node *node, char *data, int *i, int *new_i)
+static char	*combine_nodedata_env(t_node *node, char *data, int *i, int *new_i, t_info *info)
 {
 	char	*new_data;
 	char	*env_variable;
@@ -36,7 +36,10 @@ static char	*combine_nodedata_env(t_node *node, char *data, int *i, int *new_i)
 	size_t	size;
 
 	env_variable = get_env_variable(&data[*i], i);
-	env_value = getenv(env_variable);
+	if (*env_variable == '?')
+		env_value = ft_itoa(info->exit_status);
+	else
+		env_value = getenv(env_variable);
 	size = ft_strlen(data) + \
 		   ft_strlen(env_value) + ft_strlen(node->data);
 	new_data = (char *)ft_calloc(size, sizeof(char));
@@ -49,7 +52,7 @@ static char	*combine_nodedata_env(t_node *node, char *data, int *i, int *new_i)
 	return (new_data);
 }
 
-static void	process_quote_in_node(t_node *node, char *data, int *i, int *new_i)
+static void	process_quote_in_node(t_node *node, char *data, int *i, int *new_i, t_info *info)
 {
 	char	*new_data;
 	int		quote;
@@ -61,7 +64,7 @@ static void	process_quote_in_node(t_node *node, char *data, int *i, int *new_i)
 			break ;
 		if (quote == '\"' && data[*i] == '$')
 		{
-			new_data = combine_nodedata_env(node, data, i, new_i);
+			new_data = combine_nodedata_env(node, data, i, new_i, info);
 			free(node->data);
 			node->data = new_data;
 		}
@@ -70,7 +73,7 @@ static void	process_quote_in_node(t_node *node, char *data, int *i, int *new_i)
 	}
 }
 
-void	organize_node(t_list *list)
+void	when_quote_organize_node(t_list *list, t_info *info)
 {
 	t_node	*current_node;
 	char	*data;
@@ -94,7 +97,7 @@ void	organize_node(t_list *list)
 			new_i = 0;
 		}
 		else if (is_quote(data[i]))
-			process_quote_in_node(current_node, data, &i, &new_i);
+			process_quote_in_node(current_node, data, &i, &new_i, info);
 	}
 	free(data);
 }

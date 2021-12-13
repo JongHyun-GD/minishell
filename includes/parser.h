@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:48:10 by dason             #+#    #+#             */
-/*   Updated: 2021/12/07 11:31:15 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 15:19:45 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@
 
 char	*organize_input_str(char *str);
 void	make_list_quote(t_list **list, char *s);
-void	make_list_no_quote(t_list **list, char **lexer);
-void	organize_node(t_list *list);
+void	when_quote_organize_node(t_list *list, t_info *info);
+void	make_list_no_quote(t_list **list, char **lexer, t_info *info);
 int		parser_handling_exception(t_list *list);
-int		parser(t_list **list, char *str);
+int		parser(t_list **list, char *str, t_info *info);
 
 /*
 **	UTILS

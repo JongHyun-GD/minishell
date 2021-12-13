@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 09:56:28 by dason             #+#    #+#             */
-/*   Updated: 2021/12/13 09:56:29 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 15:23:03 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	make_info(t_info *info, char **envp)
 	ft_memset(info, 0, sizeof(t_info));
 	info->envp = dup_envp(envp);
 	info->has_pipe_in = false;
+	info->exit_status = 0;
 	return (0);
 }
 

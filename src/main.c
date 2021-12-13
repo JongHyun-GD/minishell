@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/13 09:53:57 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 17:07:32 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,15 @@ int	move_to_next_command_list(t_list **list)
 	return (has_next);
 }
 
-void	run(t_list *work_list, t_info info, char *input)
+void	run(t_list *work_list, t_info *info, char *input)
 {
 	while (work_list)
 	{
-		handle_redirect(work_list, &info);
-		if (try_exec_builtin(input, work_list, &info) == -1)
+		handle_redirect(work_list, info);
+		if (try_exec_builtin(input, work_list, info) == -1)
 			execute_non_builtin(work_list, \
-				make_argv_with_node(work_list), info.envp, &info);
-		swap_pipe(&info);
+				make_argv_with_node(work_list), info->envp, info);
+		swap_pipe(info);
 		if (move_to_next_command_list(&work_list) == -1)
 			break ;
 	}
@@ -74,15 +74,16 @@ int	main(int argc, char **argv, char **envp)
 
 	if (init_minishell(&info, envp, argc, argv) == -1)
 		return (-1);
+	info.exit_status = 0;
 	while (true)
 	{
 		input = get_user_input(&info);
 		if (is_valid_input(input) == false)
 			continue ;
-		if (parser(&list, ft_strdup(input)) != -1)
+		if (parser(&list, ft_strdup(input), &info) != -1)
 		{
 			work_list = list;
-			run(work_list, info, input);
+			run(work_list, &info, input);
 		}
 		add_history(input);
 		free(input);
