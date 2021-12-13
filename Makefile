@@ -33,7 +33,6 @@ C_FILES		= cd.c							\
 			  redirect.c					\
 			  set_signal.c					\
 			  unset.c 						\
-			  utils.c						\
 			  preprocess.c					\
 			  preprocess2.c					\
 			  postprocess.c					\
