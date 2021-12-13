@@ -6,13 +6,13 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/13 17:05:06 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 17:21:08 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
 
-static void process_variable(char **str, t_info *info)
+static void	process_variable(char **str, t_info *info)
 {
 	char	*new_str;
 	char	*env_variable;
@@ -26,9 +26,9 @@ static void process_variable(char **str, t_info *info)
 	*str = new_str;
 }
 
-static t_list  *progress_create_new_list(char **lexer, int i)
+static t_list	*progress_create_new_list(char **lexer, int i)
 {
-	t_list *new_list;
+	t_list	*new_list;
 
 	if (i != 0 && is_ltype_redirect(lexer[i - 1]))
 		new_list = ft_create_list(LTYPE_FILE, \

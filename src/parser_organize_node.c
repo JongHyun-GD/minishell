@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 13:09:19 by dason             #+#    #+#             */
-/*   Updated: 2021/12/13 17:03:35 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 17:24:41 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*combine_nodedata_env(t_node *node, char *data, int *i, int *new_i, 
 	if (*env_variable == '?')
 		env_value = ft_itoa(info->exit_status);
 	else
-		env_value = getenv(env_variable);
+		env_value = ft_strdup(getenv(env_variable));
 	size = ft_strlen(data) + \
 		   ft_strlen(env_value) + ft_strlen(node->data);
 	new_data = (char *)ft_calloc(size, sizeof(char));
@@ -48,6 +48,7 @@ static char	*combine_nodedata_env(t_node *node, char *data, int *i, int *new_i, 
 	ft_strlcat(new_data, node->data, ft_strlen(node->data) + 1);
 	ft_strlcat(new_data, env_value, size);
 	free(env_variable);
+	free(env_value);
 	(*new_i) += ft_strlen(env_value);
 	return (new_data);
 }
