@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/13 10:19:08 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/13 19:20:47 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ static int	execute(char **argv, char **envp)
 	exit(0);
 }
 
-// TODO: norminette - 25 lines
 int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 {
 	int		pid;
@@ -97,7 +96,7 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 		return (-1);
 	if (pid == 0)
 	{
-		preprocess(info, list);
+		preprocess(list, info);
 		execute(argv, envp);
 	}
 	else

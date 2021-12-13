@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 09:56:28 by dason             #+#    #+#             */
-/*   Updated: 2021/12/13 09:56:29 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 19:04:30 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int	make_info(t_info *info, char **envp)
 	ft_memset(info, 0, sizeof(t_info));
 	info->envp = dup_envp(envp);
 	info->has_pipe_in = false;
+	info->stdout_copy = dup(STDOUT_FILENO);
+	info->stdin_copy = dup(STDIN_FILENO);
 	return (0);
 }
 
