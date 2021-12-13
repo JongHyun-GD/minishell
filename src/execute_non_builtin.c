@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_non_builtin.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/09 16:34:05 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/13 10:19:08 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,66 +91,13 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 {
 	int		pid;
 	pid_t	wait_pid;
-	int		fd_r;
-	int		fd_l;
-	char	*input;
 
 	pid = fork();
 	if (pid < 0)
 		return (-1);
 	if (pid == 0)
 	{
-		if (info->has_pipe_in)
-		{
-			dup2(info->pipe_in[WRITE_END], STDOUT_FILENO);
-			close(info->pipe_in[WRITE_END]);
-		}
-		if (info->has_redirect_l1)
-		{
-			fd_l = open(info->l1_path, O_RDONLY);
-			if (fd_l > 0)
-			{
-				dup2(fd_l, STDIN_FILENO);
-				close(fd_l);
-			}
-			else
-				printf("minishell: no such file or directory: %s", info->l1_path);
-		}
-		if (info->has_redirect_l2)
-		{
-			pipe(info->l2_pipe);
-			while (true)
-			{
-				input = get_eof_input();
-				if (!ft_strncmp(input, info->l2_eof_word, ft_strlen(info->l2_eof_word) + 1))
-					break;
-				write(info->l2_pipe[WRITE_END], input, ft_strlen(input) + 1);
-			}
-			close(info->l2_pipe[WRITE_END]);
-			dup2(info->l2_pipe[READ_END], STDIN_FILENO);
-			close(info->l2_pipe[READ_END]);
-		}
-		if (info->has_redirect_r1)
-		{
-			fd_r = open(info->r1_path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
-			dup2(fd_r, STDOUT_FILENO);
-			close(fd_r);
-		}
-		if (info->has_redirect_r2)
-		{
-			fd_r = open(info->r2_path, O_WRONLY | O_CREAT | O_APPEND, 0755);
-			dup2(fd_r, STDOUT_FILENO);
-			close(fd_r);
-		}
-		if (list->prev && list->prev->l_type == LTYPE_PIPE)
-		{
-			dup2(info->pipe_out[READ_END], STDIN_FILENO);
-			close(info->pipe_out[READ_END]);
-		}
-		if (list->prev && list->prev->l_type == LTYPE_REDIRECT_L2)
-		{
-			dup2(info->pipe_out[READ_END], STDIN_FILENO);
-		}
+		preprocess(info, list);
 		execute(argv, envp);
 	}
 	else
@@ -158,27 +105,7 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 		wait_pid = wait(&pid);
 		if (wait_pid < 0)
 			return (-1);
-		if (info->has_pipe_in)
-		{
-			close(info->pipe_in[WRITE_END]);
-			info->has_pipe_in = false;
-		}
-		if (info->has_redirect_l1)
-		{
-			info->has_redirect_l1 = false;
-		}
-		if (info->has_redirect_l2)
-		{
-			info->has_redirect_l2 = false;
-		}
-		if (info->has_redirect_r1)
-		{
-			info->has_redirect_r1 = false;
-		}
-		if (info->has_redirect_r2)
-		{
-			info->has_redirect_r2 = false;
-		}
+		postprocess(info);
 	}
 	free_double_pointer(&argv);
 	return (0);

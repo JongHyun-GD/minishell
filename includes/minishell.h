@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:31 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/13 09:48:08 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/13 10:16:59 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,21 @@ int		try_exec_builtin(char *commandline, t_list *list, t_info *info);
 **	TEST
 */
 char	*get_eof_input(void);
+
+/*
+**	preprocess
+*/
+void	preprocess(t_info *info, t_list *list);
+void	preprocess_pipe_write(t_info *info);
+void	preprocess_pipe_read(t_info *info);
+void	preprocess_l1(t_info *info);
+void	preprocess_l2(t_info *info);
+void	preprocess_r1(t_info *info);
+void	preprocess_r2(t_info *info);
+
+/*
+**	postprocess
+*/
+void	postprocess(t_info *info);
 
 #endif

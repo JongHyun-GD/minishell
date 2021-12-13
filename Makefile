@@ -33,6 +33,9 @@ C_FILES		= cd.c							\
 			  set_signal.c					\
 			  unset.c 						\
 			  utils.c						\
+			  preprocess.c					\
+			  preprocess2.c					\
+			  postprocess.c					\
 			  test.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
