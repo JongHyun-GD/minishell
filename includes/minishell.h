@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:31 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/13 09:48:08 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/13 10:09:27 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,17 @@
 # define STAT_CTRL_C 4
 
 /*
+**	MAIN
+*/
+int		init_minishell(t_info *info, char **envp, int argc, char **argv);
+
+/*
 **	UTILS
 */
 bool	is_blank(char *str);
 bool	is_valid_input(char *str);
 void	swap_pipe(t_info *info);
+char	*get_eof_input(void);
 
 /*
 **	EXECUTE
@@ -77,10 +83,5 @@ void	handle_redirect(t_list *list, t_info *info);
 **	EXECUTE BUILT-IN
 */
 int		try_exec_builtin(char *commandline, t_list *list, t_info *info);
-
-/*
-**	TEST
-*/
-char	*get_eof_input(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 14:51:36 by dason             #+#    #+#             */
-/*   Updated: 2021/12/13 09:47:41 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/13 10:08:26 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,18 @@ void	swap_pipe(t_info *info)
 	info->pipe_in[1] = info->pipe_out[1];
 	info->pipe_out[0] = temp[0];
 	info->pipe_out[1] = temp[1];
+}
+
+char	*get_eof_input(void)
+{
+	char	*buf;
+	char	*res;
+
+	res = readline("heredoc> ");
+	if (res == NULL)
+	{
+		exit(1);
+	}
+	buf = ft_strjoin(res, "\n");
+	return (buf);
 }

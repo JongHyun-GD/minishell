@@ -20,6 +20,7 @@ C_FILES		= cd.c							\
 			  get_next_line.c				\
 			  get_next_line_utils.c			\
 			  get_user_input.c				\
+			  init.c						\
 			  list_node_utils.c				\
 			  main.c						\
 			  parser.c						\
@@ -32,8 +33,7 @@ C_FILES		= cd.c							\
 			  redirect.c					\
 			  set_signal.c					\
 			  unset.c 						\
-			  utils.c						\
-			  test.c
+			  utils.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
 OBJS		= $(SRCS:.c=.o)
