@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/13 18:28:15 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 19:58:29 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,34 +65,6 @@ void	run(t_list *work_list, t_info *info, char *input)
 	}
 }
 
-void	print_list(t_list *list)
-{
-	printf("### print_list\n");
-	t_node	*node;
-
-	if (!list)
-	{
-		printf("NULL list\n");
-		return ;
-	}
-	while (list)
-	{
-		printf("- prev adrees: %p\n", list->prev);
-		printf("- current adrees: %p\n", list);
-		printf("- next adrees: %p\n", list->next);
-		printf("- l_type: %d\n", list->l_type);
-		node = list->start_node;
-		while (node)
-		{
-			printf("-- n_type: %d\n", node->n_type);
-			printf("-- data: %s\n", node->data);
-			node = node->next;
-		}
-		printf("\n");
-		list = list->next;
-	}
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
@@ -110,7 +82,6 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		if (parser(&list, ft_strdup(input), &info) != -1)
 		{
-			print_list(list);
 			work_list = list;
 			run(work_list, &info, input);
 		}
