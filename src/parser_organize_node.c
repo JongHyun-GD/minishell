@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 13:09:19 by dason             #+#    #+#             */
-/*   Updated: 2021/12/13 20:00:24 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/14 11:13:26 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*combine_nodedata_env(char *data, int *i, int *new_i, t_info *info)
 	ft_strlcat(new_data, env_value, size);
 	free(env_variable);
 	free(env_value);
-	(*new_i) += ft_strlen(env_value);
+	(*new_i) = ft_strlen(new_data);
 	return (new_data);
 }
 
@@ -75,6 +75,7 @@ static void	process_quote_in_node(char *data, int *i, int *new_i, t_info *info)
 	}
 }
 
+// TODO: echo "Hello $? World"
 void	when_quote_organize_node(t_list *list, t_info *info)
 {
 	char	*data;
