@@ -64,6 +64,8 @@ fclean		:
 
 re			: fclean all
 
-check		: all
+check		:
+	gcc failtest.c -o failtest
+	./failtest
 
 .PHONY		: all clean fclean re check
