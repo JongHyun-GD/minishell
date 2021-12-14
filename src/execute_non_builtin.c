@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_non_builtin.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/13 19:20:47 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/14 11:28:53 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int	execute(char **argv, char **envp)
 	}
 	free_double_pointer(&paths);
 	printf("minishell: %s: command not found\n", argv[0]);
-	exit(0);
+	exit(127);
 }
 
 int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
@@ -102,6 +102,7 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 	else
 	{
 		wait_pid = wait(&pid);
+		info->exit_status = get_exit_result(pid);
 		if (wait_pid < 0)
 			return (-1);
 		postprocess(info);

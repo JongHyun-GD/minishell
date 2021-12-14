@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 09:41:36 by dason             #+#    #+#             */
-/*   Updated: 2021/12/09 18:24:43 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 14:31:41 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static void	process_organize(char **tmp_str, char *str, int *i, int *new_i)
 		(*tmp_str)[(*new_i)++] = str[(*i)++];
 }
 
-// TODO: echo a || echo b 처리
 char	*organize_input_str(char *str)
 {
 	char	*tmp_str;

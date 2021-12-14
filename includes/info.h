@@ -6,13 +6,14 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:26 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/13 18:51:27 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/14 11:28:17 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INFO_H
 # define INFO_H
 
+# include "list_node.h"
 # include <termios.h>
 # include <stdbool.h>
 
@@ -38,6 +39,8 @@ typedef struct s_info
 	char			*r2_path;
 	int				stdout_copy;
 	int				stdin_copy;
+	int				exit_status;
+	t_node			*current_node;
 }				t_info;
 
 #endif

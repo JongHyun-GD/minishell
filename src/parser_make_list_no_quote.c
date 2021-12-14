@@ -1,81 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_make_list.c                                 :+:      :+:    :+:   */
+/*   parser_make_list_no_quote.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/08 17:57:25 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/13 19:15:01 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
 
-static void	process_when_quote(char *s, int *i, int *len)
+static void	process_variable(char **str, t_info *info)
 {
-	int		quote;
+	char	*new_str;
+	char	*env_variable;
+	char	*get_env;
 
-	quote = s[*i + *len];
-	(*len)++;
-	while (s[*i + *len] && s[*i + *len] != quote)
-		(*len)++;
-}
-
-static void	process_the_list(t_list **list, char *s, int *i, int *len)
-{
-	t_list	*new_list;
-	char	*sub_str;
-
-	while (s[*i + *len] && get_ltype(&s[*i + *len]) == LTYPE_COMMAND)
-	{
-		if (s[*i + *len] == '\"' || s[*i + *len] == '\'')
-			process_when_quote(s, i, len);
-		(*len)++;
-	}
-	sub_str = ft_substr(s, *i, *len);
-	if (s[*i - 2] == '<' || s[*i - 2] == '>')
-		new_list = ft_create_list(LTYPE_FILE, \
-				ft_create_node(NTYPE_COMMAND, ft_strtrim(sub_str, " ")));
+	env_variable = ft_substr(*str, 1, ft_strlen(*str));
+	if (!env_variable)
+		exit(1);
+	if (*env_variable == '?' && *(env_variable + 1) == '\0')
+		new_str = ft_itoa(info->exit_status);
 	else
-		new_list = ft_create_list(LTYPE_COMMAND, \
-				ft_create_node(NTYPE_COMMAND, ft_strtrim(sub_str, " ")));
-	if (*i == 0)
-		*list = new_list;
-	else
-		ft_lstadd_back(*list, new_list);
-	free(sub_str);
-}
-
-void	make_list_quote(t_list **list, char *s)
-{
-	int		i;
-	int		len;
-
-	i = 0;
-	while (i < (int)ft_strlen(s))
 	{
-		while (s[i] == ' ')
-			i++;
-		if (i == 0 || get_ltype(&s[i]) == LTYPE_COMMAND)
-		{
-			len = 0;
-			process_the_list(list, s, &i, &len);
-			i += len;
-		}
-		else if (get_ltype(&s[i]) != LTYPE_COMMAND)
-		{
-			ft_lstadd_back(*list, ft_create_list(get_ltype(&s[i]), NULL));
-			if (get_ltype(&s[i]) == LTYPE_REDIRECT_L2 || \
-				get_ltype(&s[i]) == LTYPE_REDIRECT_R2)
-				i += 2;
-			else
-				i += 1;
-		}
+		get_env = getenv(env_variable);
+		free(env_variable);
+		if (!get_env)
+			return ;
+		new_str = ft_strdup(get_env);
 	}
+	free(*str);
+	*str = new_str;
 }
 
-t_list	*progress_create_new_list(char **lexer, int i)
+static t_list	*progress_create_new_list(char **lexer, int i)
 {
 	t_list	*new_list;
 
@@ -88,7 +48,7 @@ t_list	*progress_create_new_list(char **lexer, int i)
 	return (new_list);
 }
 
-void	make_list_no_quote(t_list **list, char **lexer)
+void	make_list_no_quote(t_list **list, char **lexer, t_info *info)
 {
 	t_list	*new_list;
 	int		i;
@@ -96,6 +56,8 @@ void	make_list_no_quote(t_list **list, char **lexer)
 	i = -1;
 	while (lexer[++i])
 	{
+		if (lexer[i][0] == '$')
+			process_variable(&lexer[i], info);
 		if (i == 0 || (get_ltype(lexer[i - 1]) != LTYPE_COMMAND && \
 			get_ltype(lexer[i]) == LTYPE_COMMAND))
 		{

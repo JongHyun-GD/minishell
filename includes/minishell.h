@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:31 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/13 19:19:53 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/14 11:28:30 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include "cd.h"
 # include "echo.h"
 # include "free.h"
+# include "print_exit_status.h"
 # include <stdio.h>
 # include <termios.h>
 # include <readline/readline.h>

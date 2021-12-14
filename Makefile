@@ -25,17 +25,19 @@ C_FILES		= cd.c							\
 			  main.c						\
 			  parser.c						\
 			  parser_handling_exception.c	\
-			  parser_make_list.c			\
+			  parser_make_list_no_quote.c	\
+			  parser_make_list_quote.c		\
 			  parser_organize_node.c		\
 			  parser_organize_str.c			\
 			  parser_utils.c				\
+			  postprocess.c					\
+			  preprocess.c					\
+			  preprocess2.c					\
+			  print_exit_status.c			\
 			  pwd.c 						\
 			  redirect.c					\
 			  set_signal.c					\
 			  unset.c 						\
-			  preprocess.c					\
-			  preprocess2.c					\
-			  postprocess.c					\
 			  utils.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(C_FILES))
