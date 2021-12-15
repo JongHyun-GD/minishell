@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:31:57 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/13 10:09:57 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/15 17:36:37 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/echo.h"
 
-int	echo(t_list *list)
+int	echo(t_list *list, t_info *info)
 {
 	bool	has_n_flag;
 	t_node	*node;
@@ -34,5 +34,6 @@ int	echo(t_list *list)
 	}
 	if (has_n_flag == false)
 		printf("\n");
+	info->exit_status = 0;
 	return (0);
 }

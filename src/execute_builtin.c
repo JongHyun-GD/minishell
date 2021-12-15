@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:31:26 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/15 12:51:55 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/15 17:07:42 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void	exec_builtin(t_list *list, t_info *info)
 	else if (ft_strncmp(list->start_node->data, "unset", 6) == 0)
 		unset(list, info);
 	else if (ft_strncmp(list->start_node->data, "pwd", 4) == 0)
-		pwd();
+		pwd(info);
 	else if (ft_strncmp(list->start_node->data, "cd", 3) == 0)
 		cd(list, info);
 	else if (ft_strncmp(list->start_node->data, "echo", 5) == 0)
-		echo(list);
+		echo(list, info);
 	else if (ft_strncmp(list->start_node->data, "exit", 5) == 0)
 	{
 		printf("exit\n");

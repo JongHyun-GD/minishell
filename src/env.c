@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 13:47:07 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/05 10:16:35 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/15 17:04:03 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int	env(t_info *info)
 		printf("%s\n", info->envp[i]);
 		i++;
 	}
+	info->exit_status = 0;
 	return (0);
 }
