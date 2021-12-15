@@ -8,6 +8,6 @@
 # include <stdio.h>
 # include <sys/wait.h>
 
-int		excutable(t_list *work_list, char **argv, char **envp, t_info *info);
+int		executable(t_list *work_list, char **argv, char **envp, t_info *info);
 
 #endif

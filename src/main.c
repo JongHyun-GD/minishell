@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/15 12:22:31 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/15 12:53:41 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	run(t_list *work_list, t_info *info)
 	while (work_list)
 	{
 		handle_redirect(work_list, info);
-		if (excutable(work_list, make_argv_with_node(work_list), info->envp, info) == -1)
+		if (executable(work_list, make_argv_with_node(work_list), info->envp, info) == -1)
 		{
 			if (try_exec_builtin(work_list, info) == -1)
 			{
