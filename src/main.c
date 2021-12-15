@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/14 11:30:24 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/15 11:32:45 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,14 @@ void	run(t_list *work_list, t_info *info)
 	while (work_list)
 	{
 		handle_redirect(work_list, info);
-		if (try_exec_builtin(work_list, info) == -1)
-			execute_non_builtin(work_list, \
-				make_argv_with_node(work_list), info->envp, info);
+		if (excutable(work_list, make_argv_with_node(work_list), info->envp, info) == -1)
+		{
+			if (try_exec_builtin(work_list, info) == -1)
+			{
+				execute_non_builtin(work_list, \
+					make_argv_with_node(work_list), info->envp, info);
+			}
+		}
 		swap_pipe(info);
 		if (move_to_next_command_list(&work_list) == -1)
 			break ;
@@ -72,6 +77,7 @@ int	main(int argc, char **argv, char **envp)
 	t_list	*list;
 	t_list	*work_list;
 
+	printf("run minishell\n");
 	if (init_minishell(&info, envp, argc, argv) == -1)
 		return (-1);
 	info.exit_status = 0;

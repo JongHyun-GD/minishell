@@ -13,6 +13,7 @@ C_FILES		= cd.c							\
 			  echo.c						\
 			  env.c							\
 			  envp.c 						\
+			  executable.c					\
 			  execute_builtin.c				\
 			  execute_non_builtin.c			\
 			  export.c 						\
