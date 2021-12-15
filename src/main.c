@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/15 11:32:45 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/15 12:22:31 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	main(int argc, char **argv, char **envp)
 	t_list	*list;
 	t_list	*work_list;
 
-	printf("run minishell\n");
 	if (init_minishell(&info, envp, argc, argv) == -1)
 		return (-1);
 	info.exit_status = 0;
