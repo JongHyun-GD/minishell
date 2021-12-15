@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:35:07 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/13 18:47:41 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/15 17:06:38 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,25 @@ int	cd(t_list *list, t_info *info)
 	char	*path;
 
 	if (list->start_node->next == NULL)
-	{
 		path = dup_envp_value("HOME", info->envp);
-	}
 	else
 	{
 		path = list->start_node->next->data;
 		path = make_path(make_split_path(path, info));
 	}
 	flag = chdir(path);
+	free(path);
 	if (flag == -1 && list->start_node->next != NULL)
+	{
 		printf("minishell: cd: %s: No such file or directory\n",
 			list->start_node->next->data);
+		info->exit_status = 1;
+	}
 	else if (flag == -1 && list->start_node->next == NULL)
+	{
 		printf("minishell: cd: No home directory\n");
-	free(path);
+		info->exit_status = 1;
+	}
+	info->exit_status = 0;
 	return (0);
 }

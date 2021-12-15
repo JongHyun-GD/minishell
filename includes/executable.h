@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   executable.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 13:47:07 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/15 17:04:03 by dason            ###   ########.fr       */
+/*   Created: 2021/12/15 17:25:11 by dason             #+#    #+#             */
+/*   Updated: 2021/12/15 17:25:12 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/env.h"
+#ifndef EXECUTABLE_H
+# define EXECUTABLE_H
 
-int	env(t_info *info)
-{
-	int	i;
+# include "info.h"
+# include "list_node.h"
+# include "minishell.h"
 
-	i = 0;
-	while (info->envp[i])
-	{
-		printf("%s\n", info->envp[i]);
-		i++;
-	}
-	info->exit_status = 0;
-	return (0);
-}
+# include <stdio.h>
+# include <sys/wait.h>
+
+int		executable(t_list *work_list, char **argv, char **envp, t_info *info);
+
+#endif
