@@ -22,7 +22,6 @@ int	executable(t_list *list, char **argv, char **envp, t_info *info)
 	{
 		wait_pid = wait(&pid);
 		info->exit_status = get_exit_result(pid);
-		printf("exit status: %d\n", info->exit_status);
 		if (wait_pid < 0)
 			return (-1);
 		if (get_exit_result(pid) == 127)
