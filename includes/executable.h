@@ -1,5 +1,5 @@
 #ifndef EXECUTABLE_H
-# define EXCUTABLE_H
+# define EXECUTABLE_H
 
 # include "info.h"
 # include "list_node.h"
