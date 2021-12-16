@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:31:57 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/15 18:09:46 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/16 16:24:58 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	echo(t_list *list, t_info *info)
 		node = node->next;
 	}
 	if (has_n_flag == false)
-		printf("\n");
+		write(1, "\n", 1);
 	info->exit_status = 0;
 	return (0);
 }
