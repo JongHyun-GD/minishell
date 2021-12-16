@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 14:51:36 by dason             #+#    #+#             */
-/*   Updated: 2021/12/16 16:07:05 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/16 16:21:37 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*get_eof_input(void)
 	char	*buf;
 	char	*res;
 
-	res = readline("heredoc> ");
+	res = readline("> ");
 	if (res == NULL)
 	{
 		exit(1);
