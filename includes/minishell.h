@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:31 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/16 14:16:18 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/16 14:38:39 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char	*get_eof_input(void);
 /*
 **	EXECUTE
 */
+int		ft_exit(t_list *list, t_info* info);
 int		execute_non_builtin(\
 		t_list *list, char **argv, char **envp, t_info *info);
 

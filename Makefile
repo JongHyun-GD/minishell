@@ -16,6 +16,7 @@ C_FILES		= cd.c							\
 			  executable.c					\
 			  execute_builtin.c				\
 			  execute_non_builtin.c			\
+			  exit.c						\
 			  export.c 						\
 			  free.c						\
 			  get_next_line.c				\
