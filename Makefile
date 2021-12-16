@@ -1,7 +1,9 @@
 CFLAGS		= -Wall -Wextra -Werror -g
-LFLAGS		= -lreadline -L /usr/local/Cellar/readline/8.1.1/lib
+LFLAGS		= -lreadline -L/Users/dason/.brew/opt/readline/lib
 
-INC_LINK	= -I./includes/ -I/usr/local/Cellar/readline/8.1.1/include
+
+
+INC_LINK	= -I./includes/ -I/Users/dason/.brew/opt/readline/include
 
 LIBFT_NAME      = libft.a
 LIBFT_DIR       = ./libft/
