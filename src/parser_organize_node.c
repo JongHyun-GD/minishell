@@ -6,15 +6,16 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 13:09:19 by dason             #+#    #+#             */
-/*   Updated: 2021/12/14 11:13:26 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/16 13:24:59 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
 
-static char	*get_env_variable(char *s, int *i)
+static char	*get_env_value(char *s, int *i, t_info *info)
 {
-	char	*env;
+	char	*env_variable;
+	char	*env_value;
 	int		len;
 
 	len = 0;
@@ -23,23 +24,27 @@ static char	*get_env_variable(char *s, int *i)
 		if (s[len] == ' ' || s[len] == '\"' || s[len] == '\'')
 			break ;
 	}
-	env = ft_substr(s, 1, len - 1);
 	*i += (len - 1);
-	return (env);
+	env_variable = ft_substr(s, 1, len - 1);
+	if (*env_variable == '?')
+		env_value = ft_itoa(info->exit_status);
+	else
+	{
+		env_value = ft_strdup(getenv(env_variable));
+		if (env_value == NULL)
+			env_value = ft_strdup("");
+	}
+	free(env_variable);
+	return (env_value);
 }
 
 static char	*combine_nodedata_env(char *data, int *i, int *new_i, t_info *info)
 {
 	char	*new_data;
-	char	*env_variable;
 	char	*env_value;
 	size_t	size;
 
-	env_variable = get_env_variable(&data[*i], i);
-	if (*env_variable == '?')
-		env_value = ft_itoa(info->exit_status);
-	else
-		env_value = ft_strdup(getenv(env_variable));
+	env_value = get_env_value(&data[*i], i, info);
 	size = ft_strlen(data) + \
 		   ft_strlen(env_value) + ft_strlen(info->current_node->data);
 	new_data = (char *)ft_calloc(size, sizeof(char));
@@ -48,7 +53,6 @@ static char	*combine_nodedata_env(char *data, int *i, int *new_i, t_info *info)
 	ft_strlcat(new_data, info->current_node->data, \
 		ft_strlen(info->current_node->data) + 1);
 	ft_strlcat(new_data, env_value, size);
-	free(env_variable);
 	free(env_value);
 	(*new_i) = ft_strlen(new_data);
 	return (new_data);
@@ -75,7 +79,6 @@ static void	process_quote_in_node(char *data, int *i, int *new_i, t_info *info)
 	}
 }
 
-// TODO: echo "Hello $? World"
 void	when_quote_organize_node(t_list *list, t_info *info)
 {
 	char	*data;
