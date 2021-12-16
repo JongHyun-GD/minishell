@@ -38,6 +38,7 @@ C_FILES		= cd.c							\
 			  pwd.c 						\
 			  redirect.c					\
 			  set_signal.c					\
+			  set_signal2.c					\
 			  unset.c 						\
 			  utils.c
 
@@ -59,7 +60,7 @@ clean		:
 	@make clean -C $(LIBFT_DIR)
 	rm -f $(OBJS)
 
-fclean		:
+fclean		: clean
 	@make fclean -C $(LIBFT_DIR)
 	rm -f $(NAME)
 

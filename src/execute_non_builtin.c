@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_non_builtin.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/15 17:24:52 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/16 13:32:39 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 	pid_t	wait_pid;
 
 	pid = fork();
+	set_signal_non_built_in();
 	if (pid < 0)
 		return (-1);
 	if (pid == 0)
@@ -102,6 +103,7 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 	else
 	{
 		wait_pid = wait(&pid);
+		set_signal_parent();
 		info->exit_status = get_exit_result(pid);
 		if (wait_pid < 0)
 			return (-1);

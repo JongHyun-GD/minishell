@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_signal.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 14:57:50 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/15 14:58:07 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/16 13:43:56 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,28 @@ void	handle_signal(int sig)
 	}
 }
 
+void	handle_signal_non_builtin(int signo)
+{
+	if (signo == SIGQUIT)
+	{
+		printf("^\\Quit: 3\n");
+	}
+	if (signo == SIGINT)
+	{
+		printf("^C\n");
+	}
+}
+
 void	set_signal_child(void)
 {
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	set_signal_parent(void)
+void	set_signal_non_built_in(void)
 {
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_signal_non_builtin);
+	signal(SIGQUIT, handle_signal_non_builtin);
 }
 
 void	set_stty(t_info *info)
@@ -41,5 +53,5 @@ void	set_stty(t_info *info)
 	tcgetattr(STDOUT_FILENO, &info->orig_term);
 	tcgetattr(STDOUT_FILENO, &info->new_term);
 	info->new_term.c_lflag &= (~ECHOCTL);
-	tcsetattr(STDOUT_FILENO, TCSAFLUSH, &info->new_term);
+	tcsetattr(STDOUT_FILENO, TCSANOW, &info->new_term);
 }

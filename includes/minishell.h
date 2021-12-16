@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:31 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/15 09:55:36 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/15 18:19:15 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int		execute_non_builtin(\
 void	handle_signal(int sig);
 void	set_signal_child(void);
 void	set_signal_parent(void);
+void	set_signal_non_built_in(void);
 void	set_stty(t_info *info);
 
 /*
