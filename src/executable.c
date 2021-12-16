@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 17:19:46 by dason             #+#    #+#             */
-/*   Updated: 2021/12/15 17:23:32 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/16 14:47:12 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ int	executable(t_list *list, char **argv, char **envp, t_info *info)
 	{
 		if (ft_strchr(list->start_node->data, '/'))
 		{
-			preprocess(list, info);
-			execve(argv[0], argv, envp);
+			if (preprocess(list, info) == 0)
+				execve(argv[0], argv, envp);
+			else
+				exit(1);
 		}
 		exit(127);
 	}

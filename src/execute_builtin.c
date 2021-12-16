@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:31:26 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/16 14:37:48 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/16 14:46:04 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ void	exec_builtin(t_list *list, t_info *info)
 	else if (ft_strncmp(list->start_node->data, "echo", 5) == 0)
 		echo(list, info);
 	else if (ft_strncmp(list->start_node->data, "exit", 5) == 0)
-	{
 		ft_exit(list, info);
-	}
 }
 
 int	try_exec_builtin(t_list *list, t_info *info)
