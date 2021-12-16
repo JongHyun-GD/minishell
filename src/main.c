@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/15 18:20:48 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/16 14:00:22 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		input = get_user_input(&info);
+		add_history(input);
 		if (is_valid_input(input) == false)
 			continue ;
 		if (parser(&list, ft_strdup(input), &info) != -1)
@@ -91,7 +92,6 @@ int	main(int argc, char **argv, char **envp)
 			work_list = list;
 			run(work_list, &info);
 		}
-		add_history(input);
 		free(input);
 		free_list_node(&list);
 	}
