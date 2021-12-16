@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:31 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/15 18:19:15 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/16 14:16:18 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,10 @@ char	*get_eof_input(void);
 /*
 **	preprocess
 */
-void	preprocess(t_list *list, t_info *info);
+int		preprocess(t_list *list, t_info *info);
 void	preprocess_pipe_write(t_info *info);
 void	preprocess_pipe_read(t_info *info);
-void	preprocess_l1(t_info *info);
+int		preprocess_l1(t_info *info);
 void	preprocess_l2(t_info *info);
 void	preprocess_r1(t_info *info);
 void	preprocess_r2(t_info *info);

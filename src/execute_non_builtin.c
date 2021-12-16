@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/16 13:32:39 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/16 14:18:01 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,9 @@ int	execute_non_builtin(t_list *list, char **argv, char **envp, t_info *info)
 		return (-1);
 	if (pid == 0)
 	{
-		preprocess(list, info);
-		execute(argv, envp);
+		if (preprocess(list, info) == 0)
+			execute(argv, envp);
+		exit(1);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 09:56:07 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/13 10:21:05 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/16 14:17:16 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,23 @@ void	preprocess_pipe_write(t_info *info)
 	close(info->pipe_in[WRITE_END]);
 }
 
-void	preprocess_l1(t_info *info)
+int	preprocess_l1(t_info *info)
 {
 	int	fd;
 
 	fd = open(info->l1_path, O_RDONLY);
 	if (fd > 0)
 	{
+		printf("l1 success!\n");
 		dup2(fd, STDIN_FILENO);
 		close(fd);
+		return (0);
 	}
 	else
-		printf("minishell: no such file or directory: %s", info->l1_path);
+	{
+		printf("minishell: no such file or directory: %s\n", info->l1_path);
+		return (1);
+	}
 }
 
 void	preprocess_l2(t_info *info)
