@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/16 14:00:22 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/16 16:18:30 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,29 +71,39 @@ void	run(t_list *work_list, t_info *info)
 	}
 }
 
+void	parse_and_run(t_info *info, char *input)
+{
+	t_list	*list;
+	t_list	*work_list;
+
+	if (parser(&list, ft_strdup(input), info) != -1)
+	{
+		work_list = list;
+		run(work_list, info);
+	}
+	free(input);
+	free_list_node(&list);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
 	t_info	info;
-	t_list	*list;
-	t_list	*work_list;
 
 	if (init_minishell(&info, envp, argc, argv) == -1)
 		return (-1);
-	info.exit_status = 0;
 	while (true)
 	{
 		input = get_user_input(&info);
-		add_history(input);
-		if (is_valid_input(input) == false)
-			continue ;
-		if (parser(&list, ft_strdup(input), &info) != -1)
+		if (input == NULL)
+			printf("\n");
+		else
 		{
-			work_list = list;
-			run(work_list, &info);
+			add_history(input);
+			if (is_valid_input(input) == false)
+				continue ;
+			parse_and_run(&info, input);
 		}
-		free(input);
-		free_list_node(&list);
 	}
 	return (0);
 }

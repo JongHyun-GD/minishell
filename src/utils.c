@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 14:51:36 by dason             #+#    #+#             */
-/*   Updated: 2021/12/13 10:08:26 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/16 16:07:05 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@ bool	is_blank(char *str)
 
 bool	is_valid_input(char *str)
 {
-	if (str == NULL)
-	{
-		printf("\n");
-		return (false);
-	}
 	if (ft_strlen(str) == 0 || is_blank(str))
 	{
 		free(str);
