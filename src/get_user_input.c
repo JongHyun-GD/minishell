@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   get_user_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 14:59:56 by jongpark          #+#    #+#             */
-/*   Updated: 2021/11/22 11:07:54 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/16 13:48:46 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_prompt(void)
+char	*make_prompt(void)
 {
 	char	cwd_path[PATH_LENGTH];
 
-	printf("%s", getcwd(cwd_path, PATH_LENGTH));
+	return (ft_strjoin(getcwd(cwd_path, PATH_LENGTH), " > "));
 }
 
 int	get_exit_result(int stat)
@@ -27,10 +27,12 @@ int	get_exit_result(int stat)
 void	readline_child(int *ipc_pipe)
 {
 	char	*buf;
+	char	*prompt;
 
 	set_signal_child();
-	print_prompt();
-	buf = readline(" > ");
+	prompt = make_prompt();
+	buf = readline(prompt);
+	free(prompt);
 	if (buf == NULL)
 		exit(STAT_CTRL_D);
 	write(ipc_pipe[1], buf, ft_strlen(buf) + 1);
