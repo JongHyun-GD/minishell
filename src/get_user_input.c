@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_user_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 14:59:56 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/16 14:00:07 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/16 14:55:48 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ char	*get_user_input(t_info *info)
 	pipe(ipc_pipe);
 	pid = fork();
 	if (pid == 0)
+	{
+		set_stty(info);
 		readline_child(ipc_pipe);
+	}
 	else if (pid > 0)
 		return (wait_child(ipc_pipe, info));
 	else
