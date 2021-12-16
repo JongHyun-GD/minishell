@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:35:07 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/15 17:06:38 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/16 15:44:54 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cd.h"
 
-char	*make_path(char **split_path)
+char	*join_split_path(char **split_path)
 {
 	char	*path;
 	size_t	total_size;
@@ -53,18 +53,28 @@ char	**make_split_path(char *path, t_info *info)
 	return (split_path);
 }
 
+char	*make_path(t_list *list, t_info *info)
+{
+	char	*path;
+
+	if (list->start_node->next == NULL)
+		path = dup_envp_value("HOME", info->envp);
+	else if (list->start_node->next->data[0] == '/')
+		path = ft_strdup(list->start_node->next->data);
+	else
+	{
+		path = list->start_node->next->data;
+		path = join_split_path(make_split_path(path, info));
+	}
+	return (path);
+}
+
 int	cd(t_list *list, t_info *info)
 {
 	int		flag;
 	char	*path;
 
-	if (list->start_node->next == NULL)
-		path = dup_envp_value("HOME", info->envp);
-	else
-	{
-		path = list->start_node->next->data;
-		path = make_path(make_split_path(path, info));
-	}
+	path = make_path(list, info);
 	flag = chdir(path);
 	free(path);
 	if (flag == -1 && list->start_node->next != NULL)

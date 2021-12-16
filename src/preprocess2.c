@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 10:03:07 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/16 14:15:49 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/16 15:47:13 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	preprocess_pipe_read(t_info *info)
 	close(info->pipe_out[READ_END]);
 }
 
-int		preprocess(t_list *list, t_info *info)
+int	preprocess(t_list *list, t_info *info)
 {
 	if (info->has_pipe_in)
 		preprocess_pipe_write(info);

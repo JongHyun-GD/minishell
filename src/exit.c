@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 14:25:43 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/16 14:41:42 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/16 15:48:08 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_isnumeric(char *str)
 	return (1);
 }
 
-int	ft_exit(t_list *list, t_info* info)
+int	ft_exit(t_list *list, t_info *info)
 {
 	printf("exit\n");
 	if (list->start_node->next == NULL)
@@ -44,5 +44,4 @@ int	ft_exit(t_list *list, t_info* info)
 			list->start_node->next->data);
 		exit(255);
 	}
-
 }

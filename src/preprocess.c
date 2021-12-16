@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 09:56:07 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/16 14:17:16 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/16 15:46:50 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	preprocess_l1(t_info *info)
 	fd = open(info->l1_path, O_RDONLY);
 	if (fd > 0)
 	{
-		printf("l1 success!\n");
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 		return (0);
