@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/17 11:45:43 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/17 14:06:00 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ void	run(t_list *work_list, t_info *info)
 	while (work_list)
 	{
 		handle_redirect(work_list, info);
-		if (executable(work_list, make_argv_with_node(work_list), \
-				info->envp, info) == -1)
+		if (executable(work_list, info->envp, info) == -1)
 		{
 			if (try_exec_builtin(work_list, info) == -1)
 			{
