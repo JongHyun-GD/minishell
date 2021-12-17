@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 14:59:56 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/16 15:10:32 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/17 12:13:07 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,13 @@ char	*make_prompt(void)
 
 int	get_exit_result(int stat)
 {
-	return (stat >> 8);
+	int	result;
+
+	if ((stat & 255) > 0)
+		result = (stat & 255) + 128;
+	else
+		result = stat >> 8;
+	return (result);
 }
 
 void	readline_child(int *ipc_pipe)

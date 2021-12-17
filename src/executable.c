@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executable.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 17:19:46 by dason             #+#    #+#             */
-/*   Updated: 2021/12/16 15:55:58 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/17 12:09:41 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	executable(t_list *list, char **argv, char **envp, t_info *info)
 	pid_t	wait_pid;
 
 	pid = fork();
+	set_signal_non_built_in();
 	if (pid < 0)
 		return (-1);
 	if (pid == 0)
@@ -39,6 +40,7 @@ int	executable(t_list *list, char **argv, char **envp, t_info *info)
 	else
 	{
 		wait_pid = wait(&pid);
+		set_signal_parent();
 		info->exit_status = get_exit_result(pid);
 		if (wait_pid < 0 || info->exit_status == 127)
 			return (-1);
