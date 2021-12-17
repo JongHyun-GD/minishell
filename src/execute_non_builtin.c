@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/17 12:11:43 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/17 12:14:54 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,39 +49,48 @@ void	add_pipe_to_argv(char ***argv, t_info *info)
 	*argv = new_argv;
 }
 
-static void	add_slash_to_str(char **s)
+static void	when_is_path_run(char **argv, char **envp, char **paths)
 {
 	char	*new_s;
+	char	*command;
+	int		i;
 
-	new_s = ft_strjoin(*s, "/");
-	free(*s);
-	*s = new_s;
+	i = -1;
+	while (paths[++i])
+	{
+		if (paths[i][ft_strlen(paths[i]) - 1] != '/')
+		{
+			new_s = ft_strjoin(paths[i], "/");
+			free(paths[i]);
+			paths[i] = new_s;
+		}
+		command = make_command(argv, paths[i]);
+		execve(command, argv, envp);
+		free(command);
+	}
 }
 
 static int	execute(char **argv, char **envp)
 {
 	char	**paths;
 	int		i;
-	size_t	len;
-	char	*command;
+	bool	is_path;
 
+	is_path = false;
 	i = -1;
 	while (envp[++i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
 			paths = ft_split(&envp[i][5], ':');
+			is_path = true;
+		}
 	}
-	i = -1;
-	while (paths[++i])
+	if (is_path == true)
 	{
-		len = ft_strlen(paths[i]);
-		if (paths[i][len - 1] != '/')
-			add_slash_to_str(&paths[i]);
-		command = make_command(argv, paths[i]);
-		execve(command, argv, envp);
-		free(command);
+		when_is_path_run(argv, envp, paths);
+		free_double_pointer(&paths);
 	}
-	free_double_pointer(&paths);
 	printf("minishell: %s: command not found\n", argv[0]);
 	exit(127);
 }
