@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/17 13:35:52 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/17 13:39:39 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*make_command(char	**argv, char *location)
 	command_length = strlen(argv[0]) + ft_strlen(location) + 1;
 	command = (char *)ft_calloc(command_length, 1);
 	if (command == NULL)
-		return NULL;
+		return (NULL);
 	ft_strlcpy(command, location, command_length);
 	ft_strlcat(command, argv[0], command_length);
 	return (command);
