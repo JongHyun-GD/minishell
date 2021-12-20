@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 14:25:43 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/16 15:48:08 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/20 15:56:19 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_isnumeric(char *str)
 	i = -1;
 	while (str[++i])
 	{
+		if (i == 0 && str[i] == '-' && ft_strlen(str) > 1)
+			continue ;
 		if (ft_isdigit(str[i]) != 1)
 			return (0);
 	}
@@ -37,7 +39,7 @@ int	ft_exit(t_list *list, t_info *info)
 		return (1);
 	}
 	if (list->start_node->next && ft_isnumeric(list->start_node->next->data))
-		exit(ft_atoi(list->start_node->next->data));
+		exit(ft_atoi(list->start_node->next->data) & 0377);
 	else
 	{
 		printf("minishell: exit: %s: numeric argument required\n",
