@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:03:08 by dason             #+#    #+#             */
-/*   Updated: 2021/12/20 14:39:05 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/20 14:48:12 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,10 @@ char	*ft_getenv(char **envp, char *env_variable)
 	while (envp[++i])
 	{
 		if (!ft_strncmp(env_variable, envp[i], ft_strlen(env_variable)))
-			break ;
+		{
+			env_value = ft_strdup(&envp[i][ft_strlen(env_variable) + 1]);
+			return (env_value);
+		}
 	}
-	env_value = ft_strdup(&envp[i][ft_strlen(env_variable) + 1]);
-	return (env_value);
+	return (NULL);
 }

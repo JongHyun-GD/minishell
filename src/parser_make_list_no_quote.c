@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/20 14:40:58 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/20 14:48:28 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*process_get_env_value(char *str, t_info *info, int *i)
 	while (str[len] != '\0' && (ft_isalnum(str[len]) || str[len] == '_'))
 		len++;
 	if (len == 1)
-		return (0);
+		return (NULL);
 	*i += len;
 	env_variable = ft_substr(str, 1, len - 1);
 	if (!env_variable)
@@ -34,8 +34,8 @@ static char	*process_get_env_value(char *str, t_info *info, int *i)
 	{
 		get_env = ft_getenv(info->envp, env_variable);
 		free(env_variable);
-		if (!get_env)
-			return (0);
+		if (get_env == NULL)
+			return (NULL);
 		env_value = ft_strdup(get_env);
 	}
 	return (env_value);
@@ -52,11 +52,12 @@ static char	*progress_combine_str(char *lexer, char *str, \
 	if (!new_str)
 		exit(1);
 	*new_i = ft_strlcat(new_str, str, size) - 1;
-	if (env_value != NULL)
-		*new_i = ft_strlcat(new_str, env_value, size) - 1;
 	free(str);
 	if (env_value != NULL)
+	{
+		*new_i = ft_strlcat(new_str, env_value, size) - 1;
 		free(env_value);
+	}
 	return (new_str);
 }
 
