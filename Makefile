@@ -1,8 +1,6 @@
 CFLAGS		= -Wall -Wextra -Werror -g
 LFLAGS		= -lreadline -L/Users/dason/.brew/opt/readline/lib
 
-
-
 INC_LINK	= -I./includes/ -I/Users/dason/.brew/opt/readline/include
 
 LIBFT_NAME      = libft.a
