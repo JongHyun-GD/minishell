@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/20 13:43:41 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/20 14:40:58 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ static char	*process_get_env_value(char *str, t_info *info, int *i)
 	int		len;
 
 	len = 1;
-	while (str[len] && str[len] != '\0' && ft_isalnum(str[len]))
+	while (str[len] != '\0' && (ft_isalnum(str[len]) || str[len] == '_'))
 		len++;
+	if (len == 1)
+		return (0);
 	*i += len;
 	env_variable = ft_substr(str, 1, len - 1);
 	if (!env_variable)
@@ -30,7 +32,7 @@ static char	*process_get_env_value(char *str, t_info *info, int *i)
 		env_value = ft_itoa(info->exit_status);
 	else
 	{
-		get_env = getenv(env_variable);
+		get_env = ft_getenv(info->envp, env_variable);
 		free(env_variable);
 		if (!get_env)
 			return (0);
@@ -53,7 +55,8 @@ static char	*progress_combine_str(char *lexer, char *str, \
 	if (env_value != NULL)
 		*new_i = ft_strlcat(new_str, env_value, size) - 1;
 	free(str);
-	free(env_value);
+	if (env_value != NULL)
+		free(env_value);
 	return (new_str);
 }
 

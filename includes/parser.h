@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:48:10 by dason             #+#    #+#             */
-/*   Updated: 2021/12/13 15:19:45 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/20 14:28:09 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ int		get_ltype(char *s);
 bool	is_quote(char c);
 bool	is_ltype_redirect(char *s);
 int		get_num_of_redirect(char *s);
+char	*ft_getenv(char **envp, char *env_variable);
 
 #endif

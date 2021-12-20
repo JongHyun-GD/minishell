@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 13:09:19 by dason             #+#    #+#             */
-/*   Updated: 2021/12/16 13:24:59 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/20 14:37:16 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*get_env_value(char *s, int *i, t_info *info)
 		env_value = ft_itoa(info->exit_status);
 	else
 	{
-		env_value = ft_strdup(getenv(env_variable));
+		env_value = ft_strdup(ft_getenv(info->envp, env_variable));
 		if (env_value == NULL)
 			env_value = ft_strdup("");
 	}
