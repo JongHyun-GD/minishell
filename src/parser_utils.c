@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:03:08 by dason             #+#    #+#             */
-/*   Updated: 2021/12/20 13:44:24 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/20 14:48:12 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,21 @@ int	get_num_of_redirect(char *s)
 		}
 	}
 	return (count);
+}
+
+char	*ft_getenv(char **envp, char *env_variable)
+{
+	char	*env_value;
+	int		i;
+
+	i = -1;
+	while (envp[++i])
+	{
+		if (!ft_strncmp(env_variable, envp[i], ft_strlen(env_variable)))
+		{
+			env_value = ft_strdup(&envp[i][ft_strlen(env_variable) + 1]);
+			return (env_value);
+		}
+	}
+	return (NULL);
 }
