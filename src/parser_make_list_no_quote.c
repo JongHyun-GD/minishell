@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/20 14:48:28 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/20 15:36:25 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*process_get_env_value(char *str, t_info *info, int *i)
 	int		len;
 
 	len = 1;
-	while (str[len] != '\0' && (ft_isalnum(str[len]) || str[len] == '_'))
+	while (str[len] != '\0' && (ft_isalnum(str[len]) || str[len] == '_' || str[len] == '?'))
 		len++;
 	if (len == 1)
 		return (NULL);
@@ -36,7 +36,7 @@ static char	*process_get_env_value(char *str, t_info *info, int *i)
 		free(env_variable);
 		if (get_env == NULL)
 			return (NULL);
-		env_value = ft_strdup(get_env);
+		env_value = get_env;
 	}
 	return (env_value);
 }
@@ -61,7 +61,7 @@ static char	*progress_combine_str(char *lexer, char *str, \
 	return (new_str);
 }
 
-static void	progress_organize_node(t_list *new_list, char *lexer, t_info *info)
+static char *progress_organize_node(char *lexer, t_info *info)
 {
 	char	*new_str;
 	char	*env_value;
@@ -82,9 +82,8 @@ static void	progress_organize_node(t_list *new_list, char *lexer, t_info *info)
 		}
 		new_str[++new_i] = lexer[i];
 	}
-	ft_nodeadd_back(new_list->start_node, \
-		ft_create_node(NTYPE_STRING, ft_strdup(new_str)));
-	free(new_str);
+	free(lexer);
+	return (new_str);
 }
 
 static t_list	*progress_create_new_list(char **lexer, int i)
@@ -108,6 +107,7 @@ void	make_list_no_quote(t_list **list, char **lexer, t_info *info)
 	i = -1;
 	while (lexer[++i])
 	{
+		lexer[i] = progress_organize_node(lexer[i], info);
 		if (i == 0 || (get_ltype(lexer[i - 1]) != LTYPE_COMMAND && \
 			get_ltype(lexer[i]) == LTYPE_COMMAND))
 		{
@@ -120,6 +120,7 @@ void	make_list_no_quote(t_list **list, char **lexer, t_info *info)
 		else if (get_ltype(lexer[i]) != LTYPE_COMMAND)
 			ft_lstadd_back(*list, ft_create_list(get_ltype(lexer[i]), NULL));
 		else
-			progress_organize_node(new_list, lexer[i], info);
+			ft_nodeadd_back(new_list->start_node, \
+				ft_create_node(NTYPE_STRING, ft_strdup(lexer[i])));
 	}
 }
