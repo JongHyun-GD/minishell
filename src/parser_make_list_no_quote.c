@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/20 12:11:56 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/20 12:17:01 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static void	progress_organize_node(t_list *new_list, char *lexer, t_info *info)
 	}
 	ft_nodeadd_back(new_list->start_node, \
 		ft_create_node(NTYPE_STRING, ft_strdup(new_str)));
+	free(new_str);
 }
 
 static t_list	*progress_create_new_list(char **lexer, int i)
