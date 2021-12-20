@@ -6,14 +6,17 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 17:19:46 by dason             #+#    #+#             */
-/*   Updated: 2021/12/17 13:58:20 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/20 12:14:09 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/executable.h"
 
-void	excutable_child(t_list *list, char **argv, char **envp, t_info *info)
+void	excutable_child(t_list *list, char **envp, t_info *info)
 {
+	char	**argv;
+
+	argv = make_argv_with_node(list);
 	if (ft_strchr(list->start_node->data, '/'))
 	{
 		if (preprocess(list, info) == 0)
@@ -24,7 +27,7 @@ void	excutable_child(t_list *list, char **argv, char **envp, t_info *info)
 	exit(127);
 }
 
-int	executable(t_list *list, char **argv, char **envp, t_info *info)
+int	executable(t_list *list, char **envp, t_info *info)
 {
 	pid_t	pid;
 	pid_t	wait_pid;
@@ -35,7 +38,7 @@ int	executable(t_list *list, char **argv, char **envp, t_info *info)
 		return (-1);
 	if (pid == 0)
 	{
-		excutable_child(list, argv, envp, info);
+		excutable_child(list, envp, info);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:31 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/16 15:48:37 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/17 14:06:16 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 **	MAIN
 */
 int		init_minishell(t_info *info, char **envp, int argc, char **argv);
+char	**make_argv_with_node(t_list *list);
 
 /*
 **	UTILS
