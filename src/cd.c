@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 14:35:07 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/16 15:44:54 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/20 16:05:40 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	cd(t_list *list, t_info *info)
 	path = make_path(list, info);
 	flag = chdir(path);
 	free(path);
+	info->exit_status = 0;
 	if (flag == -1 && list->start_node->next != NULL)
 	{
 		printf("minishell: cd: %s: No such file or directory\n",
@@ -88,6 +89,5 @@ int	cd(t_list *list, t_info *info)
 		printf("minishell: cd: No home directory\n");
 		info->exit_status = 1;
 	}
-	info->exit_status = 0;
 	return (0);
 }
