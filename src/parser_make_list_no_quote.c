@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/20 15:36:25 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/20 15:42:10 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ static char	*process_get_env_value(char *str, t_info *info, int *i)
 {
 	char	*env_value;
 	char	*env_variable;
-	char	*get_env;
 	int		len;
 
 	len = 1;
-	while (str[len] != '\0' && (ft_isalnum(str[len]) || str[len] == '_' || str[len] == '?'))
+	while (str[len] != '\0' && \
+		(ft_isalnum(str[len]) || str[len] == '_' || str[len] == '?'))
 		len++;
 	if (len == 1)
 		return (NULL);
@@ -32,11 +32,10 @@ static char	*process_get_env_value(char *str, t_info *info, int *i)
 		env_value = ft_itoa(info->exit_status);
 	else
 	{
-		get_env = ft_getenv(info->envp, env_variable);
+		env_value = ft_getenv(info->envp, env_variable);
 		free(env_variable);
-		if (get_env == NULL)
+		if (env_value == NULL)
 			return (NULL);
-		env_value = get_env;
 	}
 	return (env_value);
 }
@@ -61,7 +60,7 @@ static char	*progress_combine_str(char *lexer, char *str, \
 	return (new_str);
 }
 
-static char *progress_organize_node(char *lexer, t_info *info)
+static char	*progress_organize_node(char *lexer, t_info *info)
 {
 	char	*new_str;
 	char	*env_value;
