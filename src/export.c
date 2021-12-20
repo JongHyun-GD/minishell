@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:39:39 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/15 17:03:45 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/20 15:05:51 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,35 @@ int	add_envp(char *var, char **envp, t_info *info)
 	return (0);
 }
 
+bool	has_key_value(const char *str)
+{
+	char	**str_split;
+	int		size;
+
+	str_split = ft_split(str, '=');
+	size = 0;
+	while (str_split[size])
+		size++;
+	free_double_pointer(&str_split);
+	if (size >= 2)
+		return (true);
+	else
+		return (false);
+}
+
 int	ft_export(t_list *list, t_info *info)
 {
 	t_node	*node;
 	int		res;
+	int		stat;
 
 	if (list->l_type != LTYPE_COMMAND)
 		return (-1);
 	node = list->start_node->next;
+	stat = 0;
 	while (node != 0)
 	{
-		if (has_equal(node->data))
+		if (has_equal(node->data) && has_key_value(node->data))
 		{
 			res = remove_envp(node->data, info->envp, info);
 			if (res == -1)
@@ -102,8 +120,13 @@ int	ft_export(t_list *list, t_info *info)
 			if (res == -1)
 				return (1);
 		}
+		else
+		{
+			printf("minishell: export: `%s': not a valid identifier\n", node->data);
+			stat = 1;
+		}
 		node = node->next;
 	}
-	info->exit_status = 0;
+	info->exit_status = stat;
 	return (0);
 }
