@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:39:39 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/20 15:05:51 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/20 15:22:35 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	remove_envp(char *data, char **envp, t_info *info)
 		{
 			res = remove_envp_index(i, envp, info);
 			if (res == -1)
-				return (-1);
+				return (1);
 			break ;
 		}
 	}
@@ -68,7 +68,7 @@ int	add_envp(char *var, char **envp, t_info *info)
 
 	dup_var = ft_strdup(var);
 	if (dup_var == NULL)
-		return (-1);
+		return (1);
 	i = -1;
 	while (envp[++i])
 		;
@@ -102,7 +102,6 @@ bool	has_key_value(const char *str)
 int	ft_export(t_list *list, t_info *info)
 {
 	t_node	*node;
-	int		res;
 	int		stat;
 
 	if (list->l_type != LTYPE_COMMAND)
@@ -113,16 +112,14 @@ int	ft_export(t_list *list, t_info *info)
 	{
 		if (has_equal(node->data) && has_key_value(node->data))
 		{
-			res = remove_envp(node->data, info->envp, info);
-			if (res == -1)
-				return (1);
-			res = add_envp(node->data, info->envp, info);
-			if (res == -1)
+			if (remove_envp(node->data, info->envp, info)
+				|| add_envp(node->data, info->envp, info))
 				return (1);
 		}
 		else
 		{
-			printf("minishell: export: `%s': not a valid identifier\n", node->data);
+			printf("minishell: export: `%s': not a valid identifier\n",
+				node->data);
 			stat = 1;
 		}
 		node = node->next;
