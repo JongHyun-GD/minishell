@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/20 12:17:01 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/20 13:43:41 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static char	*process_get_env_value(char *str, t_info *info, int *i)
 	char	*get_env;
 	int		len;
 
-	len = 0;
-	while (str[len] != '\0' && str[len] != '=')
+	len = 1;
+	while (str[len] && str[len] != '\0' && ft_isalnum(str[len]))
 		len++;
 	*i += len;
 	env_variable = ft_substr(str, 1, len - 1);
@@ -39,12 +39,13 @@ static char	*process_get_env_value(char *str, t_info *info, int *i)
 	return (env_value);
 }
 
-static char	*progress_combine_str(char *lexer, char *str, char *env_value, int *new_i)
+static char	*progress_combine_str(char *lexer, char *str, \
+	char *env_value, int *new_i)
 {
 	char	*new_str;
 	size_t	size;
 
-	size = ft_strlen(lexer) + ft_strlen(str) + ft_strlen(env_value)+ 1;
+	size = ft_strlen(lexer) + ft_strlen(str) + ft_strlen(env_value) + 1;
 	new_str = (char *)calloc(size, sizeof(char));
 	if (!new_str)
 		exit(1);
