@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 14:25:43 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/20 15:56:19 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/21 17:27:53 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	ft_isnumeric(char *str)
 int	ft_exit(t_list *list, t_info *info)
 {
 	printf("exit\n");
-	if (list->start_node->next == NULL)
-		exit(0);
+	if (list == NULL || list->start_node->next == NULL)
+		exit(info->exit_status);
 	if (list->start_node->next->next != NULL)
 	{
 		printf("minishell: exit: too many arguments\n");
