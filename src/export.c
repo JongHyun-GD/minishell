@@ -6,7 +6,7 @@
 /*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:39:39 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/21 16:22:14 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/21 16:26:48 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,13 @@ int	divide_key_value(const char *str)
 	int		i;
 
 	i = -1;
-	while(str[++i] != '=' && str[i])
+	while (str[++i] != '=' && str[i])
 		;
 	if (i == 0)
-		return 1;
+		return (1);
 	if (str[i] == 0)
-		return 2;
-	return 0;
+		return (2);
+	return (0);
 }
 
 int	ft_export(t_list *list, t_info *info)
@@ -103,8 +103,6 @@ int	ft_export(t_list *list, t_info *info)
 	int		stat;
 	id_t	res;
 
-	if (list->l_type != LTYPE_COMMAND)
-		return (-1);
 	node = list->start_node->next;
 	stat = 0;
 	while (node != 0)
