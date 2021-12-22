@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:43:10 by dason             #+#    #+#             */
-/*   Updated: 2021/12/22 15:43:34 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/22 16:06:39 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,13 @@ static char	*get_env_variable(char *str, int *i)
 				break ;
 			len++;
 		}
+		if (len == 1)
+		{
+			*i += 1;
+			return (NULL);
+		}
 	}
 	*i += len;
-	if (len == 1)
-		return (ft_strdup("$"));
 	env_variable = ft_substr(str, 1, len - 1);
 	return (env_variable);
 }
@@ -61,10 +64,18 @@ char	*get_env_value(char *str, t_info *info, int *i)
 	char	*env_variable;
 
 	env_variable = get_env_variable(str, i);
-	if (!env_variable)
-		exit(1);
-	if (*env_variable == '?')
+	if (env_variable == NULL)
+	{
+		env_value = ft_strdup("$");
+		if (!env_value)
+			exit (1);
+	}
+	else if (*env_variable == '?')
+	{
 		env_value = ft_itoa(info->exit_status);
+		if (!env_value)
+			exit (1);
+	}
 	else
 	{
 		env_value = ft_getenv(info->envp, env_variable);
