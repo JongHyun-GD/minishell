@@ -6,39 +6,11 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/22 12:11:06 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/22 15:34:21 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
-
-static char	*process_get_env_value(char *str, t_info *info, int *i)
-{
-	char	*env_value;
-	char	*env_variable;
-	int		len;
-
-	len = 1;
-	while (str[len] != '\0' && \
-		(ft_isalnum(str[len]) || str[len] == '_' || str[len] == '?'))
-		len++;
-	if (len == 1)
-		return (NULL);
-	*i += len;
-	env_variable = ft_substr(str, 1, len - 1);
-	if (!env_variable)
-		exit(1);
-	if (*env_variable == '?' && *(env_variable + 1) == '\0')
-		env_value = ft_itoa(info->exit_status);
-	else
-	{
-		env_value = ft_getenv(info->envp, env_variable);
-		if (env_value == NULL)
-			return (NULL);
-	}
-	free(env_variable);
-	return (env_value);
-}
 
 static char	*progress_combine_str(char *lexer, char *str, \
 	char *env_value, int *new_i)
@@ -76,7 +48,7 @@ static char	*progress_organize_node(char *lexer, t_info *info)
 	{
 		if (lexer[i] == '$')
 		{
-			env_value = process_get_env_value(&lexer[i], info, &i);
+			env_value = get_env_value(&lexer[i], info, &i);
 			new_str = progress_combine_str(lexer, new_str, env_value, &new_i);
 		}
 		else

@@ -32,6 +32,7 @@ C_FILES		= cd.c							\
 			  parser_organize_node.c		\
 			  parser_organize_str.c			\
 			  parser_utils.c				\
+			  parser_utils2.c				\
 			  postprocess.c					\
 			  preprocess.c					\
 			  preprocess2.c					\
