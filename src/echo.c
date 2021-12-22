@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 10:31:57 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/16 16:24:58 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/22 10:45:47 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,15 @@ int	echo(t_list *list, t_info *info)
 		return (-1);
 	node = check_flag(list->start_node, &has_n_flag);
 	node_count = 0;
-	while (node && ++node_count)
+	while (node)
 	{
-		if (node_count != 1)
-			write(STDOUT_FILENO, " ", 1);
-		write(STDOUT_FILENO, node->data, ft_strlen(node->data));
+		if (ft_strlen(node->data))
+		{
+			if (node_count != 0)
+				write(STDOUT_FILENO, " ", 1);
+			write(STDOUT_FILENO, node->data, ft_strlen(node->data));
+			++node_count;
+		}
 		node = node->next;
 	}
 	if (has_n_flag == false)
