@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/20 15:42:10 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/22 12:11:06 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static char	*process_get_env_value(char *str, t_info *info, int *i)
 	else
 	{
 		env_value = ft_getenv(info->envp, env_variable);
-		free(env_variable);
 		if (env_value == NULL)
 			return (NULL);
 	}
+	free(env_variable);
 	return (env_value);
 }
 
@@ -71,15 +71,16 @@ static char	*progress_organize_node(char *lexer, t_info *info)
 	if (!new_str)
 		exit(1);
 	new_i = -1;
-	i = -1;
-	while (lexer[++i])
+	i = 0;
+	while (lexer[i])
 	{
 		if (lexer[i] == '$')
 		{
 			env_value = process_get_env_value(&lexer[i], info, &i);
 			new_str = progress_combine_str(lexer, new_str, env_value, &new_i);
 		}
-		new_str[++new_i] = lexer[i];
+		else
+			new_str[++new_i] = lexer[i++];
 	}
 	free(lexer);
 	return (new_str);
