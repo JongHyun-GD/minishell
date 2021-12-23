@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:29:31 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/17 14:06:16 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/23 13:17:25 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int		preprocess(t_list *list, t_info *info);
 void	preprocess_pipe_write(t_info *info);
 void	preprocess_pipe_read(t_info *info);
 int		preprocess_l1(t_info *info);
-void	preprocess_l2(t_info *info);
+int		preprocess_l2(t_info *info);
 void	preprocess_r1(t_info *info);
 void	preprocess_r2(t_info *info);
 

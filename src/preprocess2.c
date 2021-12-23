@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   preprocess2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 10:03:07 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/16 15:47:13 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/23 13:48:35 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	preprocess_pipe_write(t_info *info)
+{
+	dup2(info->pipe_in[WRITE_END], STDOUT_FILENO);
+	close(info->pipe_in[WRITE_END]);
+}
 
 void	preprocess_pipe_read(t_info *info)
 {
@@ -30,7 +36,10 @@ int	preprocess(t_list *list, t_info *info)
 			return (1);
 	}
 	if (info->has_redirect_l2)
-		preprocess_l2(info);
+	{
+		if (preprocess_l2(info) == 1)
+			return (1);
+	}
 	if (info->has_redirect_r1)
 		preprocess_r1(info);
 	if (info->has_redirect_r2)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 14:31:26 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/16 14:46:04 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/23 13:17:17 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	try_exec_builtin(t_list *list, t_info *info)
 {
 	if (is_builtin(list) == false)
 		return (-1);
-	preprocess(list, info);
-	exec_builtin(list, info);
+	if (preprocess(list, info) == 0)
+		exec_builtin(list, info);
 	postprocess_builtin(list, info);
 	return (0);
 }

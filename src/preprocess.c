@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   preprocess.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 09:56:07 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/16 15:46:50 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/23 13:58:14 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	preprocess_pipe_write(t_info *info)
-{
-	dup2(info->pipe_in[WRITE_END], STDOUT_FILENO);
-	close(info->pipe_in[WRITE_END]);
-}
 
 int	preprocess_l1(t_info *info)
 {
@@ -36,11 +30,11 @@ int	preprocess_l1(t_info *info)
 	}
 }
 
-void	preprocess_l2(t_info *info)
+void	preprocess_l2_child(t_info *info)
 {
 	char	*input;
 
-	pipe(info->l2_pipe);
+	set_signal_child();
 	while (true)
 	{
 		input = get_eof_input();
@@ -50,8 +44,36 @@ void	preprocess_l2(t_info *info)
 		write(info->l2_pipe[WRITE_END], input, ft_strlen(input) + 1);
 	}
 	close(info->l2_pipe[WRITE_END]);
-	dup2(info->l2_pipe[READ_END], STDIN_FILENO);
 	close(info->l2_pipe[READ_END]);
+	exit(0);
+}
+
+int	preprocess_l2(t_info *info)
+{
+	int		pid;
+
+	pipe(info->l2_pipe);
+	pid = fork();
+	if (pid < 0)
+	{
+		printf("minishell: fork error\n");
+		return (1);
+	}
+	if (pid == 0)
+		preprocess_l2_child(info);
+	else
+	{
+		wait(&pid);
+		printf("h1\n");
+		close(info->l2_pipe[WRITE_END]);
+		pid = get_exit_result(pid);
+		if (pid != STAT_CTRL_C)
+			dup2(info->l2_pipe[READ_END], STDIN_FILENO);
+		else
+			return (1);
+		close(info->l2_pipe[READ_END]);
+	}
+	return (0);
 }
 
 void	preprocess_r1(t_info *info)
