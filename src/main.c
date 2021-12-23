@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/21 17:03:03 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/23 10:18:26 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			if (ft_strlen(input) == 0)
+			{
+				free(input);
 				continue ;
+			}
 			add_history(input);
 			if (is_valid_input(input) == false)
 				continue ;
