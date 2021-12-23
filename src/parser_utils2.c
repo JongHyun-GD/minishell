@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:43:10 by dason             #+#    #+#             */
-/*   Updated: 2021/12/22 16:06:39 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/23 10:43:14 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,7 @@ char	*get_env_value(char *str, t_info *info, int *i)
 			exit (1);
 	}
 	else
-	{
 		env_value = ft_getenv(info->envp, env_variable);
-		if (env_value == NULL)
-			return (NULL);
-	}
 	free(env_variable);
 	return (env_value);
 }

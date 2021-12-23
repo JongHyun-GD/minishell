@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 13:09:19 by dason             #+#    #+#             */
-/*   Updated: 2021/12/22 15:21:50 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/23 10:36:16 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static char	*combine_nodedata_env(char *data, int *i, int *new_i, t_info *info)
 		exit(1);
 	ft_strlcat(new_data, info->current_node->data, \
 		ft_strlen(info->current_node->data) + 1);
+	free(info->current_node->data);
 	if (env_value != NULL)
 	{
 		ft_strlcat(new_data, env_value, size);
@@ -49,7 +50,6 @@ static void	process_quote_in_node(char *data, int *i, int *new_i, t_info *info)
 		if (quote == '\"' && data[*i] == '$')
 		{
 			new_data = combine_nodedata_env(data, i, new_i, info);
-			free(info->current_node->data);
 			info->current_node->data = new_data;
 		}
 		else if (data[*i] != quote)
