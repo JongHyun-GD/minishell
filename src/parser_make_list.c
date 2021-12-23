@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_make_list_quote.c                           :+:      :+:    :+:   */
+/*   parser_make_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/13 17:21:48 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/23 20:45:35 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	process_the_list(t_list **list, char *s, int *i, int *len)
 	free(sub_str);
 }
 
-void	make_list_quote(t_list **list, char *s)
+void	make_list(t_list **list, char *s)
 {
 	int		i;
 	int		len;

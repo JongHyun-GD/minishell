@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 17:48:10 by dason             #+#    #+#             */
-/*   Updated: 2021/12/22 15:15:25 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/23 20:52:39 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@
 */
 
 char	*organize_input_str(char *str);
-void	make_list_quote(t_list **list, char *s);
-void	when_quote_organize_node(t_list *list, t_info *info);
-void	make_list_no_quote(t_list **list, char **lexer, t_info *info);
+void	make_list(t_list **list, char *s);
+void	organize_node(t_list *list, t_info *info);
 int		parser_handling_exception(t_list *list);
 int		parser(t_list **list, char *str, t_info *info);
 

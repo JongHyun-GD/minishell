@@ -27,10 +27,9 @@ C_FILES		= cd.c							\
 			  main.c						\
 			  parser.c						\
 			  parser_handling_exception.c	\
-			  parser_make_list_no_quote.c	\
-			  parser_make_list_quote.c		\
+			  parser_make_list.c			\
 			  parser_organize_node.c		\
-			  parser_organize_str.c			\
+			  parser_organize_input_str.c	\
 			  parser_utils.c				\
 			  parser_utils2.c				\
 			  postprocess.c					\

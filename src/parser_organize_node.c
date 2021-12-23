@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 13:09:19 by dason             #+#    #+#             */
-/*   Updated: 2021/12/23 10:36:16 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/23 20:52:25 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static char	*combine_nodedata_env(char *data, int *i, int *new_i, t_info *info)
 
 static void	process_quote_in_node(char *data, int *i, int *new_i, t_info *info)
 {
-	char	*new_data;
 	int		quote;
 
 	quote = data[*i];
@@ -48,16 +47,14 @@ static void	process_quote_in_node(char *data, int *i, int *new_i, t_info *info)
 		if (data[*i] == quote)
 			break ;
 		if (quote == '\"' && data[*i] == '$')
-		{
-			new_data = combine_nodedata_env(data, i, new_i, info);
-			info->current_node->data = new_data;
-		}
+			info->current_node->data = \
+				combine_nodedata_env(data, i, new_i, info);
 		else if (data[*i] != quote)
 			info->current_node->data[(*new_i)++] = data[*i];
 	}
 }
 
-void	when_quote_organize_node(t_list *list, t_info *info)
+void	organize_node(t_list *list, t_info *info)
 {
 	char	*data;
 	int		i;
@@ -70,7 +67,7 @@ void	when_quote_organize_node(t_list *list, t_info *info)
 	new_i = 0;
 	while (data[++i])
 	{
-		if (is_quote(data[i]) == false && data[i] != ' ')
+		if (is_quote(data[i]) == false && data[i] != ' ' && data[i] != '$')
 			info->current_node->data[new_i++] = data[i];
 		else if (data[i] == ' ')
 		{
@@ -81,6 +78,9 @@ void	when_quote_organize_node(t_list *list, t_info *info)
 		}
 		else if (is_quote(data[i]))
 			process_quote_in_node(data, &i, &new_i, info);
+		else if (data[i] == '$')
+			info->current_node->data = \
+				combine_nodedata_env(data, &i, &new_i, info);
 	}
 	free(data);
 }
