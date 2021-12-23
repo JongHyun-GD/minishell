@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 09:56:07 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/23 13:58:14 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/23 14:37:34 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	preprocess_l2(t_info *info)
 	else
 	{
 		wait(&pid);
-		printf("h1\n");
 		close(info->l2_pipe[WRITE_END]);
 		pid = get_exit_result(pid);
 		if (pid != STAT_CTRL_C)
