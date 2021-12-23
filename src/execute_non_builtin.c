@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_non_builtin.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 11:02:23 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/17 13:39:39 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/23 14:30:45 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,9 @@ static int	execute(char **argv, char **envp)
 		when_is_path_run(argv, envp, paths);
 		free_double_pointer(&paths);
 	}
-	printf("minishell: %s: command not found\n", argv[0]);
+	write(2, "minishell: ", 11);
+	write(2, argv[0], ft_strlen(argv[0]));
+	write(2, ": command not found\n", 20);
 	exit(127);
 }
 
