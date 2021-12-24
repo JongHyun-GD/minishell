@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/24 11:28:13 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/24 16:15:39 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	move_to_next_command_list(t_list **list)
 
 	has_next = -1;
 	*list = (*list)->next;
-	while ((*list) && (*list)->l_type != LTYPE_COMMAND)
+	while (((*list) && (*list)->l_type != LTYPE_COMMAND) ||
+			(*list && (*list)->prev->l_type != LTYPE_PIPE))
 	{
 		has_next = 0;
 		*list = (*list)->next;
