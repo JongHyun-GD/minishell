@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/23 19:05:55 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/24 11:28:13 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	run(t_list *work_list, t_info *info)
 	while (work_list)
 	{
 		handle_redirect(work_list, info);
+		while (work_list->l_type != LTYPE_COMMAND)
+			work_list = work_list->next;
 		if (executable(work_list, info->envp, info) == -1)
 		{
 			if (try_exec_builtin(work_list, info) == -1)

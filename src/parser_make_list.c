@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/23 20:45:35 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/24 11:27:35 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,22 @@ static void	process_when_quote(char *s, int *i, int *len)
 		(*len)++;
 }
 
-static void	process_the_list(t_list **list, char *s, int *i, int *len)
+static void	process_the_ltype_command_file(t_list **list, char *s, int *i, int *len)
 {
 	t_list	*new_list;
 	char	*sub_str;
+	t_list	*last_list;
 
+	if (*i != 0)
+		last_list = ft_get_last_list(*list);
+	else
+		last_list = NULL;
 	while (s[*i + *len] && get_ltype(&s[*i + *len]) == LTYPE_COMMAND)
 	{
+		if (last_list != NULL && LTYPE_REDIRECT_L1 <= last_list->l_type && \
+			last_list->l_type <= LTYPE_REDIRECT_R2 && \
+			s[*i + *len] == ' ')
+			break ;
 		if (s[*i + *len] == '\"' || s[*i + *len] == '\'')
 			process_when_quote(s, i, len);
 		(*len)++;
@@ -47,6 +56,22 @@ static void	process_the_list(t_list **list, char *s, int *i, int *len)
 	free(sub_str);
 }
 
+void	progress_the_redirection(t_list **list, char *s, int *i)
+{
+	t_list	*new_list;
+
+	new_list = ft_create_list(get_ltype(&s[*i]), NULL);
+	if (*i == 0)
+		*list = new_list;
+	else
+		ft_lstadd_back(*list, new_list);
+	if (get_ltype(&s[*i]) == LTYPE_REDIRECT_L2 ||
+		get_ltype(&s[*i]) == LTYPE_REDIRECT_R2)
+		*i += 2;
+	else
+		*i += 1;
+}
+
 void	make_list(t_list **list, char *s)
 {
 	int		i;
@@ -57,20 +82,15 @@ void	make_list(t_list **list, char *s)
 	{
 		while (s[i] == ' ')
 			i++;
-		if (i == 0 || get_ltype(&s[i]) == LTYPE_COMMAND)
+		if (get_ltype(&s[i]) == LTYPE_COMMAND)
 		{
 			len = 0;
-			process_the_list(list, s, &i, &len);
+			process_the_ltype_command_file(list, s, &i, &len);
 			i += len;
 		}
 		else if (get_ltype(&s[i]) != LTYPE_COMMAND)
 		{
-			ft_lstadd_back(*list, ft_create_list(get_ltype(&s[i]), NULL));
-			if (get_ltype(&s[i]) == LTYPE_REDIRECT_L2 || \
-				get_ltype(&s[i]) == LTYPE_REDIRECT_R2)
-				i += 2;
-			else
-				i += 1;
+			progress_the_redirection(list, s, &i);
 		}
 	}
 }

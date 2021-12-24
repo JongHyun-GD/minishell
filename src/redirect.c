@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 10:35:52 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/13 09:48:56 by hyun             ###   ########.fr       */
+/*   Updated: 2021/12/24 11:12:56 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,6 @@ void	handle_redirect_r2(t_list *list, t_info *info)
 
 void	handle_redirect(t_list *list, t_info *info)
 {
-	if (list->l_type != LTYPE_COMMAND)
-		return ;
-	list = list->next;
 	while (list)
 	{
 		if (list->l_type == LTYPE_PIPE)
@@ -61,8 +58,6 @@ void	handle_redirect(t_list *list, t_info *info)
 			handle_redirect_r1(list, info);
 		if (list->l_type == LTYPE_REDIRECT_R2)
 			handle_redirect_r2(list, info);
-		if (list->l_type == LTYPE_COMMAND)
-			break ;
 		list = list->next;
 	}
 }

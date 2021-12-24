@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 18:41:12 by dason             #+#    #+#             */
-/*   Updated: 2021/12/23 19:03:53 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/24 11:26:09 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,15 @@ void	ft_nodeadd_back(t_node *node, t_node *new_node)
 	while (node->next)
 		node = node->next;
 	node->next = new_node;
+}
+
+t_list	*ft_get_last_list(t_list *list)
+{
+	if (!list)
+		return (0);
+	while (list->next)
+	{
+		list = list->next;
+	}
+	return (list);
 }
