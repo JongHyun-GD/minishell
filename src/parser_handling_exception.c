@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 09:44:28 by dason             #+#    #+#             */
-/*   Updated: 2021/12/24 14:20:11 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/24 14:51:32 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static bool	check_non_path_and_non_eof(t_list *list)
 {
 	while (list)
 	{
-		if (list->l_type != LTYPE_COMMAND && \
+		if (list->l_type != LTYPE_PIPE && \
+			list->l_type != LTYPE_COMMAND && \
 			list->l_type != LTYPE_FILE && \
 			(!list->next || \
 			list->next->l_type != LTYPE_FILE))
