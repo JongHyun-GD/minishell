@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:02:32 by dason             #+#    #+#             */
-/*   Updated: 2021/12/24 16:25:51 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/24 16:36:05 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ void	run(t_list *work_list, t_info *info)
 	while (work_list)
 	{
 		handle_redirect(work_list, info);
-		while (work_list->l_type != LTYPE_COMMAND)
+		while (work_list && work_list->l_type != LTYPE_COMMAND)
 			work_list = work_list->next;
+		if (work_list == NULL)
+			break ;
 		if (executable(work_list, info->envp, info) == -1)
 		{
 			if (try_exec_builtin(work_list, info) == -1)
