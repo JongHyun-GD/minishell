@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 09:44:28 by dason             #+#    #+#             */
-/*   Updated: 2021/12/24 14:51:32 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/24 15:52:52 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,17 @@ static bool	check_parse_error_near(t_list *list)
 		l_type = list->next->l_type;
 		if (l_type == 2)
 			printf("minishell: syntax error near unexpected token `|'\n");
-		if (l_type == 3)
-			printf("minishell: syntax error near unexpected token `<'\n");
-		if (l_type == 4)
-			printf("minishell: syntax error near unexpected token `<<'\n");
-		if (l_type == 5)
-			printf("minishell: syntax error near unexpected token `>'\n");
-		if (l_type == 6)
-			printf("minishell: syntax error near unexpected token `>>'\n");
+		if (list->l_type != LTYPE_PIPE)
+		{
+			if (l_type == 3)
+				printf("minishell: syntax error near unexpected token `<'\n");
+			if (l_type == 4)
+				printf("minishell: syntax error near unexpected token `<<'\n");
+			if (l_type == 5)
+				printf("minishell: syntax error near unexpected token `>'\n");
+			if (l_type == 6)
+				printf("minishell: syntax error near unexpected token `>>'\n");
+		}
 		return (false);
 	}
 	return (true);
@@ -40,18 +43,14 @@ static bool	check_parse_error_near(t_list *list)
 
 static bool	check_non_path_and_non_eof(t_list *list)
 {
-	while (list)
+	if (list->l_type != LTYPE_PIPE &&
+		list->l_type != LTYPE_COMMAND &&
+		list->l_type != LTYPE_FILE &&
+		(!list->next ||
+		 list->next->l_type != LTYPE_FILE))
 	{
-		if (list->l_type != LTYPE_PIPE && \
-			list->l_type != LTYPE_COMMAND && \
-			list->l_type != LTYPE_FILE && \
-			(!list->next || \
-			list->next->l_type != LTYPE_FILE))
-		{
-			printf("minishell: syntax error near unexpected token `newline'\n");
-			return (false);
-		}
-		list = list->next;
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		return (false);
 	}
 	return (true);
 }
