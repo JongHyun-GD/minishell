@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:58:45 by dason             #+#    #+#             */
-/*   Updated: 2021/12/24 11:27:35 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/24 11:51:17 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,14 @@ static void	process_when_quote(char *s, int *i, int *len)
 		(*len)++;
 }
 
-static void	process_the_ltype_command_file(t_list **list, char *s, int *i, int *len)
+static char	*get_sub_str(t_list **list, char *s, int *i, int *len)
 {
-	t_list	*new_list;
 	char	*sub_str;
 	t_list	*last_list;
 
+	last_list = NULL;
 	if (*i != 0)
 		last_list = ft_get_last_list(*list);
-	else
-		last_list = NULL;
 	while (s[*i + *len] && get_ltype(&s[*i + *len]) == LTYPE_COMMAND)
 	{
 		if (last_list != NULL && LTYPE_REDIRECT_L1 <= last_list->l_type && \
@@ -43,6 +41,15 @@ static void	process_the_ltype_command_file(t_list **list, char *s, int *i, int *
 		(*len)++;
 	}
 	sub_str = ft_substr(s, *i, *len);
+	return (sub_str);
+}
+
+static void	process_the_ltype_command(t_list **list, char *s, int *i, int *len)
+{
+	t_list	*new_list;
+	char	*sub_str;
+
+	sub_str = get_sub_str(list, s, i, len);
 	if (s[*i - 2] == '<' || s[*i - 2] == '>')
 		new_list = ft_create_list(LTYPE_FILE, \
 				ft_create_node(NTYPE_COMMAND, ft_strtrim(sub_str, " ")));
@@ -65,7 +72,7 @@ void	progress_the_redirection(t_list **list, char *s, int *i)
 		*list = new_list;
 	else
 		ft_lstadd_back(*list, new_list);
-	if (get_ltype(&s[*i]) == LTYPE_REDIRECT_L2 ||
+	if (get_ltype(&s[*i]) == LTYPE_REDIRECT_L2 || \
 		get_ltype(&s[*i]) == LTYPE_REDIRECT_R2)
 		*i += 2;
 	else
@@ -85,7 +92,7 @@ void	make_list(t_list **list, char *s)
 		if (get_ltype(&s[i]) == LTYPE_COMMAND)
 		{
 			len = 0;
-			process_the_ltype_command_file(list, s, &i, &len);
+			process_the_ltype_command(list, s, &i, &len);
 			i += len;
 		}
 		else if (get_ltype(&s[i]) != LTYPE_COMMAND)

@@ -6,13 +6,13 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 13:09:19 by dason             #+#    #+#             */
-/*   Updated: 2021/12/23 20:52:25 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/24 11:55:27 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
 
-static char	*combine_nodedata_env(char *data, int *i, int *new_i, t_info *info)
+static char	*combine_nodedata_env(t_info *info, char *data, int *i, int *new_i)
 {
 	char	*new_data;
 	char	*env_value;
@@ -37,7 +37,7 @@ static char	*combine_nodedata_env(char *data, int *i, int *new_i, t_info *info)
 	return (new_data);
 }
 
-static void	process_quote_in_node(char *data, int *i, int *new_i, t_info *info)
+static void	process_quote_in_node(t_info *info, char *data, int *i, int *new_i)
 {
 	int		quote;
 
@@ -52,6 +52,14 @@ static void	process_quote_in_node(char *data, int *i, int *new_i, t_info *info)
 		else if (data[*i] != quote)
 			info->current_node->data[(*new_i)++] = data[*i];
 	}
+}
+
+static void	progress_space(t_info *info, char *data, int *new_i)
+{
+	info->current_node->next = ft_create_node(NTYPE_STRING, \
+		(char *)ft_calloc(ft_strlen(data) + 1, sizeof(char)));
+	info->current_node = info->current_node->next;
+	*new_i = 0;
 }
 
 void	organize_node(t_list *list, t_info *info)
@@ -70,17 +78,12 @@ void	organize_node(t_list *list, t_info *info)
 		if (is_quote(data[i]) == false && data[i] != ' ' && data[i] != '$')
 			info->current_node->data[new_i++] = data[i];
 		else if (data[i] == ' ')
-		{
-			info->current_node->next = ft_create_node(NTYPE_STRING, \
-					(char *)ft_calloc(ft_strlen(data) + 1, sizeof(char)));
-			info->current_node = info->current_node->next;
-			new_i = 0;
-		}
+			progress_space(info, data, &new_i);
 		else if (is_quote(data[i]))
-			process_quote_in_node(data, &i, &new_i, info);
+			process_quote_in_node(info, data, &i, &new_i);
 		else if (data[i] == '$')
 			info->current_node->data = \
-				combine_nodedata_env(data, &i, &new_i, info);
+				combine_nodedata_env(info, data, &i, &new_i);
 	}
 	free(data);
 }
