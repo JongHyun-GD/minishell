@@ -6,7 +6,7 @@
 /*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 10:03:07 by hyun              #+#    #+#             */
-/*   Updated: 2021/12/24 15:26:05 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/24 15:39:53 by jongpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,6 @@ bool	has_pipe_before(t_list *list)
 
 int	preprocess(t_list *list, t_info *info)
 {
-	if (info->has_pipe_in)
-		preprocess_pipe_write(info);
-	if (has_pipe_before(list))
-		preprocess_pipe_read(info);
 	if (info->has_redirect_l1)
 	{
 		if (preprocess_l1(info) == 1)
@@ -57,5 +53,9 @@ int	preprocess(t_list *list, t_info *info)
 		preprocess_r1(info);
 	if (info->has_redirect_r2)
 		preprocess_r2(info);
+	if (info->has_pipe_in)
+		preprocess_pipe_write(info);
+	if (has_pipe_before(list))
+		preprocess_pipe_read(info);
 	return (0);
 }
