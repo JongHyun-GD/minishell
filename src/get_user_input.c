@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_user_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jongpark <jongpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyun <hyun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 14:59:56 by jongpark          #+#    #+#             */
-/*   Updated: 2021/12/23 14:42:32 by jongpark         ###   ########.fr       */
+/*   Updated: 2021/12/27 13:16:05 by hyun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ char	*make_prompt(void)
 {
 	char	cwd_path[PATH_LENGTH];
 
-	return (ft_strjoin(ft_strjoin("\e[32m",
-				ft_strjoin(getcwd(cwd_path, PATH_LENGTH), " > ")), "\e[0m"));
+	return (ft_strjoin(getcwd(cwd_path, PATH_LENGTH), " > "));
 }
 
 int	get_exit_result(int stat)
