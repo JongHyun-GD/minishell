@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 17:19:46 by dason             #+#    #+#             */
-/*   Updated: 2021/12/20 12:14:09 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/27 11:07:39 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ void	excutable_child(t_list *list, char **envp, t_info *info)
 	if (ft_strchr(list->start_node->data, '/'))
 	{
 		if (preprocess(list, info) == 0)
+		{
 			execve(argv[0], argv, envp);
-		else
-			exit(1);
+			printf("minishell: %s: No such file or directory\n", argv[0]);
+			exit (1);
+		}
 	}
 	exit(127);
 }
