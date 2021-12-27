@@ -6,7 +6,7 @@
 /*   By: dason <dason@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 17:19:46 by dason             #+#    #+#             */
-/*   Updated: 2021/12/27 11:07:39 by dason            ###   ########.fr       */
+/*   Updated: 2021/12/27 13:06:04 by dason            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	executable(t_list *list, char **envp, t_info *info)
 {
 	pid_t	pid;
 	pid_t	wait_pid;
+	int		exit_status;
 
 	pid = fork();
 	set_signal_non_built_in();
@@ -46,9 +47,10 @@ int	executable(t_list *list, char **envp, t_info *info)
 	{
 		wait_pid = wait(&pid);
 		set_signal_parent();
-		info->exit_status = get_exit_result(pid);
-		if (wait_pid < 0 || info->exit_status == 127)
+		exit_status = get_exit_result(pid);
+		if (wait_pid < 0 || exit_status == 127)
 			return (-1);
+		info->exit_status = exit_status;
 		postprocess(info);
 	}
 	return (0);
