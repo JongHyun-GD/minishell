@@ -28,7 +28,7 @@
     - `exit` (without option)
 
 2. non-builtin commands
-    - PATH 환경변수를 활용해 실행파일을 실행
+    - PATH 환경변수를 활용해 실행파일을 실행합니다.
 
 ### Redirection and Pipe
 1. Redirection
@@ -73,4 +73,4 @@ cd minishell
 
 ## Contributors
 [손대호](https://github.com/Sondho)  | `Command tokenizing`, `Environment variables`, `Non-builtin commands` <br>
-[박종현](https://github.com/JongHyun-GD) |  `Builtin command`, `Redirection and Pipe`, `Signal catch`
+[박종현](https://github.com/JongHyun-GD) |  `Builtin commands`, `Redirection and Pipe`, `Signal catch`
