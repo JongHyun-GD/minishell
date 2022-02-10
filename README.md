@@ -1,6 +1,6 @@
 # Minishell - Simpler than bash
 
-!이미지
+![Animation](https://user-images.githubusercontent.com/48791587/153360825-f39bef67-c126-4fda-918b-72cfc1b71931.gif)
 
 <br>
 
